@@ -2,17 +2,22 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import form from "../Detailform.module.css"
 import formimage from "../../Assets/ClientFormImage.png"
+import axios from 'axios'
 function ClientDetail() {
     const { register, handleSubmit, formState: { errors } } = useForm()
 
-    const onSubmit = (data) => {
+    const onsubmit = (data) => {
         console.log(data)
+            axios.post("http://localhost:3000/ClientDetail",data)
+            .then((res)=>console.log(res))
+            .catch((err)=>console.log(err))
     }
+
     return (
         <div className={form.Clientpage}>
             <div className={form.Clientbox}>
                 <h1>Client</h1>
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form onSubmit={handleSubmit(onsubmit)}>
                     <div className={form.detail}>
                         <label>Name</label>
                         <input type='text' {...register("ClientName", { required: "Client Name is required", pattern: { value: /^[a-zA-Z]+$/, message: "Only Alphabets are allowed" } })} placeholder="Enter Client Name" />
@@ -30,7 +35,7 @@ function ClientDetail() {
                         {errors.PhoneNumber && <p>{errors.PhoneNumber.message}</p>}
                     <div className={form.detail}>
                         <label>Image of Client</label>
-                        <input type="file" className={form.file}{...register("ImageOfClient", { required: "Image of Client is required" })} />
+                        <input type="input" className={form.file}{...register("ImageOfClient", { required: "Image of Client is required" })} />
                     </div>
                         {errors.ImageOfClient && <p>{errors.ImageOfClient.message}</p>}
                     <input type="submit" className={form.ClientSubmit}/>

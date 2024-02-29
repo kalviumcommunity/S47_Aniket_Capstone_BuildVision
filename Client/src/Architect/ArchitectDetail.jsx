@@ -2,12 +2,19 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import form from "../Detailform.module.css"
 import formimage from "../../Assets/ArchitectFormImage.png"
+import axios from 'axios'
+
 function ArchitectDetail() {
     const { register, handleSubmit, formState: { errors } } = useForm()
 
     const onSubmit = (data) => {
         console.log(data)
+        axios.post("http://localhost:3000/ArchitectureDetail",data)
+        .then((res)=>console.log(res))
+        .catch((err)=>console.log(err))
     }
+
+
     return (
         <div className={form.Archipage}>
             <img src={formimage} alt="" className={form.image} />
@@ -36,7 +43,7 @@ function ArchitectDetail() {
                         {errors.PhoneNumber && <p>{errors.PhoneNumber.message}</p>}
                     <div className={form.detail}>
                         <label>Image of Architect</label>
-                        <input type="file" className={form.file}{...register("ImageOfArchitect", { required: "Image of Architect is required" })}/>
+                        <input type="input" className={form.file}{...register("ImageOfArchitect", { required: "Image of Architect is required" })}/>
                     </div>
                         {errors.ImageOfArchitect && <p>{errors.ImageOfArchitect.message}</p>}
                     <input type="submit" className={form.ArchiSubmit}/>
