@@ -13,7 +13,7 @@ mongoose.connect(process.env.Cluster,{
 })
 
 app.get("/",(req,res)=>{
-    res.send("Hello, I am back")
+    res.send("")
 })
 
 app.post("/post",(req,res)=>{
