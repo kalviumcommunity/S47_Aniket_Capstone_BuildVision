@@ -3,11 +3,21 @@ const mongoose=require('mongoose')
 require('dotenv').config()
 
 const app=express()
+app.use(express.json())
 
-mongoose.connect(process.env.Cluster)
+mongoose.connect(process.env.Cluster,{
+}).then(()=>{
+    console.log("connected")
+}).catch((error)=>{
+    console.log(error)
+})
 
 app.get("/",(req,res)=>{
-    res.send("Hello, I am back")
+    res.send("")
+})
+
+app.post("/post",(req,res)=>{
+    res.json(req.body)
 })
 
 app.listen(3000,()=>{
