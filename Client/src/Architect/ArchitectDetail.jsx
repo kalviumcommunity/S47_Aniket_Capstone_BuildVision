@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import form from "../Detailform.module.css"
+import form from "../css/Detailform.module.css"
 import formimage from "../../Assets/ArchitectFormImage.png"
 import axios from 'axios'
 
