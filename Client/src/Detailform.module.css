@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
 }
-.page{
+.Archipage{
     background-color:#00B3FF;
     display: flex;
     flex-direction: row;
@@ -12,9 +12,11 @@
     padding: 0px 250px;
 }
 
-.box{
+
+
+.Archibox{
     background-color: #65D1FF;
-    padding: 20px;
+    padding: 30px;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -40,7 +42,7 @@ form{
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 5%;
+    padding: 4%;
 }
 .file{
     border: none;
@@ -59,14 +61,59 @@ input{
     text-align: center;
 }
 input:hover{
-    box-shadow: #00B3FF 0px 5px 10px;
+    box-shadow: #000000 0px .3px 10px;
 }
 
 .ArchiSubmit{
     height: 30px;
     border-radius: 10px;
     color: #000000;
-    background-color: #65D1FF;
+    background-color: #00B3FF;
+    font-size: 17px;
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+p{
+    font-size: 17px;
+    color: red;
+    text-align: center;
+    position: relative;
+    bottom: 15px;
+
+}
+
+
+
+/* Client Details */
+
+
+
+
+.Clientpage{
+    background-color:#335DB4;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    height: 100vh;
+    padding: 0px 250px;
+}
+
+.Clientbox{
+    background-color: #5885E4;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.ClientSubmit{
+    height: 30px;
+    border-radius: 10px;
+    color: #000000;
+    background-color: #335DB4;
     font-size: 17px;
     font-weight: bolder;
     cursor: pointer;
