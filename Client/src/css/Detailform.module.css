@@ -74,7 +74,7 @@ input:hover{
     cursor: pointer;
 }
 
-p{
+.alert{
     font-size: 17px;
     color: red;
     text-align: center;
