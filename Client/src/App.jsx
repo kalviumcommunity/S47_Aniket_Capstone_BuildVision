@@ -5,7 +5,7 @@ import ClientDetail from './Client/ClientDetail'
 import Homepage from './Common/Homepage'
 import DesignPage from './Common/DesignPage'
 import Archiprofile from './Common/Archiprofile'
-import SignUp from './Common/SignUp'
+import SignUp from './Common/Signup/SignUp'
 
 function App() {
   return(

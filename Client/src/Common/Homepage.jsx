@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import css from "../css/homepage.module.css"
 import logo from "../../Assets/Logo.png"
 import img from "../../Assets/HomeImage.png"
-import SignUp from './SignUp'
 
 function Homepage() {
   return (
