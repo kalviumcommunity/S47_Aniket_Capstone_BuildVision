@@ -5,7 +5,7 @@ import css from "../../css/Signup.module.css"
 import clientimage from "../../../Assets/ClientFormImage.png"
 
 
-function ClientSignupform() {
+function ClientLoginform() {
     const { register, handleSubmit, formState: { errors } } = useForm()
 
 
@@ -19,7 +19,7 @@ function ClientSignupform() {
 
                         <button>Google</button>
 
-                        <p>Already have an account? <Link to={"/Login"}>Log In</Link></p>
+                        <p>Dont have an account? <Link to={"/Signup"}>Signup</Link></p>
                         <form onSubmit={handleSubmit} className={css.form}>
                             <div className={css.orbox}>
                                 <div className={css.line}></div>
@@ -36,7 +36,7 @@ function ClientSignupform() {
                                 <input type='password' {...register("password", { required: "Password is required" })} placeholder="Enter Password" />
                             </div>
                             {errors.password && <p className={css.alert}>{errors.password.message}</p>}
-                            <Link to={"/DesignPage"}><button type='submit' className={css.clientsubmit}>Signup</button></Link>
+                            <Link to={"/DesignPage"}><button type='submit' className={css.clientsubmit}>LogIn</button></Link>
                         </form>
                     </div>
                     <div>
@@ -48,4 +48,4 @@ function ClientSignupform() {
     )
 }
 
-export default ClientSignupform
+export default ClientLoginform

@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom'
 import css from "../../css/Signup.module.css"
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import ClientSignupform from './ClientSignupform'
+import ClientSignupform from './ClientLoginform'
 import architectimage from "../../../Assets/ArchitectFormImage.png"
 import clientimage from "../../../Assets/ClientFormImage.png"
-function SignUp() {
+
+function Login() {
   const [toggle, setToggle] = useState("")
   const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -22,13 +23,13 @@ function SignUp() {
     const clientHead = document.getElementsByClassName(css.clientHeading)[0]
     const mainarchiimage = document.getElementsByClassName(css.mainarchiimage)[0]
     const mainclientimage = document.getElementsByClassName(css.mainclientimage)[0]
-
     if(toggle!=""){
       mainclientimage.style.display = "none"
       mainarchiimage.style.display = "none"
     }
 
     if (toggle === "architect") {
+
       archi.style.width = "80vw"
       body.style.backgroundColor = "#335DB4"
       client.style.width = "20vw"
@@ -58,7 +59,7 @@ function SignUp() {
   return (
     <div className={css.container}>
       <div className={css.archi} onClick={() => setToggle("architect")}>
-      <div className={css.archiHeading}>
+        <div className={css.archiHeading}>
           <div className={css.mainarchi}>
             <img src={architectimage} alt="" className={css.mainarchiimage} />
             <h1>Architecture</h1>
@@ -72,7 +73,7 @@ function SignUp() {
             <div className={css.archiform}>
               <h1>Architecture</h1>
               <button>Google</button>
-              <p>Already have an account? <Link to={"/Login"}>Log In</Link></p>
+              <p>Dont have an account? <Link to={"/Signup"}>Sign up</Link></p>
               <form onSubmit={handleSubmit} className={css.form}>
                 <div className={css.orbox}>
                   <div className={css.line}></div>
@@ -89,7 +90,7 @@ function SignUp() {
                   <input type='password' {...register("password", { required: "Password is required" })} placeholder="Enter Password" />
                 </div>
                 {errors.password && <p className={css.alert}>{errors.password.message}</p>}
-                <Link to={"/ArchitectureDetail"}><button type='submit' className={css.archisubmit}>Signup</button></Link>
+                <Link to={"/DesignPage"}><button type='submit' className={css.archisubmit}>LogIn</button></Link>
               </form>
 
             </div>
@@ -97,10 +98,10 @@ function SignUp() {
         </div>
       </div>
       <div className={css.client} onClick={() => setToggle("client")}>
-      <div className={css.clientHeading}>
+        <div className={css.clientHeading}>
           <div className={css.mainclient}>
-            <img src={clientimage} alt="" className={css.mainclientimage} />
             <h1>Client</h1>
+            <img src={clientimage} alt="" className={css.mainclientimage} />
           </div>
         </div>
         {<ClientSignupform />}
@@ -109,4 +110,4 @@ function SignUp() {
   )
 }
 
-export default SignUp
+export default Login
