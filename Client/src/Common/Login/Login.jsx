@@ -23,7 +23,7 @@ function Login() {
     const clientHead = document.getElementsByClassName(css.clientHeading)[0]
     const mainarchiimage = document.getElementsByClassName(css.mainarchiimage)[0]
     const mainclientimage = document.getElementsByClassName(css.mainclientimage)[0]
-    if(toggle!=""){
+    if (toggle !=""){
       mainclientimage.style.display = "none"
       mainarchiimage.style.display = "none"
     }

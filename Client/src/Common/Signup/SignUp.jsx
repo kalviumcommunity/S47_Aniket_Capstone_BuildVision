@@ -6,11 +6,17 @@ import { useForm } from 'react-hook-form'
 import ClientSignupform from './ClientSignupform'
 import architectimage from "../../../Assets/ArchitectFormImage.png"
 import clientimage from "../../../Assets/ClientFormImage.png"
+import axios from 'axios'
 function SignUp() {
   const [toggle, setToggle] = useState("")
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-
+  const onSubmit = (data) => {
+    console.log(data)
+    axios.post("http://localhost:3000/ArchiSignUp", data)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+  }
 
   useEffect(() => {
     const body = document.getElementsByTagName("body")[0]
@@ -73,7 +79,7 @@ function SignUp() {
               <h1>Architecture</h1>
               <button>Google</button>
               <p>Already have an account? <Link to={"/Login"}>Log In</Link></p>
-              <form onSubmit={handleSubmit} className={css.form}>
+              <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
                 <div className={css.orbox}>
                   <div className={css.line}></div>
                   <p className={css.or}>OR</p>

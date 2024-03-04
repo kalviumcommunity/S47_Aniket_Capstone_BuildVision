@@ -3,11 +3,18 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import css from "../../css/Signup.module.css"
 import clientimage from "../../../Assets/ClientFormImage.png"
+import axios from 'axios'
 
 
 function ClientSignupform() {
     const { register, handleSubmit, formState: { errors } } = useForm()
 
+    const onSubmit = (data) => {
+        console.log(data)
+        axios.post("http://localhost:3000/ClientSignUp", data)
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err))
+    }
 
     return (
         <>
@@ -20,7 +27,7 @@ function ClientSignupform() {
                         <button>Google</button>
 
                         <p>Already have an account? <Link to={"/Login"}>Log In</Link></p>
-                        <form onSubmit={handleSubmit} className={css.form}>
+                        <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
                             <div className={css.orbox}>
                                 <div className={css.line}></div>
                                 <p className={css.or}>OR</p>

@@ -26,7 +26,31 @@ app.get('/ClientDetail',async(req,res)=>{
     .then(result=>res.json(result))
     .catch(err => res.json(err))
 })
+app.get('/ArchiSignUp',async(req,res)=>{
+    await archidetailschema.find({})
+    .then(result=>res.json(result))
+    .catch(err => res.json(err))
+})
+app.get('/ClientSignUp',async(req,res)=>{
+    await clientdetailschema.find({})
+    .then(result=>res.json(result))
+    .catch(err => res.json(err))
+})
 
+
+
+app.post("/ArchiSignUp",(req,res)=>{
+    const{ArchiEmail,ArchiPassword}=req.body
+    archidetailschema.create(req.body)
+        .then(result=>res.send(result))
+        .catch(err => console.log(err))
+})
+app.post("/ClientSignUp",(req,res)=>{
+    const{ClientEmail,ClientPassword}=req.body
+    clientdetailschema.create(req.body)
+        .then(result=>res.send(result))
+        .catch(err => console.log(err))
+})
 app.post("/ArchitectureDetail",(req,res)=>{
     const{ArchitectName,NoOfProjects,YearOfExperience,PhoneNumber,ImageOfArchitect}=req.body
     archidetailschema.create(req.body)

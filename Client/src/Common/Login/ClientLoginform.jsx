@@ -8,7 +8,6 @@ import clientimage from "../../../Assets/ClientFormImage.png"
 function ClientLoginform() {
     const { register, handleSubmit, formState: { errors } } = useForm()
 
-
     return (
         <>
             <div className={css.clientcontent}>
