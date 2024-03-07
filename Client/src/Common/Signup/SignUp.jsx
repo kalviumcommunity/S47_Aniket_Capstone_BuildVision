@@ -7,18 +7,38 @@ import ClientSignupform from './ClientSignupform'
 import architectimage from "../../../Assets/ArchitectFormImage.png"
 import clientimage from "../../../Assets/ClientFormImage.png"
 import axios from 'axios'
+import google from "../../../Assets/GoogleLogo.png"
+import { useAuth0 } from '@auth0/auth0-react'
+
 function SignUp() {
   const [toggle, setToggle] = useState("")
   const { register, handleSubmit, formState: { errors } } = useForm();
 
+  const {user1, loginWithRedirect } = useAuth0();
+  console.log(user1)
+
+  
   const onSubmit = (data) => {
     console.log(data)
     axios.post("http://localhost:3000/ArchiSignUp", data)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err))
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err))
   }
-
   useEffect(() => {
+    const formdata=async()=>{
+      await axios.post("http://localhost:3000/ArchiSignUp",{
+        ArchiEmail: user1.email,
+        ArchitectName: user1.nickname,
+        ImageOfArchitect: user1.picture
+      })
+      .then((res)=>console.log(res))
+      .catch((err)=>console.log(err))
+    }
+    formdata()
+  },[user1])
+  useEffect(() => {
+    
+
     const body = document.getElementsByTagName("body")[0]
     const archi = document.getElementsByClassName(css.archi)[0]
     const client = document.getElementsByClassName(css.client)[0]
@@ -29,7 +49,7 @@ function SignUp() {
     const mainarchiimage = document.getElementsByClassName(css.mainarchiimage)[0]
     const mainclientimage = document.getElementsByClassName(css.mainclientimage)[0]
 
-    if(toggle!=""){
+    if (toggle != "") {
       mainclientimage.style.display = "none"
       mainarchiimage.style.display = "none"
     }
@@ -59,12 +79,12 @@ function SignUp() {
     else {
 
     }
-  }, [toggle])
+  }, [toggle],[user1])
 
   return (
     <div className={css.container}>
       <div className={css.archi} onClick={() => setToggle("architect")}>
-      <div className={css.archiHeading}>
+        <div className={css.archiHeading}>
           <div className={css.mainarchi}>
             <img src={architectimage} alt="" className={css.mainarchiimage} />
             <h1>Architecture</h1>
@@ -77,13 +97,18 @@ function SignUp() {
             </div>
             <div className={css.archiform}>
               <h1>Architecture</h1>
-              <button>Google</button>
+              <button className={css.googlebtn} onClick={() => loginWithRedirect()}><img src={google} alt="" className={css.google}/><h3 className={css.googletext}>Google</h3></button>
+
               <p>Already have an account? <Link to={"/Login"}>Log In</Link></p>
               <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
                 <div className={css.orbox}>
                   <div className={css.line}></div>
                   <p className={css.or}>OR</p>
                   <div className={css.line}></div>
+                </div>
+                <div className={css.formdiv}>
+                  <label>Name</label>
+                  <input type='text' {...register("name", { required: "Name is required" })} placeholder="Enter Name" />
                 </div>
                 <div className={css.formdiv}>
                   <label>Email</label>
@@ -95,7 +120,7 @@ function SignUp() {
                   <input type='password' {...register("password", { required: "Password is required" })} placeholder="Enter Password" />
                 </div>
                 {errors.password && <p className={css.alert}>{errors.password.message}</p>}
-                <Link to={"/ArchitectureDetail"}><button type='submit' className={css.archisubmit}>Signup</button></Link>
+                <Link to={"/DesignPage"}><button type='submit' className={css.archisubmit}>Signup</button></Link>
               </form>
 
             </div>
@@ -103,7 +128,7 @@ function SignUp() {
         </div>
       </div>
       <div className={css.client} onClick={() => setToggle("client")}>
-      <div className={css.clientHeading}>
+        <div className={css.clientHeading}>
           <div className={css.mainclient}>
             <img src={clientimage} alt="" className={css.mainclientimage} />
             <h1>Client</h1>

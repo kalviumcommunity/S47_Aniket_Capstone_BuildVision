@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import css from "../../css/Signup.module.css"
 import clientimage from "../../../Assets/ClientFormImage.png"
+import google from "../../../Assets/GoogleLogo.png"
+
 
 
 function ClientLoginform() {
@@ -16,7 +18,7 @@ function ClientLoginform() {
 
                         <h1>Client</h1>
 
-                        <button>Google</button>
+                        <button className={css.googlebtn}><img src={google} alt="" className={css.google} /><h3 className={css.googletext}>Google</h3></button>
 
                         <p>Dont have an account? <Link to={"/Signup"}>Signup</Link></p>
                         <form onSubmit={handleSubmit} className={css.form}>

@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom'
 import css from "../../css/Signup.module.css"
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import ClientSignupform from './ClientLoginform'
+import ClientLoginform from './ClientLoginform'
 import architectimage from "../../../Assets/ArchitectFormImage.png"
 import clientimage from "../../../Assets/ClientFormImage.png"
+import google from "../../../Assets/GoogleLogo.png"
+
 
 function Login() {
   const [toggle, setToggle] = useState("")
@@ -72,7 +74,7 @@ function Login() {
             </div>
             <div className={css.archiform}>
               <h1>Architecture</h1>
-              <button>Google</button>
+              <button className={css.googlebtn} ><img src={google} alt="" className={css.google}/><h3 className={css.googletext}>Google</h3></button>
               <p>Dont have an account? <Link to={"/Signup"}>Sign up</Link></p>
               <form onSubmit={handleSubmit} className={css.form}>
                 <div className={css.orbox}>
@@ -104,7 +106,7 @@ function Login() {
             <img src={clientimage} alt="" className={css.mainclientimage} />
           </div>
         </div>
-        {<ClientSignupform />}
+        {<ClientLoginform />}
       </div>
     </div>
   )
