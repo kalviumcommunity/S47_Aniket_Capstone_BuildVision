@@ -40,13 +40,13 @@ app.get('/ClientSignUp',async(req,res)=>{
 
 
 app.post("/ArchiSignUp",(req,res)=>{
-    const{ArchiEmail,ArchiPassword}=req.body
+    const{ArchiEmail,ImageOfArchitect,ArchitectName}=req.body
     archidetailschema.create(req.body)
         .then(result=>res.send(result))
         .catch(err => console.log(err))
 })
 app.post("/ClientSignUp",(req,res)=>{
-    const{ClientEmail,ClientPassword}=req.body
+    const{ClientEmail,ImageOfClient,ClientName}=req.body
     clientdetailschema.create(req.body)
         .then(result=>res.send(result))
         .catch(err => console.log(err))

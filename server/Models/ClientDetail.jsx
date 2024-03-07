@@ -3,7 +3,6 @@ const Joi=require('joi')
 
 const clientSchema = new mongoose.Schema({
     ClientEmail: Joi.string().required(),
-    ClientPassword: Joi.string().required(),
     ClientName: Joi.string().required(),
     NoOfProjects: Joi.number().required(),
     BirthYear: Joi.number().required(),
