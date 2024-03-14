@@ -1,24 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import NavigationBar from './NavigationBar'
 import navcss from '../css/Navigation.module.css'
-import { useAuth0 } from '@auth0/auth0-react';
 
 function DesignPage() {
-  const { user, isAuthenticated, isLoading } = useAuth0;
+  const [data, setdata] = useState([])
 
-  if(isLoading){
-    return <div>Loading...</div>
-  }
-  console.log(user)
+  useEffect(()=>{
+    fetch('http://localhost:3000/ArchiSignU')
+    .then((res)=>res.json())
+    .then((datas)=>{
+      setdata(datas);
+      console.log(datas)
+    })
+    .catch((err)=>console.log(err))
+  },[])
+
+  document.cookie="Role"
   return (
-    isAuthenticated &&(
-    <>
     <div className={navcss.navbar}>
         <NavigationBar/>
         <div>DesignPage</div>
     </div>
-    </>
-    )
   )
 }
 

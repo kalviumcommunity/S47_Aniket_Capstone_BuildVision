@@ -14,30 +14,44 @@ function SignUp() {
   const [toggle, setToggle] = useState("")
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const {user1, loginWithRedirect } = useAuth0();
-  console.log(user1)
 
-  
+  const { user1, loginWithRedirect } = useAuth0();
+
+
+  // console.log(image)
   const onSubmit = (data) => {
-    console.log(data)
-    axios.post("http://localhost:3000/ArchiSignUp", data)
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err))
+    
+    const formdata=new FormData();
+    formdata.append("ImageOfArchitect",data.ImageOfArchitect[0])
+    formdata.append("ArchitectName",data.name)
+    formdata.append("ArchiEmail",data.email)
+    formdata.append("ArchiPassword",data.password)
+    formdata.append("Role","Architect")
+    const fdata = async () => {
+      // if(data){
+        await axios.post("http://localhost:3000/ArchiSignUp", formdata)
+          .then((res) => console.log(res))
+          .catch((err) => console.log(err))
+    // }
   }
+  fdata()
+    }
   useEffect(() => {
-    const formdata=async()=>{
-      await axios.post("http://localhost:3000/ArchiSignUp",{
-        ArchiEmail: user1.email,
-        ArchitectName: user1.nickname,
-        ImageOfArchitect: user1.picture
-      })
-      .then((res)=>console.log(res))
-      .catch((err)=>console.log(err))
+    const formdata = async () => {
+      if (user1) {
+        await axios.post("http://localhost:3000/ArchiSignUp", {
+          ArchiEmail: user1.email,
+          ArchitectName: user1.nickname,
+          ImageOfArchitect: user1.picture
+        })
+          .then((res) => console.log(res))
+          .catch((err) => console.log(err))
+      }
     }
     formdata()
-  },[user1])
+  }, [user1])
   useEffect(() => {
-    
+
 
     const body = document.getElementsByTagName("body")[0]
     const archi = document.getElementsByClassName(css.archi)[0]
@@ -79,7 +93,9 @@ function SignUp() {
     else {
 
     }
-  }, [toggle],[user1])
+  }, [toggle], [user1])
+
+  document.cookie="Role=Architect"
 
   return (
     <div className={css.container}>
@@ -97,10 +113,10 @@ function SignUp() {
             </div>
             <div className={css.archiform}>
               <h1>Architecture</h1>
-              <button className={css.googlebtn} onClick={() => loginWithRedirect()}><img src={google} alt="" className={css.google}/><h3 className={css.googletext}>Google</h3></button>
+              <button className={css.googlebtn} onClick={() => loginWithRedirect()}><img src={google} alt="" className={css.google} /><h3 className={css.googletext}>Google</h3></button>
 
               <p>Already have an account? <Link to={"/Login"}>Log In</Link></p>
-              <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
+              <form  className={css.form} method="post" encType="multipart/form-data">
                 <div className={css.orbox}>
                   <div className={css.line}></div>
                   <p className={css.or}>OR</p>
@@ -120,9 +136,14 @@ function SignUp() {
                   <input type='password' {...register("password", { required: "Password is required" })} placeholder="Enter Password" />
                 </div>
                 {errors.password && <p className={css.alert}>{errors.password.message}</p>}
-                <Link to={"/DesignPage"}><button type='submit' className={css.archisubmit}>Signup</button></Link>
+                <div>
+                  <label>Image</label>
+                  <input type='file' {...register("ImageOfArchitect", { required: "Image is required" })} />
+                </div>
+                {errors.image && <p className={css.alert}>{errors.image.message}</p>}
+                <Link to={"/DesignPage"}><button onClick={handleSubmit(onSubmit)} className={css.archisubmit}>Signup</button></Link>
               </form>
-
+    <img src={register.image} alt="" />
             </div>
           </div>
         </div>

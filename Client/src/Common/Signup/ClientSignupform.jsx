@@ -12,28 +12,41 @@ function ClientSignupform() {
     const { register, handleSubmit, formState: { errors } } = useForm()
 
     const { user, loginWithRedirect } = useAuth0();
-    console.log(user)
 
     useEffect(() => {
         const formdata = async () => {
-            await axios.post("http://localhost:3000/ClientSignUp", {
-                ClientEmail: user.email,
-                ClientName: user.nickname,
-                ImageOfClient: user.picture
-            })
-                .then((res) => console.log(res))
-                .catch((err) => console.log(err))
+            if (user) {
+                await axios.post("http://localhost:3000/ClientSignUp", {
+                    ClientEmail: user.email,
+                    ClientName: user.nickname,
+                    ImageOfClient: user.picture
+                })
+                    .then((res) => console.log(res))
+                    .catch((err) => console.log(err))
+            }
         }
         formdata()
     }, [user])
 
     const onSubmit = (data) => {
-        console.log(data)
-        axios.post("http://localhost:3000/ClientSignUp", data)
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err))
+
+        const formdata = new FormData();
+        formdata.append("ImageOfClient", data.ImageOfClient[0])
+        formdata.append("ClientName", data.name)
+        formdata.append("ClientEmail", data.email)
+        formdata.append("ClientPassword", data.password)
+        formdata.append("Role", "Client")
+        const fdata = async () => {
+            // if(data){
+            await axios.post("http://localhost:3000/ClientSignUp", formdata)
+                .then((res) => console.log(res))
+                .catch((err) => console.log(err))
+            // }
+        }
+        fdata()
     }
 
+    document.cookie="role=Client"
     return (
         <>
             <div className={css.clientcontent}>
@@ -46,7 +59,7 @@ function ClientSignupform() {
 
 
                         <p>Already have an account? <Link to={"/Login"}>Log In</Link></p>
-                        <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
+                        <form onSubmit={handleSubmit(onSubmit)} className={css.form} method="post" encType="multipart/form-data">
                             <div className={css.orbox}>
                                 <div className={css.line}></div>
                                 <p className={css.or}>OR</p>
@@ -66,6 +79,11 @@ function ClientSignupform() {
                                 <input type='password' {...register("password", { required: "Password is required" })} placeholder="Enter Password" />
                             </div>
                             {errors.password && <p className={css.alert}>{errors.password.message}</p>}
+                            <div>
+                                <label>Image</label>
+                                <input type='file' {...register("image", { required: "Image is required" })} />
+                            </div>
+                            {errors.image && <p className={css.alert}>{errors.image.message}</p>}
                             <Link to={"/DesignPage"}><button type='submit' className={css.clientsubmit}>Signup</button></Link>
                         </form>
                     </div>
