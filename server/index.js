@@ -7,8 +7,11 @@ const cors=require('cors')
 const {designupload}=require('./multer/designmulter.js')
 const {clientupload}=require('./multer/clientmulter.js')
 const {archiupload}=require('./multer/architectmulter.js')
-
+const path=require('path')
 const app=express()
+
+
+app.use('/Upload',express.static(path.join(__dirname,'Upload')))
 app.use(express.json())
 app.use(cors())
 
@@ -43,19 +46,20 @@ app.get('/ClientSignU',async(req,res)=>{
 
 
 app.post("/ArchiSignUp",archiupload.single("ImageOfArchitect"),(req,res)=>{
-    const filedata=req.body
-    filedata.ImageOfArchitect = req.file.filename
-    console.log(filedata)
-    archidetailschema.create(filedata)
+    const afiledata=req.body
+    afiledata.ImageOfArchitect = req.file.ImageOfArchitect[0].path
+    console.log(afiledata)
+    archidetailschema.create(afiledata)
     .then(result=>res.send(result))
     .catch(err => console.log(err))
 })
 app.post("/ClientSignUp",clientupload.single("ImageOfClient"),(req,res)=>{
-    const filedata=req.body
-    filedata.ImageOfClient = req.file.filename
-    console.log(filedata)
+    const cfiledata=req.body
+    cfiledata.ImageOfClient = req.file.filename
+    console.log(cfiledata)
+    console.log("zsfdxgcfgvjbkjh")
     console.log(req.body)
-    clientdetailschema.create(filedata)
+    clientdetailschema.create(cfiledata)
         .then(result=>res.send(result))
         .catch(err => console.log(err))
 })

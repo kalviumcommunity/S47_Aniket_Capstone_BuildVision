@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import css from "../../css/Signup.module.css"
 import clientimage from "../../../Assets/ClientFormImage.png"
 import axios from 'axios'
@@ -12,6 +12,7 @@ function ClientSignupform() {
     const { register, handleSubmit, formState: { errors } } = useForm()
 
     const { user, loginWithRedirect } = useAuth0();
+    const navigate = useNavigate()
 
     useEffect(() => {
         const formdata = async () => {
@@ -19,7 +20,8 @@ function ClientSignupform() {
                 await axios.post("http://localhost:3000/ClientSignUp", {
                     ClientEmail: user.email,
                     ClientName: user.nickname,
-                    ImageOfClient: user.picture
+                    ImageOfClient: user.picture,
+                    Role: "Client"
                 })
                     .then((res) => console.log(res))
                     .catch((err) => console.log(err))
@@ -41,6 +43,9 @@ function ClientSignupform() {
             await axios.post("http://localhost:3000/ClientSignUp", formdata)
                 .then((res) => console.log(res))
                 .catch((err) => console.log(err))
+
+
+            navigate("/DesignPage")
             // }
         }
         fdata()
@@ -59,7 +64,7 @@ function ClientSignupform() {
 
 
                         <p>Already have an account? <Link to={"/Login"}>Log In</Link></p>
-                        <form onSubmit={handleSubmit(onSubmit)} className={css.form} method="post" encType="multipart/form-data">
+                        <form className={css.form} method="post" encType="multipart/form-data">
                             <div className={css.orbox}>
                                 <div className={css.line}></div>
                                 <p className={css.or}>OR</p>
@@ -81,10 +86,10 @@ function ClientSignupform() {
                             {errors.password && <p className={css.alert}>{errors.password.message}</p>}
                             <div>
                                 <label>Image</label>
-                                <input type='file' {...register("image", { required: "Image is required" })} />
+                                <input type='file' {...register("ImageOfClient", { required: "Image is required" })} />
                             </div>
                             {errors.image && <p className={css.alert}>{errors.image.message}</p>}
-                            <Link to={"/DesignPage"}><button type='submit' className={css.clientsubmit}>Signup</button></Link>
+                           <button onClick={handleSubmit(onSubmit)} className={css.clientsubmit}>Signup</button>
                         </form>
                     </div>
                     <div>

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import css from "../../css/Signup.module.css"
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -16,6 +16,7 @@ function SignUp() {
 
 
   const { user1, loginWithRedirect } = useAuth0();
+  const navigate=useNavigate()
 
 
   // console.log(image)
@@ -32,6 +33,8 @@ function SignUp() {
         await axios.post("http://localhost:3000/ArchiSignUp", formdata)
           .then((res) => console.log(res))
           .catch((err) => console.log(err))
+        
+        // navigate("/DesignPage")
     // }
   }
   fdata()
@@ -42,7 +45,8 @@ function SignUp() {
         await axios.post("http://localhost:3000/ArchiSignUp", {
           ArchiEmail: user1.email,
           ArchitectName: user1.nickname,
-          ImageOfArchitect: user1.picture
+          ImageOfArchitect: user1.picture,
+          Role: "Architect"
         })
           .then((res) => console.log(res))
           .catch((err) => console.log(err))
@@ -141,7 +145,7 @@ function SignUp() {
                   <input type='file' {...register("ImageOfArchitect", { required: "Image is required" })} />
                 </div>
                 {errors.image && <p className={css.alert}>{errors.image.message}</p>}
-                <Link to={"/DesignPage"}><button onClick={handleSubmit(onSubmit)} className={css.archisubmit}>Signup</button></Link>
+                <button onClick={handleSubmit(onSubmit)} className={css.archisubmit}>Signup</button>
               </form>
     <img src={register.image} alt="" />
             </div>

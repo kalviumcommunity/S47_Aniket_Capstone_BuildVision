@@ -8,7 +8,8 @@ const clientSchema = new mongoose.Schema({
     BirthYear: Number,
     PhoneNumber: Number,
     ImageOfClient: [{type:String}],
-    Role: String
+    Role: String,
+    PhoneNo: Number
 })
 const ClientDetail = mongoose.model('client_detail', clientSchema)
 module.exports = ClientDetail

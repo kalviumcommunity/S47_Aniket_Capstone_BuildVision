@@ -6,10 +6,12 @@ import menu from "../../Assets/menu.png"
 import archi from "../../Assets/arcitect.png"
 import design from "../../Assets/design.png"
 import profile from "../../Assets/profile.png"
-import logout from "../../Assets/logout.png"
+import logoutimg from "../../Assets/logout.png"
+import { useAuth0 } from "@auth0/auth0-react";
 
 function NavigationBar() {
   const [toggle,settoggle]=useState(false)
+  const { logout } = useAuth0();
 
   const togglebtn=()=>{
     settoggle(!toggle)
@@ -43,13 +45,13 @@ function NavigationBar() {
   return (
     <nav className={navcss.mainnav}>
         <div className={navcss.nav}>
-            <Link><div className={navcss.navicon}><img src={menu} alt="" className={navcss.menu} onClick={togglebtn}/><h2 className={navcss.navtext}>Menu</h2></div></Link>
-            <Link to="/DesignPage"><div className={navcss.navicon}><img src={design} alt="" className={navcss.design}/><h2 className={navcss.navtext}>Design</h2></div></Link>
-            <Link to="/Archiprofile"><div className={navcss.navicon}><img src={archi} alt="" className={navcss.archi}/><h2 className={navcss.navtext}>Architect</h2></div></Link>
+            <Link><div className={navcss.navicon}><img src={menu} alt="" className={navcss.menu} onClick={togglebtn}/><p className={navcss.navtext}>Menu</p></div></Link>
+            <Link to="/DesignPage"><div className={navcss.navicon}><img src={design} alt="" className={navcss.design}/><p className={navcss.navtext}>Design</p></div></Link>
+            <Link to="/ArchiProfile"><div className={navcss.navicon}><img src={archi} alt="" className={navcss.archi}/><p className={navcss.navtext}>Architect</p></div></Link>
         </div>
         <div className={navcss.nav}>
-            <Link><div className={navcss.navicon}><img src={profile} alt="" className={navcss.profile}/><h2 className={navcss.navtext}>Profile</h2></div></Link>
-            <Link><div className={navcss.navicon}><img src={logout} alt="" className={navcss.logout}/><h2 className={navcss.navtext}>Log-Out</h2></div></Link>
+            <Link><div className={navcss.navicon}><img src={profile} alt="" className={navcss.profile}/><p className={navcss.navtext}>Profile</p></div></Link>
+            <Link><div className={navcss.navicon}><img src={logoutimg} alt="" className={navcss.logout}/><p className={navcss.navtext} onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Log-Out</p></div></Link>
         </div>
     </nav>
   )
