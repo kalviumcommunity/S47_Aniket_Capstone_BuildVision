@@ -1,0 +1,114 @@
+.container{
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+
+.archi{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 50vw;
+    border: none;
+    background-color: #00B3FF;
+    transition: width 500ms ease-in-out;
+}
+
+.client{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 50vw;
+    border: none;
+    background-color: #335DB4;
+    transition: width 500ms ease-in-out;
+}
+
+.archicontent ,.clientcontent{
+    display: none;
+    transition: display 500ms ease-in-out;
+}
+.archiHeading ,.clientHeading{
+    display: block;
+    transition: display 500ms ease-in-out;
+}
+.archiform{
+    background-color: #65D1FF;
+}
+.clientform{
+    background-color: #5885E4;
+}
+
+.archiform, .clientform{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    border-radius: 15px;
+    height: 40vh;
+    width: 40%;
+}
+
+.archiimage ,.clientimage{
+    height: 400px;
+    margin: 50px;
+}
+
+.mainbody{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;   
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: space-around;
+    height: 30vh;
+}
+
+.formdiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.archisubmit{
+    background-color: #a5e0f9;
+}
+.clientsubmit{
+    background-color: #bad0ff;
+}
+
+.archisubmit ,.clientsubmit{
+    font-size: 17px;
+    height:5vh;
+    border-radius: 11px;
+    width: 12vw;
+    border: 1px solid black;
+}
+
+.orbox{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.or{
+    font-size: 15px;
+}
+.line{
+    background: #AAAAAA;
+    border: none;
+    height: 1px;
+    width: 40%;
+}

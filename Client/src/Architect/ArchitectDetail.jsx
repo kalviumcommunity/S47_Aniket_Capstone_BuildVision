@@ -25,27 +25,27 @@ function ArchitectDetail() {
                         <label>Name</label>
                         <input type='text' {...register("ArchitectName", { required: "Architect Name is required", pattern: { value: /^[a-zA-Z]+$/, message: "Only Alphabets are allowed" } })} placeholder="Enter Architect Name" />
                     </div>
-                        {errors.ArchitectName && <p>{errors.ArchitectName.message}</p>}
+                        {errors.ArchitectName && <p className={form.alert}>{errors.ArchitectName.message}</p>}
                     <div className={form.detail}>
                         <label>No. of projects</label>
                         <input type='number' {...register("NoOfProjects", { required: "No. of projects is required" })} defaultValue={0} />
                     </div>
-                        {errors.NoOfProjects && <p>{errors.NoOfProjects.message}</p>}
+                        {errors.NoOfProjects && <p className={form.alert}>{errors.NoOfProjects.message}</p>}
                     <div className={form.detail}>
                         <label>Year of Experience</label>
                         <input type='number' {...register("YearOfExperience", { required: "Year of Experience is required" })} defaultValue={0} />
                     </div>
-                        {errors.YearOfExperience && <p>{errors.YearOfExperience.message}</p>}
+                        {errors.YearOfExperience && <p className={form.alert}>{errors.YearOfExperience.message}</p>}
                     <div className={form.detail}>
                         <label>Phone Number</label>
                         <input type='number' {...register("PhoneNumber", { required: "Phone Number is required", maxLength: { value: 10, message: "Phone No. should be 10 digits" }, minLength: { value: 10, message: "Phone No. should be 10 digits" } })} placeholder='Enter Phone Number' />
                     </div>
-                        {errors.PhoneNumber && <p>{errors.PhoneNumber.message}</p>}
+                        {errors.PhoneNumber && <p className={form.alert}>{errors.PhoneNumber.message}</p>}
                     <div className={form.detail}>
                         <label>Image of Architect</label>
                         <input type="input" className={form.file}{...register("ImageOfArchitect", { required: "Image of Architect is required" })}/>
                     </div>
-                        {errors.ImageOfArchitect && <p>{errors.ImageOfArchitect.message}</p>}
+                        {errors.ImageOfArchitect && <p className={form.alert}>{errors.ImageOfArchitect.message}</p>}
                     <input type="submit" className={form.ArchiSubmit}/>
                 </form>
             </div>

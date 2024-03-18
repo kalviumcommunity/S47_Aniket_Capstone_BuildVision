@@ -2,15 +2,17 @@ import React from 'react'
 import { Routes, Route } from 'react-router'
 import ArchitectDetail from './Architect/ArchitectDetail'
 import ClientDetail from './Client/ClientDetail'
-import Home from './Home'
+import Homepage from './Common/Homepage'
 import DesignPage from './Common/DesignPage'
 import Archiprofile from './Common/Archiprofile'
+import SignUp from './Common/Signup/SignUp'
 
 function App() {
   return(
     <>
       <Routes>
-        <Route path="/" element={<Home/>}/>
+        <Route path="/" element={<Homepage/>}/>
+        <Route path='/SignUp' element={<SignUp/>}/>
         <Route path='/Archiprofile' element={<Archiprofile/>}></Route>
         <Route path="/DesignPage" element={<DesignPage/>}/>
         <Route path="/ArchitectureDetail" element={<ArchitectDetail />}/>
