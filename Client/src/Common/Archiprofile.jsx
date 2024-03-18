@@ -3,6 +3,7 @@ import NavigationBar from './NavigationBar'
 import navcss from '../css/Navigation.module.css'
 import css from "../css/ArchiProfilepage.module.css"
 import logo from "../../Assets/Logo.png"
+import profile from "../../Assets/profile.png"
 
 function ArchiProfile() {
   const [data, setdata] = useState([])
@@ -36,13 +37,17 @@ function ArchiProfile() {
             {data.map((data) => (
               <div className={css.card} key={data._id}>
                 <div>
-                  {data.ImageOfArchitect && <img src={`http://localhost:3000/Upload/Architect/${data.ImageOfArchitect[0].replace(/ /g, '%20')}`} alt="" className={css.archiimage}/>}
+                  {data.ImageOfArchitect?<img src={`http://localhost:3000/Upload/Architect/${data.ImageOfArchitect[0].replace(/ /g, '%20')}`} alt="" className={css.archiimage}/>:<img src={profile} alt="" className={css.archiimage}/>}
                 </div>
                 <div>
-                  <h3>Name : {data.ArchitectName}</h3>
+                  <p style={{ fontWeight: "bold" }}>Name : {data.ArchitectName}</p>
                   {data.NoOfProjects ? <p>No of Projects : {data.NoOfProjects}</p> : <p>No of Projects : 0</p>}
                   {data.YearOfExperience ? <p>Year Of Experience : {data.YearOfExperience}</p> : <p>Year Of Experience : 0</p>}
-                  {data.PhoneNo ? <p className={css.contact}>{data.PhoneNo}</p> : <p className={css.contact}>{data.ArchiEmail}</p>}
+                  <p>Email : {data.ArchiEmail}</p>
+                  <div>
+                    {data.PhoneNo ? <button className={css.contactbtn} >{data.PhoneNo}</button> : <p></p> }
+                    <button onClick={() => window.location.href = `mailto:${data.ArchiEmail}`} className={css.contactbtn}>Email Me</button>
+                  </div>
 
                 </div>
               </div>

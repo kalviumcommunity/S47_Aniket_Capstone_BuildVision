@@ -42,12 +42,25 @@ app.get('/ClientSignU',async(req,res)=>{
     .then(result=>res.json(result))
     .catch(err => res.json(err))
 })
-
+app.get('/Profile/:role/:email',async(req,res)=>{
+    if(req.params.role=="Architect"){
+        await archidetailschema.find({ArchiEmail:req.params.email})
+        .then(result=>{res.json(result)})
+        .catch(err =>console.log(err))
+    }
+    else{
+        await clientdetailschema.find({ClientEmail:req.params.email})
+        .then(result=>res.json(result))
+        .catch(err => console.log(err))
+    }
+})
 
 
 app.post("/ArchiSignUp",archiupload.single("ImageOfArchitect"),(req,res)=>{
     const afiledata=req.body
-    afiledata.ImageOfArchitect = req.file.ImageOfArchitect[0].path
+    if(req.file){
+        afiledata.ImageOfArchitect = req.file.ImageOfArchitect[0].path
+    }
     console.log(afiledata)
     archidetailschema.create(afiledata)
     .then(result=>res.send(result))
