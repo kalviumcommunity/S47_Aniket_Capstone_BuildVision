@@ -1,0 +1,45 @@
+.main{
+    width: 90vw;
+    height: 200vh;
+    margin-left: 15vh;
+}
+
+.head{
+    height: 10vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 3vh 15vh;
+}
+
+.logo{
+    height: 10vh;
+}
+
+.filter{
+    padding: 1vh;
+    font-size: x-large;
+    background-color: rgb(195, 195, 195);
+    border-radius: 15px ;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.card{
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.contact{
+    border: 1px solid black  ;
+}
+
+.archiimage{
+    height: 200px;
+}
