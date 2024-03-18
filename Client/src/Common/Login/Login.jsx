@@ -3,56 +3,19 @@ import { Link } from 'react-router-dom'
 import css from "../../css/Signup.module.css"
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import ClientSignupform from './ClientSignupform'
+import ClientLoginform from './ClientLoginform'
 import architectimage from "../../../Assets/ArchitectFormImage.png"
 import clientimage from "../../../Assets/ClientFormImage.png"
-import axios from 'axios'
 import google from "../../../Assets/GoogleLogo.png"
-import { useAuth0 } from '@auth0/auth0-react'
 
-function SignUp() {
+
+function Login() {
   const [toggle, setToggle] = useState("")
   const { register, handleSubmit, formState: { errors } } = useForm();
 
 
-  const { user1, loginWithRedirect } = useAuth0();
 
-
-  // console.log(image)
-  const onSubmit = (data) => {
-    
-    const formdata=new FormData();
-    formdata.append("ImageOfArchitect",data.ImageOfArchitect[0])
-    formdata.append("ArchitectName",data.name)
-    formdata.append("ArchiEmail",data.email)
-    formdata.append("ArchiPassword",data.password)
-    formdata.append("Role","Architect")
-    const fdata = async () => {
-      // if(data){
-        await axios.post("http://localhost:3000/ArchiSignUp", formdata)
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err))
-    // }
-  }
-  fdata()
-    }
   useEffect(() => {
-    const formdata = async () => {
-      if (user1) {
-        await axios.post("http://localhost:3000/ArchiSignUp", {
-          ArchiEmail: user1.email,
-          ArchitectName: user1.nickname,
-          ImageOfArchitect: user1.picture
-        })
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err))
-      }
-    }
-    formdata()
-  }, [user1])
-  useEffect(() => {
-
-
     const body = document.getElementsByTagName("body")[0]
     const archi = document.getElementsByClassName(css.archi)[0]
     const client = document.getElementsByClassName(css.client)[0]
@@ -62,13 +25,13 @@ function SignUp() {
     const clientHead = document.getElementsByClassName(css.clientHeading)[0]
     const mainarchiimage = document.getElementsByClassName(css.mainarchiimage)[0]
     const mainclientimage = document.getElementsByClassName(css.mainclientimage)[0]
-
-    if (toggle != "") {
+    if (toggle !=""){
       mainclientimage.style.display = "none"
       mainarchiimage.style.display = "none"
     }
 
     if (toggle === "architect") {
+
       archi.style.width = "80vw"
       body.style.backgroundColor = "#335DB4"
       client.style.width = "20vw"
@@ -93,9 +56,7 @@ function SignUp() {
     else {
 
     }
-  }, [toggle], [user1])
-
-  document.cookie="Role=Architect"
+  }, [toggle])
 
   return (
     <div className={css.container}>
@@ -113,18 +74,13 @@ function SignUp() {
             </div>
             <div className={css.archiform}>
               <h1>Architecture</h1>
-              <button className={css.googlebtn} onClick={() => loginWithRedirect()}><img src={google} alt="" className={css.google} /><h3 className={css.googletext}>Google</h3></button>
-
-              <p>Already have an account? <Link to={"/Login"}>Log In</Link></p>
-              <form  className={css.form} method="post" encType="multipart/form-data">
+              <button className={css.googlebtn} ><img src={google} alt="" className={css.google}/><h3 className={css.googletext}>Google</h3></button>
+              <p>Dont have an account? <Link to={"/Signup"}>Sign up</Link></p>
+              <form onSubmit={handleSubmit} className={css.form}>
                 <div className={css.orbox}>
                   <div className={css.line}></div>
                   <p className={css.or}>OR</p>
                   <div className={css.line}></div>
-                </div>
-                <div className={css.formdiv}>
-                  <label>Name</label>
-                  <input type='text' {...register("name", { required: "Name is required" })} placeholder="Enter Name" />
                 </div>
                 <div className={css.formdiv}>
                   <label>Email</label>
@@ -136,14 +92,9 @@ function SignUp() {
                   <input type='password' {...register("password", { required: "Password is required" })} placeholder="Enter Password" />
                 </div>
                 {errors.password && <p className={css.alert}>{errors.password.message}</p>}
-                <div>
-                  <label>Image</label>
-                  <input type='file' {...register("ImageOfArchitect", { required: "Image is required" })} />
-                </div>
-                {errors.image && <p className={css.alert}>{errors.image.message}</p>}
-                <Link to={"/DesignPage"}><button onClick={handleSubmit(onSubmit)} className={css.archisubmit}>Signup</button></Link>
+                <Link to={"/DesignPage"}><button type='submit' className={css.archisubmit}>LogIn</button></Link>
               </form>
-    <img src={register.image} alt="" />
+
             </div>
           </div>
         </div>
@@ -151,14 +102,14 @@ function SignUp() {
       <div className={css.client} onClick={() => setToggle("client")}>
         <div className={css.clientHeading}>
           <div className={css.mainclient}>
-            <img src={clientimage} alt="" className={css.mainclientimage} />
             <h1>Client</h1>
+            <img src={clientimage} alt="" className={css.mainclientimage} />
           </div>
         </div>
-        {<ClientSignupform />}
+        {<ClientLoginform />}
       </div>
     </div>
   )
 }
 
-export default SignUp
+export default Login

@@ -1,15 +1,52 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import form from "../../css/Signup.module.css"
 import { Link } from 'react-router-dom'
 import css from "../../css/Signup.module.css"
 import clientimage from "../../../Assets/ClientFormImage.png"
+import axios from 'axios'
+import google from "../../../Assets/GoogleLogo.png"
+import { useAuth0 } from '@auth0/auth0-react'
 
 
 function ClientSignupform() {
     const { register, handleSubmit, formState: { errors } } = useForm()
 
+    const { user, loginWithRedirect } = useAuth0();
 
+    useEffect(() => {
+        const formdata = async () => {
+            if (user) {
+                await axios.post("http://localhost:3000/ClientSignUp", {
+                    ClientEmail: user.email,
+                    ClientName: user.nickname,
+                    ImageOfClient: user.picture
+                })
+                    .then((res) => console.log(res))
+                    .catch((err) => console.log(err))
+            }
+        }
+        formdata()
+    }, [user])
+
+    const onSubmit = (data) => {
+
+        const formdata = new FormData();
+        formdata.append("ImageOfClient", data.ImageOfClient[0])
+        formdata.append("ClientName", data.name)
+        formdata.append("ClientEmail", data.email)
+        formdata.append("ClientPassword", data.password)
+        formdata.append("Role", "Client")
+        const fdata = async () => {
+            // if(data){
+            await axios.post("http://localhost:3000/ClientSignUp", formdata)
+                .then((res) => console.log(res))
+                .catch((err) => console.log(err))
+            // }
+        }
+        fdata()
+    }
+
+    document.cookie="role=Client"
     return (
         <>
             <div className={css.clientcontent}>
@@ -18,14 +55,19 @@ function ClientSignupform() {
 
                         <h1>Client</h1>
 
-                        <button>Google</button>
+                        <button className={css.googlebtn} onClick={() => loginWithRedirect()}><img src={google} alt="" className={css.google} /><h3 className={css.googletext}>Google</h3></button>
 
-                        <p>Already have an account? <Link>Log In</Link></p>
-                        <form onSubmit={handleSubmit} className={css.form}>
+
+                        <p>Already have an account? <Link to={"/Login"}>Log In</Link></p>
+                        <form onSubmit={handleSubmit(onSubmit)} className={css.form} method="post" encType="multipart/form-data">
                             <div className={css.orbox}>
                                 <div className={css.line}></div>
                                 <p className={css.or}>OR</p>
                                 <div className={css.line}></div>
+                            </div>
+                            <div className={css.formdiv}>
+                                <label>Name</label>
+                                <input type='text' {...register("name", { required: "Name is required" })} placeholder="Enter Name" />
                             </div>
                             <div className={css.formdiv}>
                                 <label>Email</label>
@@ -37,7 +79,12 @@ function ClientSignupform() {
                                 <input type='password' {...register("password", { required: "Password is required" })} placeholder="Enter Password" />
                             </div>
                             {errors.password && <p className={css.alert}>{errors.password.message}</p>}
-                            <Link to={"/ClientDetail"}><button type='submit' className={css.clientsubmit}>Signup</button></Link>
+                            <div>
+                                <label>Image</label>
+                                <input type='file' {...register("image", { required: "Image is required" })} />
+                            </div>
+                            {errors.image && <p className={css.alert}>{errors.image.message}</p>}
+                            <Link to={"/DesignPage"}><button type='submit' className={css.clientsubmit}>Signup</button></Link>
                         </form>
                     </div>
                     <div>
