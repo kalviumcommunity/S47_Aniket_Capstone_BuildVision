@@ -17,10 +17,15 @@ function SignUp() {
 
   const { user1, loginWithRedirect } = useAuth0();
   const navigate=useNavigate()
-
-
+  const Architect = "Architect"
+  
+  
   // console.log(image)
   const onSubmit = (data) => {
+    // document.cookie=`Role=${Architect}; expires=Thu, 01 Jan 9999 23:59:59 GMT`
+    // document.cookie=`Email=${data.email || user1.email}; expires=Thu, 01 Jan 9999 00:00:00 UTC;`
+    localStorage.setItem("Role",Architect)
+    localStorage.setItem("Email",data.email || user1.email)
     
     const formdata=new FormData();
     formdata.append("ImageOfArchitect",data.ImageOfArchitect[0])
@@ -31,10 +36,11 @@ function SignUp() {
     const fdata = async () => {
       // if(data){
         await axios.post("http://localhost:3000/ArchiSignUp", formdata)
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err))
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err))
         
-        // navigate("/DesignPage")
+        navigate("/DesignPage")
+        window.location.reload()
     // }
   }
   fdata()
@@ -99,7 +105,6 @@ function SignUp() {
     }
   }, [toggle], [user1])
 
-  document.cookie="Role=Architect"
 
   return (
     <div className={css.container}>
@@ -142,7 +147,7 @@ function SignUp() {
                 {errors.password && <p className={css.alert}>{errors.password.message}</p>}
                 <div>
                   <label>Image</label>
-                  <input type='file' {...register("ImageOfArchitect", { required: "Image is required" })} />
+                  <input type='file' {...register("ImageOfArchitect")} />
                 </div>
                 {errors.image && <p className={css.alert}>{errors.image.message}</p>}
                 <button onClick={handleSubmit(onSubmit)} className={css.archisubmit}>Signup</button>

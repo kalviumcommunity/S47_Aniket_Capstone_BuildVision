@@ -31,6 +31,8 @@ function ClientSignupform() {
     }, [user])
 
     const onSubmit = (data) => {
+        document.cookie="Role=Client"
+        document.cookie=`Email=${data.email || user.email}`
 
         const formdata = new FormData();
         formdata.append("ImageOfClient", data.ImageOfClient[0])
@@ -45,13 +47,12 @@ function ClientSignupform() {
                 .catch((err) => console.log(err))
 
 
-            navigate("/DesignPage")
+                navigate("/DesignPage")
             // }
         }
         fdata()
     }
 
-    document.cookie="role=Client"
     return (
         <>
             <div className={css.clientcontent}>
