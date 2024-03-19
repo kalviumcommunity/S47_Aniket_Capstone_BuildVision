@@ -31,8 +31,11 @@ function ClientSignupform() {
     }, [user])
 
     const onSubmit = (data) => {
-        document.cookie="Role=Client"
-        document.cookie=`Email=${data.email || user.email}`
+        // document.cookie="Role=Client"
+        // document.cookie=`Email=${data.email || user.email}`
+
+        localStorage.setItem("Role","Client")
+        localStorage.setItem("Email",data.email || user.email)
 
         const formdata = new FormData();
         formdata.append("ImageOfClient", data.ImageOfClient[0])
@@ -40,6 +43,8 @@ function ClientSignupform() {
         formdata.append("ClientEmail", data.email)
         formdata.append("ClientPassword", data.password)
         formdata.append("Role", "Client")
+        formdata.append("BirthYear", "0")
+        formdata.append("ClientPhoneNumber", "0")
         const fdata = async () => {
             // if(data){
             await axios.post("http://localhost:3000/ClientSignUp", formdata)

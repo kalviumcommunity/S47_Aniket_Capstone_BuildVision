@@ -22,16 +22,6 @@ mongoose.connect(process.env.Cluster,{dbName:"BuildVision"},{
     console.log(error)
 })
 
-app.get('/ArchitectureDetail',async(req,res)=>{
-    await archidetailschema.find({})
-    .then(result=>res.json(result))
-    .catch(err => res.json(err))
-})
-app.get('/ClientDetail',async(req,res)=>{
-    await clientdetailschema.find({})
-    .then(result=>res.json(result))
-    .catch(err => res.json(err))
-})
 app.get('/ArchiSignU',async(req,res)=>{
     await archidetailschema.find({})
     .then(result=>res.json(result))
@@ -55,6 +45,20 @@ app.get('/Profile/:role/:email',async(req,res)=>{
     }
 })
 
+app.put('/Profileedit/:role/:email/:id',async(req,res)=>{
+    const id=req.params.id
+    if(req.params.role=="Architect"){
+        console.log(req.body)
+        await archidetailschema.findByIdAndUpdate(id,req.body)
+        .then(result=>{res.json(result)})
+        .catch(err =>console.log(err))
+    }
+    else{
+        await clientdetailschema.findByIdAndUpdate(id,req.body)
+        .then(result=>res.json(result))
+        .catch(err => console.log(err))
+    }
+})
 
 app.post("/ArchiSignUp",archiupload.single("ImageOfArchitect"),(req,res)=>{
     const afiledata=req.body
@@ -73,18 +77,6 @@ app.post("/ClientSignUp",clientupload.single("ImageOfClient"),(req,res)=>{
     console.log("zsfdxgcfgvjbkjh")
     console.log(req.body)
     clientdetailschema.create(cfiledata)
-        .then(result=>res.send(result))
-        .catch(err => console.log(err))
-})
-app.post("/ArchitectureDetail",(req,res)=>{
-    const{ArchitectName,NoOfProjects,YearOfExperience,PhoneNumber,ImageOfArchitect}=req.body
-    archidetailschema.create(req.body)
-        .then(result=>res.send(result))
-        .catch(err => console.log(err))
-})
-app.post("/ClientDetail",(req,res)=>{
-    const{ClientName,BirthYear,PhoneNumber,ImageOfClient}=req.body
-    clientdetailschema.create(req.body)
         .then(result=>res.send(result))
         .catch(err => console.log(err))
 })

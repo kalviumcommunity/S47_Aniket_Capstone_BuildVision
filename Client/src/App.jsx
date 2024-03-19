@@ -8,6 +8,7 @@ import ArchiProfile from './Common/ArchiProfile'
 import SignUp from './Common/Signup/SignUp'
 import Login from './Common/Login/Login'
 import Profile from './Common/Profile'
+import Profileedit from './Edit/Profileedit'
 
 function App() {
   return(
@@ -21,6 +22,7 @@ function App() {
         <Route path="/ArchitectureDetail" element={<ArchitectDetail />}/>
         <Route path="/ClientDetail" element={<ClientDetail/>}/>
         <Route path="/Profile/:role/:email" element={<Profile/>}/>
+        <Route path="/Profileedit/:role/:email/:id" element={<Profileedit/>}/>
       </Routes>
     </>
   )
