@@ -1,14 +1,13 @@
 import React from 'react'
 import { Routes, Route } from 'react-router'
-import ArchitectDetail from './Architect/ArchitectDetail'
-import ClientDetail from './Client/ClientDetail'
 import Homepage from './Common/Homepage'
 import DesignPage from './Common/DesignPage'
 import ArchiProfile from './Common/ArchiProfile'
 import SignUp from './Common/Signup/SignUp'
 import Login from './Common/Login/Login'
 import Profile from './Common/Profile'
-import Profileedit from './Edit/Profileedit'
+import Profileedit from './Common/Edit/Profileedit'
+import AddDesign from './Common/AddDesign/AddDesign'
 
 function App() {
   return(
@@ -19,10 +18,9 @@ function App() {
         <Route path='/SignUp' element={<SignUp/>}/>
         <Route path='/ArchiProfile' element={<ArchiProfile/>}></Route>
         <Route path="/DesignPage" element={<DesignPage/>}/>
-        <Route path="/ArchitectureDetail" element={<ArchitectDetail />}/>
-        <Route path="/ClientDetail" element={<ClientDetail/>}/>
-        <Route path="/Profile/:role/:email" element={<Profile/>}/>
-        <Route path="/Profileedit/:role/:email/:id" element={<Profileedit/>}/>
+        <Route path="/Profile/:role/:id" element={<Profile/>}/>
+        <Route path="/Profileedit/:role/:id" element={<Profileedit/>}/>
+        <Route path='/AddDesign/:role/:id' element={<AddDesign/>}/>
       </Routes>
     </>
   )

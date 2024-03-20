@@ -8,17 +8,16 @@ import profile from '../../Assets/profile.png'
 function Profile() {
     const [data, setdata] = useState([])
     const role = useParams().role
-    const email = useParams().email
+    const id = useParams().id
 
     useEffect(() => {
-        fetch(`http://localhost:3000/Profile/${role}/${email}`)
-            .then((res) => { return res.json() })
+        fetch(`http://localhost:3000/Profile/${role}/${id}`)
+            .then((res) => res.json())
             .then((datas) => {
-                setdata(datas[0])
+                setdata(datas)
             })
             .catch((err) => console.log(err))
-        console.log(data)
-    }, [role, email])
+    }, [role, id])
 
     return (
         <div className={navcss.navbar}>
@@ -40,13 +39,15 @@ function Profile() {
                                 <>
                                     <h3>Name : {data.ClientName}</h3>
                                     <h3>Birth Year : {data.BirthYear || "****"}</h3>
-                                    <h3>Phone Number : +91 {data.ClientPhoneNumber? data.ClientPhoneNumber : "**********"}</h3>
+                                    <h3>Phone Number : +91 {data.ClientPhoneNumber ? data.ClientPhoneNumber : "**********"}</h3>
                                     <h3>Email : {data.ClientEmail}</h3>
                                 </>
                             )}
                             <div className={css.buttons}>
-                                <Link to={`/Profileedit/${role}/${email}/${data._id}`}><button className={css.editbtn}>Edit</button></Link>
-                                <button className={css.addbtn}>Add Design</button>
+                                <Link to={`/Profileedit/${role}/${id}`}><button className={css.editbtn}>Edit</button></Link>
+                                {data.Role === "Architect" && (
+                                    <Link to={`/AddDesign/${role}/${id}`}><button className={css.addbtn}>Add Design</button></Link>
+                                )}
                             </div>
                         </div>
                         <div className={css.right}>

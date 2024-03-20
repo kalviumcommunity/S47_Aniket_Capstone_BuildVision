@@ -3,6 +3,7 @@ const mongoose=require('mongoose')
 require('dotenv').config()
 const archidetailschema=require("./Models/ArchiDetail.jsx")
 const clientdetailschema=require("./Models/ClientDetail.jsx")
+const designdetailschema=require("./Models/DesignDetail.jsx")
 const cors=require('cors')
 const {designupload}=require('./multer/designmulter.js')
 const {clientupload}=require('./multer/clientmulter.js')
@@ -27,14 +28,27 @@ app.get('/ArchiSignU',async(req,res)=>{
     .then(result=>res.json(result))
     .catch(err => res.json(err))
 })
+app.get('/Profilefind/:role/:email',async(req,res)=>{
+    if(req.params.role=="Architect"){
+        await archidetailschema.findOne({ArchiEmail:req.params.email})
+        .then(result=>res.json(result))
+        .catch(err =>console.log(err))
+    }
+    else{
+        await clientdetailschema.findOne({ClientEmail:req.params.email})
+        .then(result=>res.json(result))
+        .catch(err => console.log(err))
+    }
+})
 app.get('/ClientSignU',async(req,res)=>{
     await clientdetailschema.find({})
     .then(result=>res.json(result))
     .catch(err => res.json(err))
 })
-app.get('/Profile/:role/:email',async(req,res)=>{
+app.get('/Profile/:role/:id',async(req,res)=>{
+    id=req.params.id
     if(req.params.role=="Architect"){
-        await archidetailschema.find({ArchiEmail:req.params.email})
+        await archidetailschema.findById(id)
         .then(result=>{res.json(result)})
         .catch(err =>console.log(err))
     }
@@ -45,7 +59,7 @@ app.get('/Profile/:role/:email',async(req,res)=>{
     }
 })
 
-app.put('/Profileedit/:role/:email/:id',async(req,res)=>{
+app.put('/Profileedit/:role/:id',async(req,res)=>{
     const id=req.params.id
     if(req.params.role=="Architect"){
         console.log(req.body)
@@ -63,23 +77,48 @@ app.put('/Profileedit/:role/:email/:id',async(req,res)=>{
 app.post("/ArchiSignUp",archiupload.single("ImageOfArchitect"),(req,res)=>{
     const afiledata=req.body
     if(req.file){
-        afiledata.ImageOfArchitect = req.file.ImageOfArchitect[0].path
+        afiledata.ImageOfArchitect = req.file.filename
     }
-    console.log(afiledata)
     archidetailschema.create(afiledata)
     .then(result=>res.send(result))
     .catch(err => console.log(err))
 })
 app.post("/ClientSignUp",clientupload.single("ImageOfClient"),(req,res)=>{
     const cfiledata=req.body
-    cfiledata.ImageOfClient = req.file.filename
-    console.log(cfiledata)
-    console.log("zsfdxgcfgvjbkjh")
-    console.log(req.body)
+    if(req.file){
+        cfiledata.ImageOfClient = req.file.filename
+    }
     clientdetailschema.create(cfiledata)
         .then(result=>res.send(result))
         .catch(err => console.log(err))
 })
+// app.post('/AddDesign/:role/:id',designupload.single("ImageOfDesign"),(req,res)=>{
+//     if(req.params.role=="Architect"){
+//         const dfiledata=req.body
+//         console.log(req.body);
+//         console.log(req.file.ImageOfDesign)
+//         if(req.file){
+//             dfiledata.ImageOfDesign = req.file.ImageOfDesign
+//         }
+//         designdetailschema.create(dfiledata)
+//             .then(result=>res.send(result))
+//             .catch(err => console.log(err))
+//     }
+// })
+
+
+app.post('/AddDesign/:role/:id', designupload.single("ImageOfDesign"), (req, res) => {
+    if (req.params.role === "Architect") {
+        const dfiledata = req.body;
+        if (req.file) {
+            dfiledata.ImageOfDesign = req.file.filename;
+        }
+        designdetailschema.create(dfiledata)
+            .then(result => res.send(result))
+            .catch(err => console.log(err));
+    }
+});
+
 
 
 app.listen(3000,()=>{
