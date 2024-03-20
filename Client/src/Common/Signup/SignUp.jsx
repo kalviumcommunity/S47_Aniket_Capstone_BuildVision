@@ -17,14 +17,13 @@ function SignUp() {
 
   const { user1, loginWithRedirect } = useAuth0();
   const navigate=useNavigate()
-  const Architect = "Architect"
   
   
   // console.log(image)
   const onSubmit = (data) => {
     // document.cookie=`Role=${Architect}; expires=Thu, 01 Jan 9999 23:59:59 GMT`
     // document.cookie=`Email=${data.email || user1.email}; expires=Thu, 01 Jan 9999 00:00:00 UTC;`
-    localStorage.setItem("Role",Architect)
+    localStorage.setItem("Role","Architect")
     localStorage.setItem("Email",data.email || user1.email)
     
     const formdata=new FormData();
@@ -33,6 +32,9 @@ function SignUp() {
     formdata.append("ArchiEmail",data.email)
     formdata.append("ArchiPassword",data.password)
     formdata.append("Role","Architect")
+    formdata.append("NoOfProjects","0")
+    formdata.append("YearOfExperience","0")
+    formdata.append("ArchiPhoneNumber","0")
     const fdata = async () => {
       // if(data){
         await axios.post("http://localhost:3000/ArchiSignUp", formdata)

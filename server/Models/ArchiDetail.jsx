@@ -6,9 +6,9 @@ const archiSchema = new mongoose.Schema({
     ArchitectName: String,
     NoOfProjects: Number,
     YearOfExperience: Number,
+    ArchiPhoneNumber: Number,
     ImageOfArchitect: [{type: String}],
-    Role: String,
-    PhoneNo: Number
+    Role: String
 })
 const ArchiDetail = mongoose.model('architect_detail', archiSchema)
 module.exports = ArchiDetail

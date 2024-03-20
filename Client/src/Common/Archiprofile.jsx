@@ -45,7 +45,7 @@ function ArchiProfile() {
                   {data.YearOfExperience ? <p>Year Of Experience : {data.YearOfExperience}</p> : <p>Year Of Experience : 0</p>}
                   <p>Email : {data.ArchiEmail}</p>
                   <div>
-                    {data.PhoneNo ? <button className={css.contactbtn} >{data.PhoneNo}</button> : <p></p> }
+                    {data.ArchiPhoneNumber ? <button className={css.contactbtn} >{data.ArchiPhoneNumber}</button> : <p></p> }
                     <button onClick={() => window.location.href = `mailto:${data.ArchiEmail}`} className={css.contactbtn}>Email Me</button>
                   </div>
 
