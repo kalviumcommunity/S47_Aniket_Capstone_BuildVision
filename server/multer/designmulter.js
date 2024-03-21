@@ -8,5 +8,4 @@ const storage=multer.diskStorage({
         cb(null,dfile)
     }
 })
-const designupload=multer({storage:storage})
-module.exports=designupload
+exports.designupload=multer({storage:storage})

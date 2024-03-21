@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import navcss from '../css/Navigation.module.css'
-import NavigationBar from '../Common/NavigationBar'
-import css from '../css/ProfileEdit.module.css'
+import navcss from '../../css/Navigation.module.css'
+import NavigationBar from '../NavigationBar'
+import css from '../../css/ProfileEdit.module.css'
 import { useParams ,useNavigate} from 'react-router-dom'
 import axios from 'axios'
-import archiimage from '../../Assets/ArchitectFormImage.png'
-import clientimage from '../../Assets/ClientFormImage.png'
+import archiimage from '../../../Assets/ArchitectFormImage.png'
+import clientimage from '../../../Assets/ClientFormImage.png'
 import { useForm } from 'react-hook-form'
 
 
@@ -20,27 +20,26 @@ function Profileedit() {
 
 
     const role = useParams().role
-    const email = useParams().email
     const id=useParams().id
     const navigate=useNavigate()
 
     useEffect(() => {
         try {
             if(role === "Architect"){
-                axios.get(`http://localhost:3000/Profile/${role}/${email}`)
+                axios.get(`http://localhost:3000/Profile/${role}/${id}`)
                     .then((data) => {
-                        setArchitectName(data.data[0].ArchitectName)    
-                        setArchiPhoneNumber(data.data[0].PhoneNumber)
-                        setYearOfExperience(data.data[0].YearOfExperience)
-                        setNoOfProjects(data.data[0].NoOfProjects)
+                        setArchitectName(data.data.ArchitectName)    
+                        setArchiPhoneNumber(data.data.PhoneNumber)
+                        setYearOfExperience(data.data.YearOfExperience)
+                        setNoOfProjects(data.data.NoOfProjects)
                     })
                     .catch((err) => console.log(err))
             }else{
-                axios.get(`http://localhost:3000/Profile/${role}/${email}`)
+                axios.get(`http://localhost:3000/Profile/${role}/${id}`)
                     .then((data) => {
-                        setClientName(data.data[0].ClientName)
-                        setClinetPhoneNumber(data.data[0].PhoneNumber)
-                        setBirthYear(data.data[0].BirthYear)
+                        setClientName(data.data.ClientName)
+                        setClinetPhoneNumber(data.data.PhoneNumber)
+                        setBirthYear(data.data.BirthYear)
                     })
                     .catch((err) => console.log(err))
             }
@@ -52,7 +51,7 @@ function Profileedit() {
     const submit = (data) => {
         if(role === "Architect"){
             if (data) {
-                axios.put(`http://localhost:3000/Profileedit/${role}/${email}/${id}`, {ArchitectName, YearOfExperience, NoOfProjects, ArchiPhoneNumber})
+                axios.put(`http://localhost:3000/Profileedit/${role}/${id}`, {ArchitectName, YearOfExperience, NoOfProjects, ArchiPhoneNumber})
                     .then((res) => {
                         console.log(res.data)
                     })
@@ -60,14 +59,14 @@ function Profileedit() {
             }   
         }else{
             if (data) {
-                axios.put(`http://localhost:3000/Profileedit/${role}/${email}/${id}`, {ClientName, BirthYear, ClinetPhoneNumber})
+                axios.put(`http://localhost:3000/Profileedit/${role}/${id}`, {ClientName, BirthYear, ClinetPhoneNumber})
                     .then((res) => {
                         console.log(res.data)
                     })
                     .catch((err) => console.log(err))
             }
         }
-        navigate(`/Profile/${role}/${email}`)
+        navigate(`/Profile/${role}/${id}`)
     }
     const handleAname = (e) =>{
         setArchitectName(e.target.value)

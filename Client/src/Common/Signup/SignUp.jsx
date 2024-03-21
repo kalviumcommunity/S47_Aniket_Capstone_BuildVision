@@ -137,6 +137,7 @@ function SignUp() {
                   <label>Name</label>
                   <input type='text' {...register("name", { required: "Name is required" })} placeholder="Enter Name" />
                 </div>
+                {errors.name && <p className={css.alert}>{errors.name.message}</p>}
                 <div className={css.formdiv}>
                   <label>Email</label>
                   <input type='email' {...register("email", { required: "Email is required" })} placeholder="Enter Email" />
