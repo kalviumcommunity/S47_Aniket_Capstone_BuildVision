@@ -7,6 +7,7 @@ import ClientLoginform from './ClientLoginform'
 import architectimage from "../../../Assets/ArchitectFormImage.png"
 import clientimage from "../../../Assets/ClientFormImage.png"
 import google from "../../../Assets/GoogleLogo.png"
+import axios from 'axios'
 
 
 function Login() {
@@ -14,6 +15,14 @@ function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
 
+  const submit=(data)=>{
+    axios.post("http://localhost:3000/ArchiLogin",data)
+    .then((res)=>{
+      localStorage.setItem("Token",res.data.token)
+      alert(res.data.result)
+    })
+    .catch((err)=>alert(err.response.data))
+  }
 
   useEffect(() => {
     const body = document.getElementsByTagName("body")[0]
@@ -92,7 +101,7 @@ function Login() {
                   <input type='password' {...register("password", { required: "Password is required" })} placeholder="Enter Password" />
                 </div>
                 {errors.password && <p className={css.alert}>{errors.password.message}</p>}
-                <Link to={"/DesignPage"}><button type='submit' className={css.archisubmit}>LogIn</button></Link>
+                <button type='submit' className={css.archisubmit} onClick={handleSubmit(submit)}>LogIn</button>
               </form>
 
             </div>
