@@ -33,7 +33,7 @@ header{
     margin: 2.5vh 0;
 }
 
-.editbtn ,.addbtn{
+.editbtn ,.addbtn, .deletebtn{
     padding: 1vh 3vh;
     border-radius: 10px;
     border: 1px solid black;
@@ -47,4 +47,47 @@ header{
     width: 30vh;
     border-radius: 50%;
     background-color: #e1e1e1;
+}
+
+
+
+
+
+.designmain{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+}
+.designcontainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 4vh 2vh;
+    margin: 4vh 0;
+    width: 80vw;
+    border: 2px solid black;
+    gap: 10vw;
+}
+.designheading{
+    text-align: center;
+}
+.designleft{
+    height: 20vh;
+    width: 30vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+.designright{
+    line-height: 4vh;
+    font-size: 3.2vh;
+    font-weight: 550;
+}
+
+.designimage{
+    height: 50vh;
 }

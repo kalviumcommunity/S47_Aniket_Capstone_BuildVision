@@ -91,8 +91,6 @@ function Profileedit() {
     }
 
     return (
-        <div className={navcss.navbar}>
-            <NavigationBar />
             <div className={css.body}>
                 <img src={role == "Architect" ? archiimage : clientimage} alt="" className={css.mainimage}/>
                 <div className={css.container}>
@@ -136,11 +134,14 @@ function Profileedit() {
                             </>
                         )
                         }
+                        <div className={css.button}>
+                        <button className={css.submit} onClick={() => navigate(`/Profile/${role}/${id}`)}>Cancel</button>
                         <button className={css.submit} onClick={submit}>Submit</button>
+
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     )
 }
 

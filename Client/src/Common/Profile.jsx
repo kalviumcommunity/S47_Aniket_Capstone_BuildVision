@@ -7,9 +7,21 @@ import profile from '../../Assets/profile.png'
 
 function Profile() {
     const [data, setdata] = useState([])
+    const [design, setdesign] = useState([])
     const role = useParams().role
     const id = useParams().id
 
+    const deleteDesign = (did) => {
+        fetch(`http://localhost:3000/DeleteDesign/${role}/${id}/${did}`, {
+            method: "DELETE",
+        })
+            .then((res) => res.json())
+            .then((datas) => {
+                console.log(datas)
+            })
+            .catch((err) => console.log(err))
+        window.location.reload()
+    }
     useEffect(() => {
         fetch(`http://localhost:3000/Profile/${role}/${id}`)
             .then((res) => res.json())
@@ -17,8 +29,16 @@ function Profile() {
                 setdata(datas)
             })
             .catch((err) => console.log(err))
-    }, [role, id])
 
+        fetch(`http://localhost:3000/ShowDesign/${role}/${id}`)
+            .then((res) => res.json())
+            .then((datas) => {
+                setdesign(datas)
+                console.log(datas)
+            })
+            .catch((err) => console.log(err))
+
+    }, [role, id])
     return (
         <div className={navcss.navbar}>
             <NavigationBar />
@@ -54,6 +74,33 @@ function Profile() {
                             {data && (data.ImageOfArchitect === undefined || data.ImageOfClient === undefined) ? <img src={profile} alt="" className={css.image} /> : <img src={`http://localhost:3000/Upload/Architect/${(data.ImageOfArchitect[0] ? data.ImageOfArchitect[0] : data.ImageOfClient[0]).replace(/ /g, '%20')}`} alt="" className={css.image} />}
                         </div>
                     </header>
+                </div>
+                <div className={css.designmain}>
+                    {design && data.Role === "Architect" && (<div>
+                        <div className={css.designheading}>
+                            {design && (design.length > 0) && (<h1>Designs</h1>)}
+                        </div>
+                        {design.map((designs) => (
+                            <div className={css.designcontainer} id={designs._id}>
+                                <div className={css.designleft}>
+                                    <img src={`http://localhost:3000/Upload/Design/${designs.ImageOfDesign[0].replace(/ /g, '%20')}`} alt="Image of Design is missing" className={css.designimage} />
+                                </div>
+                                <div className={css.designright}>
+                                    <ul>
+                                        <li>Architect Name : {data.ArchitectName}</li>
+                                        <li>Year Of Experience : {data.YearOfExperience}</li>
+                                        <li>Dimentions of Plot : {designs.AreaOfPlot}</li>
+                                        <li>Dimentions of Map : {designs.AreaOfMap}</li>
+                                        <li>Details of Map : {designs.DetailsOfMap}</li>
+                                    </ul>
+                                    <div className={css.buttons}>
+                                        <Link to={`/EditDesign/${role}/${id}/${designs._id}`}><button className={css.editbtn}>Edit</button></Link>
+                                        <button className={css.deletebtn} onClick={() => deleteDesign(designs._id)}>Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>)}
                 </div>
             </div>
         </div>

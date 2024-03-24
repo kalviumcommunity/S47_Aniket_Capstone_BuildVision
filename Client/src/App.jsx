@@ -7,7 +7,8 @@ import SignUp from './Common/Signup/SignUp'
 import Login from './Common/Login/Login'
 import Profile from './Common/Profile'
 import Profileedit from './Common/Edit/Profileedit'
-import AddDesign from './Common/AddDesign/AddDesign'
+import AddDesign from './Common/Design/AddDesign'
+import EditDesign from './Common/Design/EditDesign'
 
 function App() {
   return(
@@ -21,6 +22,7 @@ function App() {
         <Route path="/Profile/:role/:id" element={<Profile/>}/>
         <Route path="/Profileedit/:role/:id" element={<Profileedit/>}/>
         <Route path='/AddDesign/:role/:id' element={<AddDesign/>}/>
+        <Route path='/EditDesign/:role/:id/:did' element={<EditDesign/>}/>
       </Routes>
     </>
   )

@@ -58,6 +58,20 @@ app.get('/Profile/:role/:id',async(req,res)=>{
         .catch(err => console.log(err))
     }
 })
+app.get('/ShowDesign/:role/:id',async(req,res)=>{
+    id=req.params.id
+    await designdetailschema.find({ArchitectId:id})
+    .then(result=>res.json(result))
+    .catch(err => res.json(err))
+})
+app.get('/Design/:role/:id/:did',async(req,res)=>{
+    id=req.params.did
+    if(req.params.role=="Architect"){
+        await designdetailschema.findById(id)
+        .then(result=>{res.json(result)})
+        .catch(err =>console.log(err))
+    }
+})
 
 app.put('/Profileedit/:role/:id',async(req,res)=>{
     const id=req.params.id
@@ -71,6 +85,14 @@ app.put('/Profileedit/:role/:id',async(req,res)=>{
         await clientdetailschema.findByIdAndUpdate(id,req.body)
         .then(result=>res.json(result))
         .catch(err => console.log(err))
+    }
+})
+app.put('/EditDesign/:role/:id/:did',async(req,res)=>{
+    const id=req.params.did
+    if(req.params.role=="Architect"){
+        await designdetailschema.findByIdAndUpdate(id,req.body)
+        .then(result=>{res.json(result)})
+        .catch(err =>console.log(err))
     }
 })
 
@@ -92,21 +114,6 @@ app.post("/ClientSignUp",clientupload.single("ImageOfClient"),(req,res)=>{
         .then(result=>res.send(result))
         .catch(err => console.log(err))
 })
-// app.post('/AddDesign/:role/:id',designupload.single("ImageOfDesign"),(req,res)=>{
-//     if(req.params.role=="Architect"){
-//         const dfiledata=req.body
-//         console.log(req.body);
-//         console.log(req.file.ImageOfDesign)
-//         if(req.file){
-//             dfiledata.ImageOfDesign = req.file.ImageOfDesign
-//         }
-//         designdetailschema.create(dfiledata)
-//             .then(result=>res.send(result))
-//             .catch(err => console.log(err))
-//     }
-// })
-
-
 app.post('/AddDesign/:role/:id', designupload.single("ImageOfDesign"), (req, res) => {
     if (req.params.role === "Architect") {
         const dfiledata = req.body;
@@ -119,6 +126,15 @@ app.post('/AddDesign/:role/:id', designupload.single("ImageOfDesign"), (req, res
     }
 });
 
+
+app.delete('/DeleteDesign/:role/:id/:did',async(req,res)=>{
+    const id=req.params.did
+    if(req.params.role=="Architect"){
+        await designdetailschema.findByIdAndDelete(id)
+        .then(result=>{res.json(result)})
+        .catch(err =>console.log(err))
+    }
+})
 
 
 app.listen(3000,()=>{
