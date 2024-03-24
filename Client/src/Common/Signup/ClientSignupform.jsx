@@ -13,50 +13,46 @@ function ClientSignupform() {
 
     const { user, loginWithRedirect } = useAuth0();
     const navigate = useNavigate()
-
-    useEffect(() => {
-        const formdata = async () => {
-            if (user) {
-                await axios.post("http://localhost:3000/ClientSignUp", {
-                    ClientEmail: user.email,
-                    ClientName: user.nickname,
-                    ImageOfClient: user.picture,
-                    Role: "Client"
-                })
-                    .then((res) => console.log(res))
-                    .catch((err) => console.log(err))
-            }
-        }
-        formdata()
-    }, [user])
-
     const onSubmit = (data) => {
         // document.cookie="Role=Client"
         // document.cookie=`Email=${data.email || user.email}`
 
-        localStorage.setItem("Role","Client")
-        localStorage.setItem("Email",data.email || user.email)
+        localStorage.setItem("Role", "Client");
+        localStorage.setItem("Email", data.email || user.email);
 
-        const formdata = new FormData();
-        formdata.append("ImageOfClient", data.ImageOfClient[0])
-        formdata.append("ClientName", data.name)
-        formdata.append("ClientEmail", data.email)
-        formdata.append("ClientPassword", data.password)
-        formdata.append("Role", "Client")
-        formdata.append("BirthYear", "0")
-        formdata.append("ClientPhoneNumber", "0")
+        const formData = new FormData();
+        Object.entries(data).forEach(([key, value]) => {
+            if (key !== "ImageOfClient") {
+                formData.append(key, value);
+            }
+        });
+        formData.append("Role", "Client");
+        formData.append("BirthYear", "0");
+        formData.append("ClientPhoneNumber", "0");
+        if (data.ImageOfClient[0]) {
+            formData.append("ImageOfClient", data.ImageOfClient[0]);
+        }
+
+        console.log(data);
+        console.log(formData);
+
         const fdata = async () => {
             // if(data){
-            await axios.post("http://localhost:3000/ClientSignUp", formdata)
-                .then((res) => console.log(res))
-                .catch((err) => console.log(err))
+            axios.post("http://localhost:3000/ClientSignUp", formData)
+                .then((res) => {
+                    alert(res.data.result)
+                    localStorage.setItem("Token", res.data.token)
 
-
-                navigate("/DesignPage")
+                    navigate("/DesignPage")
+                    window.location.reload()
+                })
+                .catch((err) => alert(err.response.data.message))
+                
             // }
         }
         fdata()
     }
+
 
     return (
         <>
@@ -76,26 +72,27 @@ function ClientSignupform() {
                                 <p className={css.or}>OR</p>
                                 <div className={css.line}></div>
                             </div>
+
                             <div className={css.formdiv}>
                                 <label>Name</label>
-                                <input type='text' {...register("name", { required: "Name is required" })} placeholder="Enter Name" />
+                                <input type='text' {...register("ClientName", { required: "Name is required" })} placeholder="Enter Name" />
                             </div>
                             <div className={css.formdiv}>
                                 <label>Email</label>
-                                <input type='email' {...register("email", { required: "Email is required" })} placeholder="Enter Email" />
+                                <input type='email' {...register("ClientEmail", { required: "Email is required" })} placeholder="Enter Email" />
                             </div>
-                            {errors.email && <p className={css.alert}>{errors.email.message}</p>}
+                            {errors.ClientEmail && <p className={css.alert}>{errors.ClientEmail.message}</p>}
                             <div className={css.formdiv}>
                                 <label>Password</label>
-                                <input type='password' {...register("password", { required: "Password is required" })} placeholder="Enter Password" />
+                                <input type='password' {...register("ClientPassword", { required: "Password is required" })} placeholder="Enter Password" />
                             </div>
-                            {errors.password && <p className={css.alert}>{errors.password.message}</p>}
+                            {errors.ClientPassword && <p className={css.alert}>{errors.ClientPassword.message}</p>}
                             <div>
                                 <label>Image</label>
-                                <input type='file' {...register("ImageOfClient", { required: "Image is required" })} />
+                                <input type='file' {...register("ImageOfClient")} />
                             </div>
                             {errors.image && <p className={css.alert}>{errors.image.message}</p>}
-                           <button onClick={handleSubmit(onSubmit)} className={css.clientsubmit}>Signup</button>
+                            <button onClick={handleSubmit(onSubmit)} className={css.clientsubmit}>Signup</button>
                         </form>
                     </div>
                     <div>
