@@ -59,6 +59,12 @@ function NavigationBar() {
     }
   }, [toggle]);
 
+
+  const Logout = () => {
+    logout({ logoutParams: { returnTo: window.location.origin } })
+    localStorage.clear()
+  }
+
   return (
     <div>
 
@@ -70,7 +76,7 @@ function NavigationBar() {
         </div>
         <div className={navcss.nav}>
           <Link to={`/Profile/${role}/${id}`}><div className={navcss.navicon}><img src={profile} alt="" className={navcss.profile} /><p className={navcss.navtext}>Profile</p></div></Link>
-          <div className={navcss.navicon} onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}><img src={logoutimg} alt="" className={navcss.logout} /><p className={navcss.navtext} onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Log-Out</p></div>
+          <div className={navcss.navicon} onClick={Logout}><img src={logoutimg} alt="" className={navcss.logout} /><p className={navcss.navtext} onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Log-Out</p></div>
         </div>
       </nav>
     </div>
