@@ -17,6 +17,8 @@ function Login() {
 
 
   const submit=(data)=>{
+    localStorage.setItem("Role", "Architect");
+    localStorage.setItem("Email", data.email || user.email);
     axios.post("http://localhost:3000/ArchiLogin",data,
     {
       headers:{
