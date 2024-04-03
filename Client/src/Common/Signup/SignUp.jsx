@@ -27,7 +27,7 @@ function SignUp() {
     localStorage.setItem("Email",data.email || user1.email)
     
     const formdata=new FormData();
-    formdata.append("ImageOfArchitect",data.ImageOfArchitect[0])
+    formdata.append("ImageOfArchitect",data.ImageOfArchitect[0] || "")
     formdata.append("ArchitectName",data.name)
     formdata.append("ArchiEmail",data.email)
     formdata.append("ArchiPassword",data.password)
