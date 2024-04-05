@@ -15,42 +15,43 @@ function SignUp() {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
 
-  const { user1, loginWithRedirect } = useAuth0();
-  const navigate=useNavigate()
-  
-  
+  const { user, loginWithRedirect, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const navigate = useNavigate()
+
   // console.log(image)
   const onSubmit = (data) => {
     // document.cookie=`Role=${Architect}; expires=Thu, 01 Jan 9999 23:59:59 GMT`
     // document.cookie=`Email=${data.email || user1.email}; expires=Thu, 01 Jan 9999 00:00:00 UTC;`
-    localStorage.setItem("Role","Architect")
-    localStorage.setItem("Email",data.email || user1.email)
-    
-    const formdata=new FormData();
-    formdata.append("ImageOfArchitect",data.ImageOfArchitect[0] || "")
-    formdata.append("ArchitectName",data.name)
-    formdata.append("ArchiEmail",data.email)
-    formdata.append("ArchiPassword",data.password)
-    formdata.append("Role","Architect")
-    formdata.append("NoOfProjects","0")
-    formdata.append("YearOfExperience","0")
-    formdata.append("ArchiPhoneNumber","0")
+    localStorage.setItem("Role", "Architect")
+    localStorage.setItem("Email", data.email || user.email)
+
+    console.log(data)
+
+    const formdata = new FormData();
+    formdata.append("ImageOfArchitect", data.ImageOfArchitect[0] || user.picture)
+    formdata.append("ArchitectName", data.name || user.name)
+    formdata.append("ArchiEmail", data.email || user.email)
+    formdata.append("ArchiPassword", data.password)
+    formdata.append("Role", "Architect")
+    formdata.append("NoOfProjects", "0")
+    formdata.append("YearOfExperience", "0")
+    formdata.append("ArchiPhoneNumber", "0")
     const fdata = async () => {
       // if(data){
-        await axios.post("http://localhost:3000/ArchiSignUp", formdata)
+      await axios.post("http://localhost:3000/ArchiSignUp", formdata)
         .then((res) => {
           alert(res.data.result)
-          localStorage.setItem("Token",res.data.token)
+          localStorage.setItem("Token", res.data.token)
           navigate("/DesignPage")
           window.location.reload()
         })
         .catch((err) => alert(err.response.data.message))
-        
-    // }
-  }
-  fdata()
+
+      // }
     }
-  
+    fdata()
+  }
+
   useEffect(() => {
 
 
@@ -94,8 +95,19 @@ function SignUp() {
     else {
 
     }
-  }, [toggle], [user1])
+  }, [toggle])
 
+
+  const token = async () => {
+    const res = await getAccessTokenSilently()
+    console.log("Token", res)
+  }
+
+
+  if (isAuthenticated) {
+    token()
+    navigate("/DesignPage")
+  }
 
   return (
     <div className={css.container}>
@@ -113,10 +125,10 @@ function SignUp() {
             </div>
             <div className={css.archiform}>
               <h1>Architecture</h1>
-              <button className={css.googlebtn} onClick={() => loginWithRedirect()}><img src={google} alt="" className={css.google} /><h3 className={css.googletext}>Google</h3></button>
+              <button className={css.googlebtn} onClick={() => loginWithRedirect({ authorizationParams: { 'screen_hint': 'signup' } })}><img src={google} alt="" className={css.google} /><h3 className={css.googletext}>Google</h3></button>
 
               <p>Already have an account? <Link to={"/Login"}>Log In</Link></p>
-              <form  className={css.form} method="post" encType="multipart/form-data">
+              <form className={css.form} method="post" encType="multipart/form-data">
                 <div className={css.orbox}>
                   <div className={css.line}></div>
                   <p className={css.or}>OR</p>
@@ -144,7 +156,7 @@ function SignUp() {
                 {errors.image && <p className={css.alert}>{errors.image.message}</p>}
                 <button onClick={handleSubmit(onSubmit)} className={css.archisubmit}>Signup</button>
               </form>
-    <img src={register.image} alt="" />
+              <img src={register.image} alt="" />
             </div>
           </div>
         </div>

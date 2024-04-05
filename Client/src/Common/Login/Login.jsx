@@ -8,32 +8,33 @@ import architectimage from "../../../Assets/ArchitectFormImage.png"
 import clientimage from "../../../Assets/ClientFormImage.png"
 import google from "../../../Assets/GoogleLogo.png"
 import axios from 'axios'
-
+import { useAuth0 } from '@auth0/auth0-react'
 
 function Login() {
   const [toggle, setToggle] = useState("")
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate()
+  const { user, loginWithRedirect ,isAuthenticated} = useAuth0();
 
 
-  const submit=(data)=>{
+  const submit = (data) => {
     localStorage.setItem("Role", "Architect");
     localStorage.setItem("Email", data.email || user.email);
-    axios.post("http://localhost:3000/ArchiLogin",data,
-    {
-      headers:{
-        "Content-Type":"application/json",
-        "Authorization":"Bearer "+localStorage.getItem("Token")
-      }
-    })
-    .then((res)=>{
-      localStorage.setItem("Token",res.data.token)
-      alert(res.data.result)
-      navigate("/DesignPage")
-      window.location.reload()
+    axios.post("http://localhost:3000/ArchiLogin", data,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + localStorage.getItem("Token")
+        }
+      })
+      .then((res) => {
+        localStorage.setItem("Token", res.data.token)
+        alert(res.data.result)
+        navigate("/DesignPage")
+        window.location.reload()
 
-    })
-    .catch((err)=>alert(err.response.data))
+      })
+      .catch((err) => alert(err.response.data))
   }
 
   useEffect(() => {
@@ -46,7 +47,7 @@ function Login() {
     const clientHead = document.getElementsByClassName(css.clientHeading)[0]
     const mainarchiimage = document.getElementsByClassName(css.mainarchiimage)[0]
     const mainclientimage = document.getElementsByClassName(css.mainclientimage)[0]
-    if (toggle !=""){
+    if (toggle != "") {
       mainclientimage.style.display = "none"
       mainarchiimage.style.display = "none"
     }
@@ -79,6 +80,17 @@ function Login() {
     }
   }, [toggle])
 
+
+  const token = async () => {
+    const res = await getAccessTokenSilently()
+    console.log("Token", res)
+  }
+  if (isAuthenticated) {
+    token()
+    navigate("/DesignPage")
+  }
+
+
   return (
     <div className={css.container}>
       <div className={css.archi} onClick={() => setToggle("architect")}>
@@ -95,7 +107,7 @@ function Login() {
             </div>
             <div className={css.archiform}>
               <h1>Architecture</h1>
-              <button className={css.googlebtn} ><img src={google} alt="" className={css.google}/><h3 className={css.googletext}>Google</h3></button>
+              <button className={css.googlebtn} onClick={() => loginWithRedirect()}><img src={google} alt="" className={css.google} /><h3 className={css.googletext}>Google</h3></button>
               <p>Dont have an account? <Link to={"/Signup"}>Sign up</Link></p>
               <form onSubmit={handleSubmit} className={css.form}>
                 <div className={css.orbox}>

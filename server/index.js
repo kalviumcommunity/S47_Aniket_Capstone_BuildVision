@@ -25,7 +25,7 @@ mongoose.connect(process.env.Cluster, { dbName: "BuildVision" }, {
     console.log(error)
 })
 
-app.get('/ArchiSignU',Validation, async (req, res) => {
+app.get('/ArchiSignU', Validation, async (req, res) => {
     console.log("hello");
     await archidetailschema.find({})
         .then(result => res.json(result))
@@ -43,7 +43,7 @@ app.get('/Profilefind/:role/:email', async (req, res) => {
             .catch(err => console.log(err))
     }
 })
-app.get('/ClientSignU',Validation, async (req, res) => {
+app.get('/ClientSignU', Validation, async (req, res) => {
     await clientdetailschema.find({})
         .then(result => res.json(result))
         .catch(err => res.json(err))
@@ -55,11 +55,16 @@ app.get('/Profile/:role/:id', async (req, res) => {
             .then(result => { res.json(result) })
             .catch(err => console.log(err))
     }
-    else {
-        await clientdetailschema.find({ ClientEmail: req.params.email })
+    else if (req.params.role == "Client") {
+        await clientdetailschema.findById(id)
             .then(result => res.json(result))
             .catch(err => console.log(err))
     }
+})
+app.get('/Designs', Validation, async (req, res) => {
+    await designdetailschema.find({})
+        .then(result => res.json(result))
+        .catch(err => res.json(err))
 })
 app.get('/ShowDesign/:role/:id', async (req, res) => {
     id = req.params.id
@@ -77,38 +82,38 @@ app.get('/Design/:role/:id/:did', async (req, res) => {
 })
 
 app.post('/ArchiLogin', async (req, res) => {
-    const {email,password}=req.body
-    const walidate=await archidetailschema.findOne({ArchiEmail:email})
-    if(walidate){
-        const pass=walidate.ArchiPassword
-        const validpassword=await bcrypt.compare(password,pass)
-        if(validpassword){
+    const { email, password } = req.body
+    const walidate = await archidetailschema.findOne({ ArchiEmail: email })
+    if (walidate) {
+        const pass = walidate.ArchiPassword
+        const validpassword = await bcrypt.compare(password, pass)
+        if (validpassword) {
             const token = jwt.sign({ walidate }, "mynameiskaran", { expiresIn: "1d" })
             res.json({ "result": "Login Successful", "token": token })
         }
-        else{
+        else {
             return res.status(400).send("Entries doesn't match")
         }
     }
-    else{
+    else {
         return res.status(400).send("User Doest Exist")
     }
 })
 app.post('/ClientLogin', async (req, res) => {
-    const {email,password}=req.body
-    const walidate=await clientdetailschema.findOne({ClientEmail:email})
-    if(walidate){
-        const pass=walidate.ClientPassword
-        const validpassword=await bcrypt.compare(password,pass)
-        if(validpassword){
+    const { email, password } = req.body
+    const walidate = await clientdetailschema.findOne({ ClientEmail: email })
+    if (walidate) {
+        const pass = walidate.ClientPassword
+        const validpassword = await bcrypt.compare(password, pass)
+        if (validpassword) {
             const token = jwt.sign({ walidate }, "mynameiskaran", { expiresIn: "1d" })
             res.json({ "result": "Login Successful", "token": token })
         }
-        else{
-            return res.status(400).send("Entries doesn't match") 
+        else {
+            return res.status(400).send("Entries doesn't match")
         }
     }
-    else{
+    else {
         return res.status(400).send("User Doest Exist")
     }
 })
@@ -159,9 +164,13 @@ app.post("/ArchiSignUp", archiupload.single("ImageOfArchitect"), async (req, res
 })
 app.post("/ClientSignUp", clientupload.single("ImageOfClient"), async (req, res) => {
     const cfiledata = req.body
-    const pass = req.body.ClientPassword
-    console.log(pass);
-
+    console.log(cfiledata);
+    if(cfiledata.ClientPassword){
+        const pass = req.body.ClientPassword
+        const hash = await bcrypt.hash(pass, 10)
+    }
+    // console.log(pass);
+    
     
     const userexist = await clientdetailschema.findOne({ ClientEmail: cfiledata.ClientEmail })
     console.log(userexist);
@@ -170,18 +179,26 @@ app.post("/ClientSignUp", clientupload.single("ImageOfClient"), async (req, res)
         return res.status(400).json({ message: "user already exists" })
     }
     else {
-    const hash = await bcrypt.hash(pass, 10)
-        
+
         if (req.file) {
             cfiledata.ImageOfClient = req.file.filename
         }
-        clientdetailschema.create({...cfiledata,ClientPassword:hash})
-            .then(result => {
-                console.log(result);
-                const token = jwt.sign({ result }, "mynameiskaran", { expiresIn: "1d" })
-                res.json({ "result": "Signup Successful", "token": token })
-            })
-            .catch(err => console.log(err))
+        if(cfiledata.ClientPassword){
+            clientdetailschema.create({ ...cfiledata, ClientPassword: hash })
+                .then(result => {
+                    console.log(result);
+                    const token = jwt.sign({ result }, "mynameiskaran", { expiresIn: "1d" })
+                    res.json({ "result": "Signup Successful", "token": token })
+                })
+                .catch(err => console.log(err))
+        }
+        else{
+            clientdetailschema.create({ ...cfiledata })
+                .then(result => {
+                    res.json({ "result": "Signup Successful"})
+                })
+                .catch(err => console.log(err))
+        }
     }
 })
 app.post('/AddDesign/:role/:id', designupload.single("ImageOfDesign"), (req, res) => {

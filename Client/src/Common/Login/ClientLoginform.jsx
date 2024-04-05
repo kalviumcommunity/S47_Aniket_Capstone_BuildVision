@@ -5,12 +5,13 @@ import css from "../../css/Signup.module.css"
 import clientimage from "../../../Assets/ClientFormImage.png"
 import google from "../../../Assets/GoogleLogo.png"
 import axios from 'axios'
-
+import { useAuth0 } from '@auth0/auth0-react'
 
 
 function ClientLoginform() {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const navigate = useNavigate()
+    const { user, loginWithRedirect, isAuthenticated } = useAuth0();
 
     const submit = (data) => {
 
@@ -27,6 +28,15 @@ function ClientLoginform() {
             .catch((err) => alert(err.response.data))
     }
 
+    const token = async () => {
+        const res = await getAccessTokenSilently()
+        console.log("Token", res)
+    }
+    if (isAuthenticated) {
+        token()
+        navigate("/DesignPage")
+    }
+
     return (
         <>
             <div className={css.clientcontent}>
@@ -35,7 +45,7 @@ function ClientLoginform() {
 
                         <h1>Client</h1>
 
-                        <button className={css.googlebtn}><img src={google} alt="" className={css.google} /><h3 className={css.googletext}>Google</h3></button>
+                        <button className={css.googlebtn} onClick={() => loginWithRedirect({})}><img src={google} alt="" className={css.google} /><h3 className={css.googletext}>Google</h3></button>
 
                         <p>Dont have an account? <Link to={"/Signup"}>Signup</Link></p>
                         <form onSubmit={handleSubmit} className={css.form}>

@@ -11,25 +11,51 @@ import { useAuth0 } from '@auth0/auth0-react'
 function ClientSignupform() {
     const { register, handleSubmit, formState: { errors } } = useForm()
 
-    const { user, loginWithRedirect } = useAuth0();
+    const { user, loginWithRedirect, isAuthenticated } = useAuth0();
     const navigate = useNavigate()
+
+    console.log(user)
+    console.log(isAuthenticated)
+
+    // console.log('Token',getAccessTokenSilently().then(res=>res));
+    if (isAuthenticated) {
+        localStorage.setItem("Role", "Client")
+        localStorage.setItem("Email", user.email)
+        const formdata=new FormData();
+
+        formdata.append("ClientEmail", user.email)
+        formdata.append("ClientName", user.name)
+        formdata.append("ImageOfClient", user.picture)
+        formdata.append("Role", "Client");
+        formdata.append("BirthYear", "0");
+        formdata.append("ClientPhoneNumber", "0");
+        axios.post("http://localhost:3000/ClientSignUp", formdata)
+            .then((res) => {
+                // alert(res.data.result)
+            })
+            .catch((err) => alert(err.response))
+        formdata.forEach((value, key) => {
+            console.log(key, value)
+        })
+    }
+
     const onSubmit = (data) => {
         // document.cookie="Role=Client"
         // document.cookie=`Email=${data.email || user.email}`
 
         localStorage.setItem("Role", "Client");
-        localStorage.setItem("Email", data.email || user.email);
+        localStorage.setItem("Email", data.ClientEmail);
 
+        console.log(data)
         const formData = new FormData();
-        Object.entries(data).forEach(([key, value]) => {
-            if (key !== "ImageOfClient") {
-                formData.append(key, value);
-            }
-        });
+
+        formData.append("ClientEmail", data.ClientEmail )
+        formData.append("ClientName", data.ClientName);
+        formData.append("ClientPassword", data.ClientPassword);
         formData.append("Role", "Client");
         formData.append("BirthYear", "0");
         formData.append("ClientPhoneNumber", "0");
-        formData.append("ImageOfClient", data.ImageOfClient[0] || "");
+        formData.append("ImageOfClient", data.ImageOfClient[0]);
 
         console.log(data);
         console.log(formData);
@@ -38,14 +64,14 @@ function ClientSignupform() {
             // if(data){
             axios.post("http://localhost:3000/ClientSignUp", formData)
                 .then((res) => {
-                    alert(res.data.result)
+                    // alert(res.data.result)
                     localStorage.setItem("Token", res.data.token)
 
-                    navigate("/DesignPage")
+                    // navigate("/DesignPage")
                     window.location.reload()
                 })
-                .catch((err) => alert(err.response.data.message))
-                
+                .catch((err) => alert(err.response))
+
             // }
         }
         fdata()
@@ -60,7 +86,7 @@ function ClientSignupform() {
 
                         <h1>Client</h1>
 
-                        <button className={css.googlebtn} onClick={() => loginWithRedirect()}><img src={google} alt="" className={css.google} /><h3 className={css.googletext}>Google</h3></button>
+                        <button className={css.googlebtn} onClick={() => loginWithRedirect({ authorizationParams: { 'screen_hint': 'signup' }})}><img src={google} alt="" className={css.google} /><h3 className={css.googletext}>Google</h3></button>
 
 
                         <p>Already have an account? <Link to={"/Login"}>Log In</Link></p>
