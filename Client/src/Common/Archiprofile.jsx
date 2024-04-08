@@ -5,27 +5,37 @@ import css from "../css/ArchiProfilepage.module.css"
 import logo from "../../Assets/Logo.png"
 import profile from "../../Assets/profile.png"
 import axios from 'axios'
+import {useAuth0} from "@auth0/auth0-react"
 
 function ArchiProfile() {
   const [data, setdata] = useState([])
   const [error, setError] = useState("")
+  const { isAuthenticated, getAccessTokenSilently, isLoading } = useAuth0();
 
   useEffect(() => {
     // console.log("token", localStorage.getItem("Token"))
-
-    axios.get('http://localhost:3000/ArchiSignU', {
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + localStorage.getItem("Token")
-      }
-    })
-      .then((datas) => {
-        setdata(datas.data);
-        console.log(datas.data)
+    const getdata=async()=>{
+      const token = isAuthenticated ? await getAccessTokenSilently() : localStorage.getItem("Token")
+      axios.get('http://localhost:3000/ArchiSignU', {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": token
+        }
       })
-
-      .catch((err) => setError(err.response.data))
+        .then((datas) => {
+          setdata(datas.data);
+          console.log(datas.data)
+        })
+  
+        .catch((err) => setError(err.response.data))
+      
+    }
+    getdata()
   }, [])
+
+  if(isLoading){
+    return <h1>Loading....</h1>
+  }
   if (error) {
     return (
       <h1>Please Login ....</h1>
@@ -40,7 +50,7 @@ function ArchiProfile() {
             <div className={css.head}>
               <img src={logo} alt="" className={css.logo} />
               <select name="Filter" id="" className={css.filter}>
-                <option value="" selected disabled hidden>Filter</option>
+                <option value="" defaultValue={true}>Filter</option>
                 <option value="default">Default</option>
                 <option value="Experiece">Experience</option>
                 <option value="No. Of Projects">No. Of Projects</option>
@@ -82,4 +92,4 @@ function ArchiProfile() {
   }
 }
 
-  export default ArchiProfile; 
+export default ArchiProfile
