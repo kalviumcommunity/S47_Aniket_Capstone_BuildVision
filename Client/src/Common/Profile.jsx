@@ -27,18 +27,21 @@ function Profile() {
             .then((res) => res.json())
             .then((datas) => {
                 setdata(datas)
+                console.log(datas)
             })
             .catch((err) => console.log(err))
-
-        fetch(`http://localhost:3000/ShowDesign/${role}/${id}`)
+        if(role === "Architect"){
+            fetch(`http://localhost:3000/ShowDesign/${role}/${id}`)
             .then((res) => res.json())
             .then((datas) => {
                 setdesign(datas)
                 console.log(datas)
             })
             .catch((err) => console.log(err))
+        }
 
     }, [role, id])
+    console.log(data)
     return (
         <div className={navcss.navbar}>
             <NavigationBar />
@@ -58,7 +61,7 @@ function Profile() {
                             {data && data.Role === "Client" && (
                                 <>
                                     <h3>Name : {data.ClientName}</h3>
-                                    <h3>Birth Year : {data.BirthYear || "****"}</h3>
+                                    <h3>D.O.B : {data.DOB || "**/**/****"}</h3>
                                     <h3>Phone Number : +91 {data.ClientPhoneNumber ? data.ClientPhoneNumber : "**********"}</h3>
                                     <h3>Email : {data.ClientEmail}</h3>
                                 </>
