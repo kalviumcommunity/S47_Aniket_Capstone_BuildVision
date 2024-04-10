@@ -24,6 +24,9 @@ function DesignPage() {
 
   document.cookie = "Role"
   if(error){
+
+  // console.log(designdata)
+  // console.log(Archidata)
   return (
       <h1>Please Login ....</h1>
       )
@@ -33,7 +36,22 @@ function DesignPage() {
     <>
       <div className={navcss.navbar}>
         <NavigationBar/>
-        <div>DesignPage</div>
+        <div className={css.main}>
+          <div className={css.head}>
+            {designdata.map((data) => (
+              <div className={css.card} key={data._id}>
+                <img src={data.ImageOfDesign} alt="" className={css.image}/>
+                <div className={css.details}>
+                  <h1>{Archidata.find(Archidata => Archidata._id === data.ArchitectId).ArchitectName}</h1>
+                  <h1>{Archidata.find(Archidata => Archidata._id === data.ArchitectId).YearOfExperience}</h1>
+                  <h1>{data.AreaOfPlot}</h1>
+                  <p>{data.AreaOfMap}</p>
+                  <p>{data.DetailsOfMap}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </>
 
