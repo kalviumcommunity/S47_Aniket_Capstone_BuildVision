@@ -12,6 +12,7 @@ const path = require('path')
 const app = express()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const { Validation } = require('./Auth/Auth.js')
 
 app.use('/Upload', express.static(path.join(__dirname, 'Upload')))
 app.use(express.json())
@@ -24,7 +25,7 @@ mongoose.connect(process.env.Cluster, { dbName: "BuildVision" }, {
     console.log(error)
 })
 
-app.get('/ArchiSignU', async (req, res) => {
+app.get('/ArchiSignU',Validation, async (req, res) => {
     await archidetailschema.find({})
         .then(result => res.json(result))
         .catch(err => res.json(err))
@@ -42,7 +43,7 @@ app.get('/Profilefind/:role/:email', async (req, res) => {
             .catch(err => console.log(err))
     }
 })
-app.get('/ClientSignU', async (req, res) => {
+app.get('/ClientSignU',Validation, async (req, res) => {
     await clientdetailschema.find({})
         .then(result => res.json(result))
         .catch(err => res.json(err))
@@ -219,3 +220,5 @@ app.delete('/DeleteDesign/:role/:id/:did', async (req, res) => {
 app.listen(3000, () => {
     console.log("Server 3000 is running")
 })
+
+

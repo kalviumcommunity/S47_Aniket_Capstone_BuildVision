@@ -1,35 +1,38 @@
 import React, { useEffect, useState } from 'react'
 import NavigationBar from './NavigationBar'
 import navcss from '../css/Navigation.module.css'
-import css from '../css/DesignPage.module.css'
+import axios from 'axios'
 
-function DesignPage(){
-  const [designdata, setdesigndata] = useState([])
-  const [Archidata, setArchidata] = useState([])
+function DesignPage() {
+  const [data, setdata] = useState([])
+  const [error, setError] = useState(false)
+  const token = localStorage.getItem("Token")
 
   useEffect(() => {
-    fetch('http://localhost:3000/DesignPage')
-      .then((res) => res.json())
-      .then((datas) => {
-         setdesigndata(datas);
-        // console.log(datas)
+    axios.get('http://localhost:3000/ClientSignU', {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("Token")
+      }
+    })
+      .then((res) => {
+        setdata(res.data)
+        // console.log(res.data)
       })
-      .catch((err) => console.log(err))
-
-    fetch('http://localhost:3000/ArchiSignU')
-      .then((res) => res.json())
-      .then((datas) => {
-         setArchidata(datas);
-        // console.log(datas)
-      })
-      .catch((err) => console.log(err))
+      .catch((err) => setError(err.response.data))
   }, [])
 
   document.cookie = "Role"
+  if(error){
 
   // console.log(designdata)
   // console.log(Archidata)
   return (
+      <h1>Please Login ....</h1>
+      )
+    }
+  else{
+    return(
     <>
       <div className={navcss.navbar}>
         <NavigationBar/>
@@ -51,7 +54,9 @@ function DesignPage(){
         </div>
       </div>
     </>
-  )
+
+    )
+  }
 }
 
 export default DesignPage

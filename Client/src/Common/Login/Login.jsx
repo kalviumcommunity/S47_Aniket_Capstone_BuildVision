@@ -13,10 +13,15 @@ import axios from 'axios'
 function Login() {
   const [toggle, setToggle] = useState("")
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const navigate=useNavigate()
-  
+  const navigate = useNavigate()
   const submit=(data)=>{
-    axios.post("http://localhost:3000/ArchiLogin",data)
+    axios.post("http://localhost:3000/ArchiLogin",data,
+    {
+      headers:{
+        "Content-Type":"application/json",
+        "Authorization":"Bearer "+localStorage.getItem("Token")
+      }
+    })
     .then((res)=>{
       
       localStorage.setItem("Role","Architect")
