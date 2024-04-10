@@ -37,7 +37,7 @@ function ArchiProfile() {
             {data.map((data) => (
               <div className={css.card} key={data._id}>
                 <div>
-                  {data.ImageOfArchitect?<img src={`http://localhost:3000/Upload/Architect/${data.ImageOfArchitect[0].replace(/ /g, '%20')}`} alt="" className={css.archiimage}/>:<img src={profile} alt="" className={css.archiimage}/>}
+                  {data.ImageOfArchitect?<img src={data.ImageOfArchitect[0] ?`http://localhost:3000/Upload/Architect/${data.ImageOfArchitect[0].replace(/ /g, '%20')}` : profile} alt="" className={css.archiimage}/>:<img src={profile} alt="" className={css.archiimage}/>}
                 </div>
                 <div>
                   <p style={{ fontWeight: "bold" }}>Name : {data.ArchitectName}</p>

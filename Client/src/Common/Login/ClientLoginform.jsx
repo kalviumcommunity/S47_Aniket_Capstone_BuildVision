@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import css from "../../css/Signup.module.css"
 import clientimage from "../../../Assets/ClientFormImage.png"
 import google from "../../../Assets/GoogleLogo.png"
@@ -10,12 +10,17 @@ import axios from 'axios'
 
 function ClientLoginform() {
     const { register, handleSubmit, formState: { errors } } = useForm()
-
+    const navigate=useNavigate()
+    
     const submit=(data)=>{
         axios.post("http://localhost:3000/ClientLogin",data)
         .then((res)=>{
-          localStorage.setItem("Token",res.data.token)
-          alert(res.data.result)
+            localStorage.setItem("Token",res.data.token)
+            localStorage.setItem("Role","Client")
+            localStorage.setItem("Email",data.email || user1.email)
+            alert(res.data.result)
+            navigate('/DesignPage')
+            window.location.reload()
         })
         .catch((err)=>alert(err.response.data))
       }
