@@ -4,6 +4,7 @@ import navcss from '../css/Navigation.module.css'
 import css from '../css/Profile.module.css'
 import { Link, useParams } from 'react-router-dom'
 import profile from '../../Assets/profile.png'
+import axios from 'axios'
 
 function Profile() {
     const [data, setdata] = useState([])
@@ -12,9 +13,7 @@ function Profile() {
     const id = useParams().id
 
     const deleteDesign = (did) => {
-        fetch(`http://localhost:3000/DeleteDesign/${role}/${id}/${did}`, {
-            method: "DELETE",
-        })
+        axios.delete(`http://localhost:3000/DeleteDesign/${role}/${id}/${did}`)
             .then((res) => res.json())
             .then((datas) => {
                 console.log(datas)
@@ -23,23 +22,19 @@ function Profile() {
         window.location.reload()
     }
     useEffect(() => {
-        fetch(`http://localhost:3000/Profile/${role}/${id}`)
-            .then((res) => res.json())
+        axios(`http://localhost:3000/Profile/${role}/${id}`)
             .then((datas) => {
-                setdata(datas)
-                console.log(datas)
+                setdata(datas.data)
             })
             .catch((err) => console.log(err))
         if(role === "Architect"){
-            fetch(`http://localhost:3000/ShowDesign/${role}/${id}`)
-            .then((res) => res.json())
+            axios(`http://localhost:3000/ShowDesign/${role}/${id}`)
             .then((datas) => {
-                setdesign(datas)
+                setdesign(datas.data)
                 console.log(datas)
             })
             .catch((err) => console.log(err))
         }
-
     }, [role, id])
     console.log(data)
     return (

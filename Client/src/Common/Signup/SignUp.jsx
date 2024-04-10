@@ -54,7 +54,7 @@ function SignUp() {
   useEffect(() => {
 
 
-    const body = document.getElementsByTagName("body")[0]
+    const body = document.getElementsByClassName(css.container)[0]
     const archi = document.getElementsByClassName(css.archi)[0]
     const client = document.getElementsByClassName(css.client)[0]
     const archicontent = document.getElementsByClassName(css.archicontent)[0]

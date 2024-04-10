@@ -10,23 +10,22 @@ import axios from 'axios'
 
 function ClientLoginform() {
     const { register, handleSubmit, formState: { errors } } = useForm()
-    const navigate=useNavigate()
-    
-    const submit=(data)=>{
+    const navigate = useNavigate()
+
+    const submit = (data) => {
 
         localStorage.setItem("Role", "Client");
         localStorage.setItem("Email", data.email || user.email);
-        axios.post("http://localhost:3000/ClientLogin",data)
-        .then((res)=>{
-            localStorage.setItem("Token",res.data.token)
-            localStorage.setItem("Role","Client")
-            localStorage.setItem("Email",data.email || user1.email)
-            alert(res.data.result)
-            navigate('/DesignPage')
-            window.location.reload()
-        })
-        .catch((err)=>alert(err.response.data))
-      }
+        axios.post("http://localhost:3000/ClientLogin", data)
+            .then((res) => {
+                localStorage.setItem("Token", res.data.token)
+                alert(res.data.result)
+                navigate("/DesignPage")
+                window.location.reload()
+
+            })
+            .catch((err) => alert(err.response.data))
+    }
 
     return (
         <>
