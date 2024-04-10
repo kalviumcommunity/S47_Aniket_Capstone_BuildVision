@@ -37,9 +37,10 @@ app.get('/Profilefind/:role/:email', async (req, res) => {
             .then(result => res.json(result))
             .catch(err => console.log(err))
     }
-    else {
+    else if(req.params.role == "Client") {
         await clientdetailschema.findOne({ ClientEmail: req.params.email })
-            .then(result => res.json(result))
+            .then(result =>{ res.json(result)
+            console.log(result)})
             .catch(err => console.log(err))
     }
 })
@@ -52,7 +53,9 @@ app.get('/Profile/:role/:id', async (req, res) => {
     id = req.params.id
     if (req.params.role == "Architect") {
         await archidetailschema.findById(id)
-            .then(result => { res.json(result) })
+            .then(result => { 
+                res.json(result) 
+            console.log(result)})
             .catch(err => console.log(err))
     }
     else if (req.params.role == "Client") {
@@ -62,6 +65,7 @@ app.get('/Profile/:role/:id', async (req, res) => {
     }
 })
 app.get('/Designs', Validation, async (req, res) => {
+
     await designdetailschema.find({})
         .then(result => res.json(result))
         .catch(err => res.json(err))
@@ -76,6 +80,29 @@ app.get('/Design/:role/:id/:did', async (req, res) => {
     id = req.params.did
     if (req.params.role == "Architect") {
         await designdetailschema.findById(id)
+            .then(result => { res.json(result) })
+            .catch(err => console.log(err))
+    }
+})
+
+app.put('/Profileedit/:role/:id', async (req, res) => {
+    const id = req.params.id
+    if (req.params.role == "Architect") {
+        console.log(req.body)
+        await archidetailschema.findByIdAndUpdate(id, req.body)
+            .then(result => { res.json(result) })
+            .catch(err => console.log(err))
+    }
+    else {
+        await clientdetailschema.findByIdAndUpdate(id, req.body)
+            .then(result => res.json(result))
+            .catch(err => console.log(err))
+    }
+})
+app.put('/EditDesign/:role/:id/:did', async (req, res) => {
+    const id = req.params.did
+    if (req.params.role == "Architect") {
+        await designdetailschema.findByIdAndUpdate(id, req.body)
             .then(result => { res.json(result) })
             .catch(err => console.log(err))
     }
@@ -115,29 +142,6 @@ app.post('/ClientLogin', async (req, res) => {
     }
     else {
         return res.status(400).send("User Doest Exist")
-    }
-})
-
-app.put('/Profileedit/:role/:id', async (req, res) => {
-    const id = req.params.id
-    if (req.params.role == "Architect") {
-        console.log(req.body)
-        await archidetailschema.findByIdAndUpdate(id, req.body)
-            .then(result => { res.json(result) })
-            .catch(err => console.log(err))
-    }
-    else {
-        await clientdetailschema.findByIdAndUpdate(id, req.body)
-            .then(result => res.json(result))
-            .catch(err => console.log(err))
-    }
-})
-app.put('/EditDesign/:role/:id/:did', async (req, res) => {
-    const id = req.params.did
-    if (req.params.role == "Architect") {
-        await designdetailschema.findByIdAndUpdate(id, req.body)
-            .then(result => { res.json(result) })
-            .catch(err => console.log(err))
     }
 })
 

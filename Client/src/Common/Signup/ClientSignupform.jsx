@@ -44,7 +44,9 @@ function ClientSignupform() {
         // document.cookie=`Email=${data.email || user.email}`
 
         localStorage.setItem("Role", "Client");
+
         localStorage.setItem("Email", data.ClientEmail);
+
 
         console.log(data)
         const formData = new FormData();
@@ -53,7 +55,7 @@ function ClientSignupform() {
         formData.append("ClientName", data.ClientName);
         formData.append("ClientPassword", data.ClientPassword);
         formData.append("Role", "Client");
-        formData.append("BirthYear", "0");
+        formData.append("D.O.B", ISODate(""));
         formData.append("ClientPhoneNumber", "0");
         formData.append("ImageOfClient", data.ImageOfClient[0]);
 
@@ -70,6 +72,7 @@ function ClientSignupform() {
                     // navigate("/DesignPage")
                     window.location.reload()
                 })
+
                 .catch((err) => alert(err.response))
 
             // }

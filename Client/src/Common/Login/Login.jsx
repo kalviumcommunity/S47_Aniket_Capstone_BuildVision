@@ -14,6 +14,7 @@ function Login() {
   const [toggle, setToggle] = useState("")
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate()
+
   const { user, loginWithRedirect ,isAuthenticated} = useAuth0();
 
 
