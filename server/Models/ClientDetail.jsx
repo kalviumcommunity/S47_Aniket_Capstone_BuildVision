@@ -4,7 +4,7 @@ const clientSchema = new mongoose.Schema({
     ClientEmail: String,
     ClientName: String,
     ClientPassword: String,
-    BirthYear: Number,
+    DOB: Date,
     ClientPhoneNumber: Number,
     ImageOfClient: [{type:String}],
     Role: String

@@ -14,8 +14,6 @@ function Login() {
   const [toggle, setToggle] = useState("")
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate()
-
-
   const submit=(data)=>{
     axios.post("http://localhost:3000/ArchiLogin",data,
     {
@@ -25,11 +23,13 @@ function Login() {
       }
     })
     .then((res)=>{
+      
+      localStorage.setItem("Role","Architect")
       localStorage.setItem("Token",res.data.token)
+      localStorage.setItem("Email",data.email || user1.email)
       alert(res.data.result)
       navigate("/DesignPage")
       window.location.reload()
-
     })
     .catch((err)=>alert(err.response.data))
   }

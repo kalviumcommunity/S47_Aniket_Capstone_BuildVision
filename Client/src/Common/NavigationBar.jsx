@@ -15,20 +15,25 @@ function NavigationBar() {
   const [toggle, settoggle] = useState(false)
   const { logout } = useAuth0();
 
-
   const togglebtn = () => {
     settoggle(!toggle)
   }
 
-
-
   const email = localStorage.getItem("Email")
   const role = localStorage.getItem("Role")
   
+  // console.log(email,role)
+
+  const exit=()=>{
+    logout({ returnTo: window.location.origin })
+    localStorage.clear();
+  }
   
   useEffect(() => {
     axios.get(`http://localhost:3000/Profilefind/${role}/${email}`)
-    .then((res) => setid(res.data._id))
+    .then((res) => {
+      setid(res.data._id)
+    console.log(res.data._id)})
     .catch((err) => {
       console.log(err)
     })
@@ -76,7 +81,9 @@ function NavigationBar() {
         </div>
         <div className={navcss.nav}>
           <Link to={`/Profile/${role}/${id}`}><div className={navcss.navicon}><img src={profile} alt="" className={navcss.profile} /><p className={navcss.navtext}>Profile</p></div></Link>
-          <div className={navcss.navicon} onClick={Logout}><img src={logoutimg} alt="" className={navcss.logout} /><p className={navcss.navtext} onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Log-Out</p></div>
+
+          <div className={navcss.navicon} onClick={exit}><img src={logoutimg} alt="" className={navcss.logout} /><p className={navcss.navtext}>Log-Out</p></div>
+
         </div>
       </nav>
     </div>

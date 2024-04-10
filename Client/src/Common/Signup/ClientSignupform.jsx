@@ -18,7 +18,7 @@ function ClientSignupform() {
         // document.cookie=`Email=${data.email || user.email}`
 
         localStorage.setItem("Role", "Client");
-        localStorage.setItem("Email", data.email || user.email);
+        localStorage.setItem("Email", data.ClientEmail || user.email);
 
         const formData = new FormData();
         Object.entries(data).forEach(([key, value]) => {
@@ -27,7 +27,7 @@ function ClientSignupform() {
             }
         });
         formData.append("Role", "Client");
-        formData.append("BirthYear", "0");
+        formData.append("D.O.B", ISODate(""));
         formData.append("ClientPhoneNumber", "0");
         if (data.ImageOfClient[0]) {
             formData.append("ImageOfClient", data.ImageOfClient[0]);
@@ -46,7 +46,7 @@ function ClientSignupform() {
                     navigate("/DesignPage")
                     window.location.reload()
                 })
-                .catch((err) => alert(err.response.data.message))
+                .catch((err) => console.log(err))
                 
             // }
         }

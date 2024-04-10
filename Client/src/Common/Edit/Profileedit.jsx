@@ -14,8 +14,8 @@ function Profileedit() {
     const [ClientName, setClientName] = useState("")
     const [YearOfExperience, setYearOfExperience] = useState("")
     const [NoOfProjects, setNoOfProjects] = useState("")
-    const [BirthYear, setBirthYear] = useState("")
-    const [ClinetPhoneNumber, setClinetPhoneNumber] = useState("")
+    const [DOB, setBirthYear] = useState("")
+    const [ClientPhoneNumber, setClientPhoneNumber] = useState("")
     const [ArchiPhoneNumber, setArchiPhoneNumber] = useState("")
 
 
@@ -34,12 +34,12 @@ function Profileedit() {
                         setNoOfProjects(data.data.NoOfProjects)
                     })
                     .catch((err) => console.log(err))
-            }else{
+            }else if(role === "Client"){
                 axios.get(`http://localhost:3000/Profile/${role}/${id}`)
                     .then((data) => {
                         setClientName(data.data.ClientName)
-                        setClinetPhoneNumber(data.data.PhoneNumber)
-                        setBirthYear(data.data.BirthYear)
+                        setClientPhoneNumber(data.data.PhoneNumber)
+                        setBirthYear(data.data.DOB)
                     })
                     .catch((err) => console.log(err))
             }
@@ -59,7 +59,7 @@ function Profileedit() {
             }   
         }else{
             if (data) {
-                axios.put(`http://localhost:3000/Profileedit/${role}/${id}`, {ClientName, BirthYear, ClinetPhoneNumber})
+                axios.put(`http://localhost:3000/Profileedit/${role}/${id}`, {ClientName, DOB, ClientPhoneNumber})
                     .then((res) => {
                         console.log(res.data)
                     })
@@ -81,7 +81,7 @@ function Profileedit() {
         setArchiPhoneNumber(e.target.value)
     }
     const handleCphone = (e) =>{
-        setClinetPhoneNumber(e.target.value)
+        setClientPhoneNumber(e.target.value)
     }
     const handleBirth = (e) =>{
         setBirthYear(e.target.value)
@@ -122,11 +122,11 @@ function Profileedit() {
                                     <label>Name</label>
                                     <input type="text" defaultValue={ClientName} placeholder='Enter Name' onChange={(e)=>handleCname(e)}/>
                                 </div><div className={css.detail}>
-                                    <label>Birth Year</label>
-                                    <input type="number" defaultValue={BirthYear==0?"":BirthYear} placeholder='Enter Birth Year' onChange={(e)=>handleBirth(e)}/>
+                                    <label>Date of Birth</label>
+                                    <input type="date" defaultValue={DOB} placeholder='Enter DOB' onChange={(e)=>handleBirth(e)}/>
                                 </div><div className={css.detail}>
                                     <label>Phone Number</label>
-                                    <input type="number" defaultValue={PhoneNumber==0?"":PhoneNumber} placeholder='Enter Phone Number' onChange={(e)=>handleCphone(e)}/>
+                                    <input type="number" defaultValue={ClientPhoneNumber==0?"":ClientPhoneNumber} placeholder='Enter Phone Number' onChange={(e)=>handleCphone(e)}/>
                                 </div><div className={css.detail}>
                                     <label>Image</label>
                                     <input type="file"  onChange={(e)=>handlCimage(e)}/>
