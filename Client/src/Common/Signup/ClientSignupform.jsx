@@ -13,11 +13,7 @@ function ClientSignupform() {
 
     const { user, loginWithRedirect, isAuthenticated } = useAuth0();
     const navigate = useNavigate()
-
-    console.log(user)
     console.log(isAuthenticated)
-
-    // console.log('Token',getAccessTokenSilently().then(res=>res));
     if (isAuthenticated) {
         localStorage.setItem("Role", "Client")
         localStorage.setItem("Email", user.email)
@@ -31,12 +27,10 @@ function ClientSignupform() {
         formdata.append("ClientPhoneNumber", "0");
         axios.post("http://localhost:3000/ClientSignUp", formdata)
             .then((res) => {
-                // alert(res.data.result)
+                alert(res.data.result)
+                navigate("/DesignPage")
             })
             .catch((err) => alert(err.response))
-        formdata.forEach((value, key) => {
-            console.log(key, value)
-        })
     }
 
     const onSubmit = (data) => {
@@ -66,10 +60,10 @@ function ClientSignupform() {
             // if(data){
             axios.post("http://localhost:3000/ClientSignUp", formData)
                 .then((res) => {
-                    // alert(res.data.result)
+                    alert(res.data.result)
                     localStorage.setItem("Token", res.data.token)
 
-                    // navigate("/DesignPage")
+                    navigate("/DesignPage")
                     window.location.reload()
                 })
 
@@ -89,7 +83,7 @@ function ClientSignupform() {
 
                         <h1>Client</h1>
 
-                        <button className={css.googlebtn} onClick={() => loginWithRedirect({ authorizationParams: { 'screen_hint': 'signup' }})}><img src={google} alt="" className={css.google} /><h3 className={css.googletext}>Google</h3></button>
+                        <button className={css.googlebtn} onClick={() => loginWithRedirect({ authorizationParams: { 'screen_hint': 'signup' },returnTo: window.location.origin + "/DesignPage"})}><img src={google} alt="" className={css.google} /><h3 className={css.googletext}>Google</h3></button>
 
 
                         <p>Already have an account? <Link to={"/Login"}>Log In</Link></p>

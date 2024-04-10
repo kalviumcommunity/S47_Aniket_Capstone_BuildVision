@@ -8,39 +8,42 @@ import { useAuth0 } from '@auth0/auth0-react'
 
 function DesignPage() {
   const [data, setdata] = useState([])
-  const [error, setError] = useState(false)
+  const [error, setError] = useState("")
   const { isAuthenticated, getAccessTokenSilently, isLoading } = useAuth0()
 
   useEffect(() => {
     const getdata = async () => {
-      const token=isAuthenticated? await getAccessTokenSilently():localStorage.getItem("Token")
-      console.log(token)
+      const token = isAuthenticated ? await getAccessTokenSilently() : localStorage.getItem("Token")
+      console.log(isAuthenticated, token)
       axios.get('http://localhost:3000/Designs', {
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " +  token
+          "Content-Type": "text",
+          "Authorization": token
         }
       })
         .then((res) => {
           setdata(res.data)
           console.log(res.data)
         })
-        // .catch((err) => setError(err.response.data))
+        .catch((err) => {
+          console.log(err)
+          setError(true)
+        })
     }
     getdata()
   }, [])
 
-  if(isLoading) {
-    return (
-      <h1>Loading ....</h1>
-    )
-  }
   if (error) {
     return (
       <h1>Please Login ....</h1>
     )
   }
-  else {
+  if (isLoading) {
+    return (
+      <h1>Loading ....</h1>
+    )
+  }
+  if(!error){
     return (
       <>
         <div className={navcss.navbar}>
@@ -49,13 +52,12 @@ function DesignPage() {
             <div className={css.header}>
               <img src={logo} alt="" className={css.logo} />
               <select name="Filter" id="" className={css.filter}>
-                <option value="" selected disabled hidden>Filter</option>
+                <option value="" defaultValue={true}>Filter</option>
                 <option value="default">Default</option>
               </select>
             </div>
             {
               data.map((item) => {
-                console.log(item)
                 return (
                   <>
                     <div className={css.card} key={item._id}>

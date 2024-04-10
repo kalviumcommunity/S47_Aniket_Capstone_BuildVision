@@ -19,18 +19,45 @@ function SignUp() {
   const navigate = useNavigate()
 
   // console.log(image)
+  if(isAuthenticated){
+    // document.cookie=`Role=${Architect}; expires=Thu, 01 Jan 9999 23:59:59 GMT`
+    // document.cookie=`Email=${data.email || user1.email}; expires=Thu, 01 Jan 9999 00:00:00 UTC;`
+    localStorage.setItem("Role", "Architect")
+    localStorage.setItem("Email", user.email)
+    const formdata = new FormData();
+    formdata.append("ImageOfArchitect", user.picture)
+    formdata.append("ArchitectName", user.name)
+    formdata.append("ArchiEmail", user.email)
+    formdata.append("Role", "Architect")
+    formdata.append("NoOfProjects", "0")
+    formdata.append("YearOfExperience", "0")
+    formdata.append("ArchiPhoneNumber", "0")
+
+    console.log(formdata)
+    const fdata = async () => {
+      // if(data){
+      await axios.post("http://localhost:3000/ArchiSignUp", formdata)
+        .then((res) => {
+          alert(res.data.result)
+          navigate("/DesignPage")
+          window.location.reload()
+        })
+        // .catch((err) => alert(err.response.data.message))
+
+      // }
+    }
+    fdata()
+  }
   const onSubmit = (data) => {
     // document.cookie=`Role=${Architect}; expires=Thu, 01 Jan 9999 23:59:59 GMT`
     // document.cookie=`Email=${data.email || user1.email}; expires=Thu, 01 Jan 9999 00:00:00 UTC;`
     localStorage.setItem("Role", "Architect")
-    localStorage.setItem("Email", data.email || user.email)
-
-    console.log(data)
+    localStorage.setItem("Email", data.email)
 
     const formdata = new FormData();
-    formdata.append("ImageOfArchitect", data.ImageOfArchitect[0] || user.picture)
-    formdata.append("ArchitectName", data.name || user.name)
-    formdata.append("ArchiEmail", data.email || user.email)
+    formdata.append("ImageOfArchitect", data.ImageOfArchitect[0] || "")
+    formdata.append("ArchitectName", data.name)
+    formdata.append("ArchiEmail", data.email)
     formdata.append("ArchiPassword", data.password)
     formdata.append("Role", "Architect")
     formdata.append("NoOfProjects", "0")

@@ -1,15 +1,17 @@
 const jwt = require('jsonwebtoken')
+
 const { auth } = require('express-oauth2-jwt-bearer')
 
 const Validation = async (req, res, next) => {
     try {
-        const auth = req.headers["authorization"]
-        // console.log("auth",auth)
-        if (!auth) {
+        const authenticate = req.headers["authorization"]
+        console.log("auth",req.headers.authorization)
+        
+        if (!authenticate) {
             return res.status(400).send("Please Provide Autherisation")
         }
-        const token = auth.split(" ")[1]
-        console.log('token', token);
+        const token = authenticate
+        // console.log('token', token);
         try {
             // console.log(token)
             const decode = jwt.verify(token, "mynameiskaran")
@@ -21,21 +23,23 @@ const Validation = async (req, res, next) => {
         catch (err) {
             console.log("jwt token fail")
         }
-
+        
         try {
-            // console.log('auth', token)
-            const decode = auth({
-                audience: 'aniketgoyal791@gmail.com',
+            console.log('auth', token)
+            console.log("Auth")
+            const checkJwt = auth({
+                audience: 'http://BuildVision',
                 issuerBaseURL: `https://dev-bhzywqcftmwjth02.us.auth0.com/`,
             })
+            console.log('decode',checkJwt)
             next()
         } catch (error) {
-            res.status(500).json({ error: "Auth token error" })
+            return res.status(500).json({ error: "Auth token error" })
         }
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        return res.status(500).json({ error: "token failed" })
     }
-    }
+}
 
 
 module.exports = { Validation }
