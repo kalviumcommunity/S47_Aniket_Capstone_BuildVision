@@ -76,7 +76,7 @@ function NavigationBar() {
       <nav className={navcss.mainnav}>
         <div className={navcss.nav}>
           <Link><div className={navcss.navicon}><img src={menu} alt="" className={navcss.menu} onClick={togglebtn} /><p className={navcss.navtext}>Menu</p></div></Link>
-          <Link to="/DesignPage"><div className={navcss.navicon}><img src={design} alt="" className={navcss.design} /><p className={navcss.navtext}>Design</p></div></Link>
+          <Link to="/DesignPage"><div className={navcss.navicon} ><img src={design} alt="" className={navcss.design} /><p className={navcss.navtext}>Design</p></div></Link>
           <Link to="/ArchiProfile"><div className={navcss.navicon}><img src={archi} alt="" className={navcss.archi} /><p className={navcss.navtext}>Architect</p></div></Link>
         </div>
         <div className={navcss.nav}>

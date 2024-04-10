@@ -15,6 +15,8 @@ function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate()
   const submit=(data)=>{
+    localStorage.setItem("Role", "Architect");
+    localStorage.setItem("Email", data.email || user.email);
     axios.post("http://localhost:3000/ArchiLogin",data,
     {
       headers:{

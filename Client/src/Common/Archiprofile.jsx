@@ -4,13 +4,20 @@ import navcss from '../css/Navigation.module.css'
 import css from "../css/ArchiProfilepage.module.css"
 import logo from "../../Assets/Logo.png"
 import profile from "../../Assets/profile.png"
+import axios from 'axios'
 
 function ArchiProfile() {
   const [data, setdata] = useState([])
 
   useEffect(() => {
-    fetch('http://localhost:3000/ArchiSignU')
-      .then((res) => res.json())
+    console.log("token", localStorage.getItem("Token"))
+
+    axios.get('http://localhost:3000/ArchiSignU', {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("Token")
+      }
+    })
       .then((datas) => {
         setdata(datas);
         console.log(datas)

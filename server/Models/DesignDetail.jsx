@@ -1,7 +1,10 @@
 const mongoose = require('mongoose')
 
 const DesignSchema=new mongoose.Schema({
-    ArchitectId:String,
+    ArchitectId: String,
+    ArchitectEmail: String,
+    ArchitectName: String,
+    ArchitectExperience: Number,
     AreaOfPlot:Number,
     AreaOfMap: Number,
     DetailsOfMap: String,

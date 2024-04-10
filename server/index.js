@@ -26,6 +26,7 @@ mongoose.connect(process.env.Cluster, { dbName: "BuildVision" }, {
 })
 
 app.get('/ArchiSignU',Validation, async (req, res) => {
+    console.log("hello");
     await archidetailschema.find({})
         .then(result => res.json(result))
         .catch(err => res.json(err))

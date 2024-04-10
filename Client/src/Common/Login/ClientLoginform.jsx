@@ -13,6 +13,9 @@ function ClientLoginform() {
     const navigate=useNavigate()
     
     const submit=(data)=>{
+
+        localStorage.setItem("Role", "Client");
+        localStorage.setItem("Email", data.email || user.email);
         axios.post("http://localhost:3000/ClientLogin",data)
         .then((res)=>{
             localStorage.setItem("Token",res.data.token)
