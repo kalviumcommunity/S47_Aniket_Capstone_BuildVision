@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import NavigationBar from '../NavigationBar'
 import navcss from '../../css/Navigation.module.css'
 import css from '../../css/AddDesign.module.css'
@@ -37,8 +37,9 @@ function AddDesign() {
     const formdata = new FormData();
     formdata.append("ArchitectId", Archidata._id)
     formdata.append("ArchitectName", Archidata.ArchitectName)
-    formdata.append("ArchitectEmail", Archidata.ArchitectEmail)
-    formdata.append("ArchitectExperience", Archidata.ArchitectExperience)
+    formdata.append("ArchitectEmail", Archidata.ArchiEmail)
+    formdata.append("ArchitectExperience", Archidata.ArchitectExperience || 0)
+    formdata.append("ArchiPhoneNumber", Archidata.ArchiPhoneNumber || 0)
     formdata.append("AreaOfPlot", data.AreaOfPlot)
     formdata.append("AreaOfMap", data.AreaOfMap)
     formdata.append("DetailsOfMap", data.DetailsOfMap)
@@ -81,7 +82,7 @@ function AddDesign() {
               {errors.DetailsOfMap && <p className={css.alert}>{errors.DetailsOfMap.message}</p>}
               <div className={css.detail}>
                 <label>Image of Map</label>
-                <input type='file' {...register("ImageOfDesign", { required: "Image of Design is required" })} placeholder="Upload Image of Map" className={css.input} />
+                <input type='file' {...register("ImageOfDesign", )} placeholder="Upload Image of Map" className={css.input} />
               </div>
               {errors.ImageOfDesign && <p className={css.alert}>{errors.ImageOfDesign.message}</p>}
               <div className={css.btns}>

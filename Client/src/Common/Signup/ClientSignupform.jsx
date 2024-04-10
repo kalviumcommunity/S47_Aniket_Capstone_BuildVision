@@ -29,9 +29,7 @@ function ClientSignupform() {
         formData.append("Role", "Client");
         formData.append("D.O.B", ISODate(""));
         formData.append("ClientPhoneNumber", "0");
-        if (data.ImageOfClient[0]) {
-            formData.append("ImageOfClient", data.ImageOfClient[0]);
-        }
+        formData.append("ImageOfClient", data.ImageOfClient[0] || "");
 
         console.log(data);
         console.log(formData);

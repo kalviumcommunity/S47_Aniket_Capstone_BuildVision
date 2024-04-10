@@ -10,7 +10,7 @@ function ArchiProfile() {
   const [data, setdata] = useState([])
 
   useEffect(() => {
-    console.log("token", localStorage.getItem("Token"))
+    // console.log("token", localStorage.getItem("Token"))
 
     axios.get('http://localhost:3000/ArchiSignU', {
       headers: {
@@ -19,8 +19,8 @@ function ArchiProfile() {
       }
     })
       .then((datas) => {
-        setdata(datas);
-        console.log(datas)
+        setdata(datas.data);
+        console.log(datas.data)
       })
 
       .catch((err) => console.log(err))
@@ -41,19 +41,28 @@ function ArchiProfile() {
             </select>
           </div>
           <div className={css.body}>
-            {data.map((data) => (
-              <div className={css.card} key={data._id}>
+            {data.map((datas) => (
+              <div className={css.card} key={datas._id}>
                 <div>
-                  {data.ImageOfArchitect?<img src={data.ImageOfArchitect[0] ?`http://localhost:3000/Upload/Architect/${data.ImageOfArchitect[0].replace(/ /g, '%20')}` : profile} alt="" className={css.archiimage}/>:<img src={profile} alt="" className={css.archiimage}/>}
+                  {datas.ImageOfArchitect && datas.ImageOfArchitect[0] && datas.ImageOfArchitect[0] !== "undefined" ? (
+                    <img
+                      src={`http://localhost:3000/Upload/Architect/${datas.ImageOfArchitect[0].replace(/ /g, '%20')}`}
+                      alt=""
+                      className={css.archiimage}
+                    />
+                  ) : (
+                    <img src={profile} alt="" className={css.archiimage} />
+                  )}
                 </div>
+
                 <div>
-                  <p style={{ fontWeight: "bold" }}>Name : {data.ArchitectName}</p>
-                  {data.NoOfProjects ? <p>No of Projects : {data.NoOfProjects}</p> : <p>No of Projects : 0</p>}
-                  {data.YearOfExperience ? <p>Year Of Experience : {data.YearOfExperience}</p> : <p>Year Of Experience : 0</p>}
-                  <p>Email : {data.ArchiEmail}</p>
+                  <p style={{ fontWeight: "bold" }}>Name : {datas.ArchitectName}</p>
+                  {datas.NoOfProjects ? <p>No of Projects : {datas.NoOfProjects}</p> : <p>No of Projects : 0</p>}
+                  {datas.YearOfExperience ? <p>Year Of Experience : {datas.YearOfExperience}</p> : <p>Year Of Experience : 0</p>}
+                  <p>Email : {datas.ArchiEmail}</p>
                   <div>
-                    {data.ArchiPhoneNumber ? <button className={css.contactbtn} >{data.ArchiPhoneNumber}</button> : <p></p> }
-                    <button onClick={() => window.location.href = `mailto:${data.ArchiEmail}`} className={css.contactbtn}>Email Me</button>
+                    {datas.ArchiPhoneNumber ? <button className={css.contactbtn} >{datas.ArchiPhoneNumber}</button> : <p></p>}
+                    <button onClick={() => window.location.href = `mailto:${datas.ArchiEmail}`} className={css.contactbtn}>Email Me</button>
                   </div>
 
                 </div>
