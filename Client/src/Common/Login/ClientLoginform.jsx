@@ -4,11 +4,21 @@ import { Link } from 'react-router-dom'
 import css from "../../css/Signup.module.css"
 import clientimage from "../../../Assets/ClientFormImage.png"
 import google from "../../../Assets/GoogleLogo.png"
+import axios from 'axios'
 
 
 
 function ClientLoginform() {
     const { register, handleSubmit, formState: { errors } } = useForm()
+
+    const submit=(data)=>{
+        axios.post("http://localhost:3000/ClientLogin",data)
+        .then((res)=>{
+          localStorage.setItem("Token",res.data.token)
+          alert(res.data.result)
+        })
+        .catch((err)=>alert(err.response.data))
+      }
 
     return (
         <>
@@ -37,7 +47,7 @@ function ClientLoginform() {
                                 <input type='password' {...register("password", { required: "Password is required" })} placeholder="Enter Password" />
                             </div>
                             {errors.password && <p className={css.alert}>{errors.password.message}</p>}
-                            <Link to={"/DesignPage"}><button type='submit' className={css.clientsubmit}>LogIn</button></Link>
+                            <button type='submit' className={css.clientsubmit} onClick={handleSubmit(submit)}>LogIn</button>
                         </form>
                     </div>
                     <div>

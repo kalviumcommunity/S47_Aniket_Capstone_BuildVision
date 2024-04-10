@@ -38,30 +38,19 @@ function SignUp() {
     const fdata = async () => {
       // if(data){
         await axios.post("http://localhost:3000/ArchiSignUp", formdata)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err))
+        .then((res) => {
+          alert(res.data.result)
+          localStorage.setItem("Token",res.data.token)
+          navigate("/DesignPage")
+          window.location.reload()
+        })
+        .catch((err) => alert(err.response.data.message))
         
-        navigate("/DesignPage")
-        window.location.reload()
     // }
   }
   fdata()
     }
-  useEffect(() => {
-    const formdata = async () => {
-      if (user1) {
-        await axios.post("http://localhost:3000/ArchiSignUp", {
-          ArchiEmail: user1.email,
-          ArchitectName: user1.nickname,
-          ImageOfArchitect: user1.picture,
-          Role: "Architect"
-        })
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err))
-      }
-    }
-    formdata()
-  }, [user1])
+  
   useEffect(() => {
 
 
