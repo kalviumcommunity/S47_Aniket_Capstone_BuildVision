@@ -4,27 +4,37 @@ import navcss from '../css/Navigation.module.css'
 import axios from 'axios'
 import logo from '../../Assets/Logo.png'
 import css from '../css/Designpage.module.css'
+import { useAuth0 } from '@auth0/auth0-react'
 
 function DesignPage() {
   const [data, setdata] = useState([])
   const [error, setError] = useState(false)
-  const token = localStorage.getItem("Token")
+  const { isAuthenticated, getAccessTokenSilently, isLoading } = useAuth0()
 
   useEffect(() => {
-    axios.get('http://localhost:3000/Designs', {
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + localStorage.getItem("Token")
-      }
-    })
-      .then((res) => {
-        setdata(res.data)
-        console.log(res.data)
+    const getdata = async () => {
+      const token=isAuthenticated? await getAccessTokenSilently():localStorage.getItem("Token")
+      console.log(token)
+      axios.get('http://localhost:3000/Designs', {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " +  token
+        }
       })
-      .catch((err) => setError(err.response.data))
+        .then((res) => {
+          setdata(res.data)
+          console.log(res.data)
+        })
+        // .catch((err) => setError(err.response.data))
+    }
+    getdata()
   }, [])
 
-  document.cookie = "Role"
+  if(isLoading) {
+    return (
+      <h1>Loading ....</h1>
+    )
+  }
   if (error) {
     return (
       <h1>Please Login ....</h1>
