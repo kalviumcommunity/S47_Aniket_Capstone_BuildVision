@@ -16,6 +16,7 @@ function Login() {
   const navigate = useNavigate()
   const { user, loginWithRedirect, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
+
   const submit = (data) => {
     localStorage.setItem("Role", "Architect");
     localStorage.setItem("Email", data.email);
