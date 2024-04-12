@@ -21,33 +21,17 @@ function ClientLoginform() {
             .then((res) => {
                 localStorage.setItem("Token", res.data.token)
                 // alert(res.data.result)
-                navigate("/DesignPage")
+                // navigate("/DesignPage")
 
             })
             .catch((err) => alert(err.response.data))
     }
 
-    const storeTokenAndNavigate = async (token) => {
-        console.log(token)
-        localStorage.setItem("Token", token);
+    async function handleLoginWithRedirect(){
         localStorage.setItem("Role", "Client");
-        localStorage.setItem("Email", user.email);
-        navigate("/DesignPage");
+        await loginWithRedirect()
     }
-
-    const handleLogin = async () => {
-        try {
-            const accessToken = await getAccessTokenSilently();
-            await storeTokenAndNavigate(accessToken);
-        } catch (error) {
-            console.error("Error occurred while fetching access token:", error);
-        }
-    }
-    useEffect(() => {
-        if (isAuthenticated) {
-            handleLogin();
-        }
-    }, [isAuthenticated])
+    
 
     return (
         <>
@@ -57,7 +41,7 @@ function ClientLoginform() {
 
                         <h1>Client</h1>
 
-                        <button className={css.googlebtn} onClick={() => loginWithRedirect()}><img src={google} alt="" className={css.google} /><h3 className={css.googletext}>Google</h3></button>
+                        <button className={css.googlebtn} onClick={handleLoginWithRedirect}><img src={google} alt="" className={css.google} /><h3 className={css.googletext}>Google</h3></button>
 
                         <p>Dont have an account? <Link to={"/Signup"}>Signup</Link></p>
                         <form onSubmit={handleSubmit} className={css.form}>

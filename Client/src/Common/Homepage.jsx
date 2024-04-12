@@ -7,8 +7,13 @@ import { useAuth0 } from '@auth0/auth0-react'
 
 function Homepage() {
   const navigate=useNavigate()
-  const {isAuthenticated}=useAuth0()
+  const {user,isAuthenticated,getAccessTokenSilently}=useAuth0()
   const token=localStorage.getItem("Token")
+  if(isAuthenticated){
+    localStorage.setItem("Email",user.email)
+    localStorage.setItem("Token",getAccessTokenSilently())
+
+  }
   if(token || isAuthenticated){
     navigate("/DesignPage")
   }
