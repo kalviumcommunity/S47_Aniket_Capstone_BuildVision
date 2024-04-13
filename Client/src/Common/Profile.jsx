@@ -31,7 +31,7 @@ function Profile() {
             axios(`http://localhost:3000/ShowDesign/${role}/${id}`)
             .then((datas) => {
                 setdesign(datas.data)
-                console.log(datas)
+                // console.log(datas)
             })
             .catch((err) => console.log(err))
         }
@@ -73,12 +73,12 @@ function Profile() {
                     </header>
                 </div>
                 <div className={css.designmain}>
-                    {design && data.Role === "Architect" && (<div>
+                    {design && data.Role === "Architect" && (<div >
                         <div className={css.designheading}>
                             {design && (design.length > 0) && (<h1>Designs</h1>)}
                         </div>
                         {design.map((designs) => (
-                            <div className={css.designcontainer} id={designs._id}>
+                            <div className={css.designcontainer} key={designs._id}>
                                 <div className={css.designleft}>
                                     <img src={`http://localhost:3000/Upload/Design/${designs.ImageOfDesign[0].replace(/ /g, '%20')}`} alt="Image of Design is missing" className={css.designimage} />
                                 </div>

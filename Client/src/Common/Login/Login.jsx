@@ -22,8 +22,8 @@ function Login() {
     axios.post("http://localhost:3000/ArchiLogin", data)
       .then((res) => {
         localStorage.setItem("Token", res.data.token)
-        // alert(res.data.result)
-        // navigate("/DesignPage")
+        alert(res.data.result)
+        navigate("/DesignPage")
 
       })
       .catch((err) => {

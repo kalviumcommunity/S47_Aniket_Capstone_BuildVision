@@ -10,11 +10,34 @@ function DesignPage() {
   const [data, setdata] = useState([])
   const [error, setError] = useState("")
   const { isAuthenticated, getAccessTokenSilently, isLoading } = useAuth0()
+  const [filter, setFilter] = useState("")
+  const [sortedData, setSortedData] = useState([])
+
+  useEffect(() => {
+    const sorted = [...data].sort((a, b) => {
+      if (filter === "") {
+        return 0;
+      } else if (filter === "Low to High Plot Area") {
+        return a.AreaOfPlot - b.AreaOfPlot;
+      }
+      else if (filter === "High to Low Plot Area") {
+        return b.AreaOfPlot - a.AreaOfPlot;
+      }
+      else if (filter === "Low to High Map Area") {
+        return a.AreaOfMap - b.AreaOfMap;
+      }
+      else if (filter === "High to Low Map Area") {
+        return b.AreaOfMap - a.AreaOfMap;
+      }
+      
+    });
+    setSortedData(sorted);
+  }, [filter, data]);
 
   useEffect(() => {
     const getdata = async () => {
       const token = isAuthenticated ? await getAccessTokenSilently() : localStorage.getItem("Token")
-      console.log(isAuthenticated, token)
+      // console.log(isAuthenticated, token)
       axios.get('http://localhost:3000/Designs', {
         headers: {
           "Content-Type": "text",
@@ -23,7 +46,7 @@ function DesignPage() {
       })
         .then((res) => {
           setdata(res.data)
-          console.log(res.data)
+          // console.log(res.data)
         })
         .catch((err) => {
           console.log(err)
@@ -52,8 +75,11 @@ function DesignPage() {
             <div className={css.header}>
               <img src={logo} alt="" className={css.logo} />
               <select name="Filter" id="" className={css.filter}>
-                <option value="" defaultValue={true}>Filter</option>
-                <option value="default">Default</option>
+                <option value="" defaultValue={true}>All</option>
+                <option value="Low to High Plot Area">Low to High Area</option>
+                <option value="High to Low Plot Area">High to Low Area</option>
+                <option value="Low to High Map Area">Low to High Area</option>
+                <option value="High to Low Map Area">High to Low Area</option>
               </select>
             </div>
             {
