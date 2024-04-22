@@ -5,7 +5,7 @@ const { auth } = require('express-oauth2-jwt-bearer')
 const Validation = async (req, res, next) => {
     try {
         const authenticate = req.headers["authorization"]
-        console.log("auth",req.headers.authorization)
+        // console.log("auth",req.headers.authorization)
         
         if (!authenticate) {
             return res.status(400).send("Please Provide Autherisation")
@@ -25,13 +25,13 @@ const Validation = async (req, res, next) => {
         }
         
         try {
-            console.log('auth', token)
-            console.log("Auth")
+            // console.log('auth', token)
+            // console.log("Auth")
             const checkJwt = auth({
                 audience: 'http://BuildVision',
                 issuerBaseURL: `https://dev-bhzywqcftmwjth02.us.auth0.com/`,
             })
-            console.log('decode',checkJwt)
+            // console.log('decode',checkJwt)
             next()
         } catch (error) {
             return res.status(500).json({ error: "Auth token error" })

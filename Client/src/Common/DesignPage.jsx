@@ -36,10 +36,10 @@ function DesignPage() {
   }, [filter, data]);
 
   useEffect(() => {
-    const getdata = async () => {
+    const getdata =async () => {
       const token = isAuthenticated ? await getAccessTokenSilently() : localStorage.getItem("Token")
       // console.log(isAuthenticated, token)
-      axios.get(`${import.meta.env.VITE_SERVER_URL}/Designs`, {
+      await axios.get(`${import.meta.env.VITE_SERVER_URL}/Designs`, {
         headers: {
           "Content-Type": "text",
           "Authorization": token
@@ -67,6 +67,8 @@ function DesignPage() {
       <h1>Loading ....</h1>
     )
   }
+
+  console.log(data)
   if(!error){
     return (
       <>
@@ -88,7 +90,7 @@ function DesignPage() {
                 return (
                   
                     <div className={css.card} key={item._id}>
-                      <img src={item.ImageOfDesign} alt="Image is not Available" className={css.img} />
+                      <img src={`${import.meta.env.VITE_SERVER_URL}/Upload/Design/${item.ImageOfDesign[0].replace(/ /g, "%20")}`} alt="Image is not Available" className={css.img} />
                       <ul className={css.details}>
                         <li>Creater : {item.ArchitectName}</li>
                         <li>Year of Experience : {item.ArchitectExperience}</li>

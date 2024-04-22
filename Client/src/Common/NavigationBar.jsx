@@ -64,11 +64,6 @@ function NavigationBar() {
   }, [toggle]);
 
 
-  const Logout = () => {
-    // logout({ logoutParams: { returnTo: window.location.origin } })
-    localStorage.clear()
-    navigate("/")
-  }
 
   return (
     <div>

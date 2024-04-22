@@ -19,7 +19,7 @@ function Profile() {
                 console.log(datas)
             })
             .catch((err) => console.log(err))
-        window.location.reload()
+        // window.location.reload()
     }
     useEffect(() => {
         axios(`${import.meta.env.VITE_SERVER_URL}/Profile/${role}/${id}`)
@@ -35,7 +35,8 @@ function Profile() {
             })
             .catch((err) => console.log(err))
         }
-    }, [design,data])
+    }, [data,design])
+
     return (
         <div className={navcss.navbar}>
             <NavigationBar />
@@ -68,7 +69,7 @@ function Profile() {
                             </div>
                         </div>
                         <div className={css.right}>
-                            {data && (data.ImageOfArchitect === undefined || data.ImageOfClient === undefined) ? <img src={profile} alt="" className={css.image} /> : <img src={`${import.meta.env.VITE_SERVER_URL}/Upload/Architect/${(data.ImageOfArchitect[0] ? data.ImageOfArchitect[0] : data.ImageOfClient[0]).replace(/ /g, '%20')}`} alt="" className={css.image} />}
+                            {data && (data.ImageOfArchitect === undefined || data.ImageOfClient === undefined) ?  <img src={`${import.meta.env.VITE_SERVER_URL}/Upload/Architect/${(data.ImageOfArchitect ? data.ImageOfArchitect[0] : data.ImageOfClient)}`} alt="" className={css.image} />:<img src={profile} alt="" className={css.image} />}
                         </div>
                     </header>
                 </div>

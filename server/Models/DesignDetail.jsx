@@ -5,8 +5,8 @@ const DesignSchema=new mongoose.Schema({
     ArchitectEmail: String,
     ArchitectName: String,
     ArchitectExperience: Number,
-    AreaOfPlot:Number,
-    AreaOfMap: Number,
+    AreaOfPlot:String,
+    AreaOfMap: String,
     DetailsOfMap: String,
     ImageOfDesign: [{type:String}]
 })

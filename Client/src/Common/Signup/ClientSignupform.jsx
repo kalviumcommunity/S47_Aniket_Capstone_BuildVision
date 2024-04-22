@@ -14,7 +14,6 @@ function ClientSignupform() {
 
     const { user, loginWithRedirect, isAuthenticated } = useAuth0();
     const navigate = useNavigate()
-    console.log(isAuthenticated)
     if (isAuthenticated) {
         localStorage.setItem("Role", "Client")
         localStorage.setItem("Email", user.email)
@@ -59,7 +58,7 @@ function ClientSignupform() {
 
         const fdata = async () => {
             // if(data){
-            axios.post("http://localhost:3000/ClientSignUp", formData)
+            axios.post(`${import.meta.env.VITE_SERVER_URL}/ClientSignUp`, formData)
                 .then((res) => {
                     alert(res.data.result)
                     localStorage.setItem("Token", res.data.token)

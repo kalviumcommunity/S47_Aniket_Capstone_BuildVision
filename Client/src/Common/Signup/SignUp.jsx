@@ -37,7 +37,7 @@ function SignUp() {
     console.log(formdata)
     const fdata = async () => {
       // if(data){
-      await axios.post(`${import.meta.env.SERVER_URL}/ArchiSignUp`, formdata)
+      await axios.post(`${import.meta.env.VITE_SERVER_URL}/ArchiSignUp`, formdata)
         .then((res) => {
           alert(res.data.result)
           navigate("/DesignPage")
@@ -66,7 +66,7 @@ function SignUp() {
     formdata.append("ArchiPhoneNumber", "0")
     const fdata = async () => {
       // if(data){
-      await axios.post(`${process.env.VITE_SERVER_URL}/ArchiSignUp`, formdata)
+      await axios.post(`${import.meta.env.VITE_SERVER_URL}/ArchiSignUp`, formdata)
         .then((res) => {
           alert(res.data.result)
           localStorage.setItem("Token", res.data.token)
