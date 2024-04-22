@@ -19,7 +19,7 @@ function Profile() {
                 console.log(datas)
             })
             .catch((err) => console.log(err))
-        window.location.reload()
+        // window.location.reload()
     }
     useEffect(() => {
         axios(`${import.meta.env.VITE_SERVER_URL}/Profile/${role}/${id}`)
@@ -35,7 +35,7 @@ function Profile() {
             })
             .catch((err) => console.log(err))
         }
-    }, [role, id])
+    }, [data])
     return (
         <div className={navcss.navbar}>
             <NavigationBar />
