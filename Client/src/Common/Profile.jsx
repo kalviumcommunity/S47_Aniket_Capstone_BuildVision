@@ -35,7 +35,7 @@ function Profile() {
             })
             .catch((err) => console.log(err))
         }
-    }, design,data)
+    }, [design,data])
     return (
         <div className={navcss.navbar}>
             <NavigationBar />
