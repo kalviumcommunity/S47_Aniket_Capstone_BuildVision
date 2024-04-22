@@ -10,6 +10,7 @@ import axios from 'axios'
 import google from "../../../Assets/GoogleLogo.png"
 import { useAuth0 } from '@auth0/auth0-react'
 
+
 function SignUp() {
   const [toggle, setToggle] = useState("")
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -36,7 +37,7 @@ function SignUp() {
     console.log(formdata)
     const fdata = async () => {
       // if(data){
-      await axios.post("http://localhost:3000/ArchiSignUp", formdata)
+      await axios.post(`${import.meta.env.SERVER_URL}/ArchiSignUp`, formdata)
         .then((res) => {
           alert(res.data.result)
           navigate("/DesignPage")
@@ -65,7 +66,7 @@ function SignUp() {
     formdata.append("ArchiPhoneNumber", "0")
     const fdata = async () => {
       // if(data){
-      await axios.post("http://localhost:3000/ArchiSignUp", formdata)
+      await axios.post(`${process.env.VITE_SERVER_URL}/ArchiSignUp`, formdata)
         .then((res) => {
           alert(res.data.result)
           localStorage.setItem("Token", res.data.token)

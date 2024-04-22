@@ -11,13 +11,13 @@ import { useAuth0 } from '@auth0/auth0-react'
 function ClientLoginform() {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const navigate = useNavigate()
-    const { user, loginWithRedirect, isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const { loginWithRedirect,} = useAuth0();
 
     const submit = (data) => {
 
         localStorage.setItem("Role", "Client");
         localStorage.setItem("Email", data.email);
-        axios.post("http://localhost:3000/ClientLogin", data)
+        axios.post(`${import.meta.env.VITE_SERVER_URL}/ClientLogin`, data)
             .then((res) => {
                 localStorage.setItem("Token", res.data.token)
                 // alert(res.data.result)

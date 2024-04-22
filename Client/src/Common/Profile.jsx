@@ -13,7 +13,7 @@ function Profile() {
     const id = useParams().id
 
     const deleteDesign = (did) => {
-        axios.delete(`http://localhost:3000/DeleteDesign/${role}/${id}/${did}`)
+        axios.delete(`${import.meta.env.VITE_SERVER_URL}/DeleteDesign/${role}/${id}/${did}`)
             .then((res) => res.json())
             .then((datas) => {
                 console.log(datas)
@@ -22,13 +22,13 @@ function Profile() {
         window.location.reload()
     }
     useEffect(() => {
-        axios(`http://localhost:3000/Profile/${role}/${id}`)
+        axios(`${import.meta.env.VITE_SERVER_URL}/Profile/${role}/${id}`)
             .then((datas) => {
                 setdata(datas.data)
             })
             .catch((err) => console.log(err))
         if(role === "Architect"){
-            axios(`http://localhost:3000/ShowDesign/${role}/${id}`)
+            axios(`${import.meta.env.VITE_SERVER_URL}/ShowDesign/${role}/${id}`)
             .then((datas) => {
                 setdesign(datas.data)
                 // console.log(datas)
@@ -68,7 +68,7 @@ function Profile() {
                             </div>
                         </div>
                         <div className={css.right}>
-                            {data && (data.ImageOfArchitect === undefined || data.ImageOfClient === undefined) ? <img src={profile} alt="" className={css.image} /> : <img src={`http://localhost:3000/Upload/Architect/${(data.ImageOfArchitect[0] ? data.ImageOfArchitect[0] : data.ImageOfClient[0]).replace(/ /g, '%20')}`} alt="" className={css.image} />}
+                            {data && (data.ImageOfArchitect === undefined || data.ImageOfClient === undefined) ? <img src={profile} alt="" className={css.image} /> : <img src={`${import.meta.env.VITE_SERVER_URL}/Upload/Architect/${(data.ImageOfArchitect[0] ? data.ImageOfArchitect[0] : data.ImageOfClient[0]).replace(/ /g, '%20')}`} alt="" className={css.image} />}
                         </div>
                     </header>
                 </div>
@@ -80,7 +80,7 @@ function Profile() {
                         {design.map((designs) => (
                             <div className={css.designcontainer} key={designs._id}>
                                 <div className={css.designleft}>
-                                    <img src={`http://localhost:3000/Upload/Design/${designs.ImageOfDesign[0].replace(/ /g, '%20')}`} alt="Image of Design is missing" className={css.designimage} />
+                                    <img src={`${import.meta.env.VITE_SERVER_URL}/Upload/Design/${designs.ImageOfDesign[0].replace(/ /g, '%20')}`} alt="Image of Design is missing" className={css.designimage} />
                                 </div>
                                 <div className={css.designright}>
                                     <ul>

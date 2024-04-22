@@ -8,6 +8,7 @@ import google from "../../../Assets/GoogleLogo.png"
 import { useAuth0 } from '@auth0/auth0-react'
 
 
+
 function ClientSignupform() {
     const { register, handleSubmit, formState: { errors } } = useForm()
 
@@ -25,7 +26,7 @@ function ClientSignupform() {
         formdata.append("Role", "Client");
         formdata.append("BirthYear", "0");
         formdata.append("ClientPhoneNumber", "0");
-        axios.post("http://localhost:3000/ClientSignUp", formdata)
+        axios.post(`${import.meta.env.VITE_SERVER_URL}/ClientSignUp`, formdata)
             .then((res) => {
                 alert(res.data.result)
                 navigate("/DesignPage")

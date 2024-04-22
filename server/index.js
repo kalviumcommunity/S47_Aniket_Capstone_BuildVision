@@ -18,7 +18,7 @@ app.use('/Upload', express.static(path.join(__dirname, 'Upload')))
 app.use(express.json())
 app.use(cors())
 
-mongoose.connect(process.env.Cluster, { dbName: "BuildVision" }, {
+mongoose.connect(process.env.CLUSTER, { dbName: "BuildVision" }, {
 }).then(() => {
     console.log("connected")
 }).catch((error) => {
@@ -88,7 +88,7 @@ app.post('/ArchiLogin', async (req, res) => {
         const pass = walidate.ArchiPassword
         const validpassword = await bcrypt.compare(password, pass)
         if (validpassword) {
-            const token = jwt.sign({ walidate }, "mynameiskaran", { expiresIn: "1d" })
+            const token = jwt.sign({ walidate },`${process.env.SECRET_KEY}`, { expiresIn: "1d" })
             res.json({ "result": "Login Successful", "token": token })
         }
         else {
@@ -106,7 +106,7 @@ app.post('/ClientLogin', async (req, res) => {
         const pass = walidate.ClientPassword
         const validpassword = await bcrypt.compare(password, pass)
         if (validpassword) {
-            const token = jwt.sign({ walidate }, "mynameiskaran", { expiresIn: "1d" })
+            const token = jwt.sign({ walidate },`${process.env.SECRET_KEY}`, { expiresIn: "1d" })
             res.json({ "result": "Login Successful", "token": token })
         }
         else {
@@ -157,7 +157,7 @@ app.post("/ArchiSignUp", archiupload.single("ImageOfArchitect"), async (req, res
             const hash = await bcrypt.hash(pass, 10)
             archidetailschema.create({ ...afiledata, ArchiPassword: hash })
                 .then(result => {
-                    const token = jwt.sign({ result }, "mynameiskaran", { expiresIn: "1d" })
+                    const token = jwt.sign({ result },`${process.env.SECRET_KEY}`, { expiresIn: "1d" })
                     res.json({ "result": "Signup Successful", "token": token })
                 })
                 .catch(err => console.log(err))
@@ -193,7 +193,7 @@ app.post("/ClientSignUp", clientupload.single("ImageOfClient"), async (req, res)
             clientdetailschema.create({ ...cfiledata, ClientPassword: hash })
                 .then(result => {
                     console.log(result);
-                    const token = jwt.sign({ result }, "mynameiskaran", { expiresIn: "1d" })
+                    const token = jwt.sign({ result },`${process.env.SECRET_KEY}`, { expiresIn: "1d" })
                     res.json({ "result": "Signup Successful", "token": token })
                 })
                 .catch(err => console.log(err))

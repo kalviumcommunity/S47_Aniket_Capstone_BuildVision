@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import navcss from '../../css/Navigation.module.css'
-import NavigationBar from '../NavigationBar'
 import css from '../../css/ProfileEdit.module.css'
 import { useParams ,useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import archiimage from '../../../Assets/ArchitectFormImage.png'
 import clientimage from '../../../Assets/ClientFormImage.png'
 import { useForm } from 'react-hook-form'
+
 
 
 function Profileedit() {
@@ -26,7 +25,7 @@ function Profileedit() {
     useEffect(() => {
         try {
             if(role === "Architect"){
-                axios.get(`http://localhost:3000/Profile/${role}/${id}`)
+                axios.get(`${import.meta.env.VITE_SERVER_URL}/Profile/${role}/${id}`)
                     .then((data) => {
                         setArchitectName(data.data.ArchitectName)    
                         setArchiPhoneNumber(data.data.PhoneNumber)
@@ -35,7 +34,7 @@ function Profileedit() {
                     })
                     .catch((err) => console.log(err))
             }else{
-                axios.get(`http://localhost:3000/Profile/${role}/${id}`)
+                axios.get(`${import.meta.env.VITE_SERVER_URL}/Profile/${role}/${id}`)
                     .then((data) => {
                         setClientName(data.data.ClientName)
                         setClinetPhoneNumber(data.data.PhoneNumber)
@@ -51,7 +50,7 @@ function Profileedit() {
     const submit = (data) => {
         if(role === "Architect"){
             if (data) {
-                axios.put(`http://localhost:3000/Profileedit/${role}/${id}`, {ArchitectName, YearOfExperience, NoOfProjects, ArchiPhoneNumber})
+                axios.put(`${import.meta.env.VITE_SERVER_URL}/Profileedit/${role}/${id}`, {ArchitectName, YearOfExperience, NoOfProjects, ArchiPhoneNumber})
                     .then((res) => {
                         console.log(res.data)
                     })
@@ -59,7 +58,7 @@ function Profileedit() {
             }   
         }else{
             if (data) {
-                axios.put(`http://localhost:3000/Profileedit/${role}/${id}`, {ClientName, BirthYear, ClinetPhoneNumber})
+                axios.put(`${import.meta.env.VITE_SERVER_URL}/Profileedit/${role}/${id}`, {ClientName, BirthYear, ClinetPhoneNumber})
                     .then((res) => {
                         console.log(res.data)
                     })
