@@ -6,6 +6,7 @@ import logo from '../../Assets/Logo.png'
 import css from '../css/Designpage.module.css'
 import { useAuth0 } from '@auth0/auth0-react'
 
+
 function DesignPage() {
   const [data, setdata] = useState([])
   const [error, setError] = useState("")
@@ -38,7 +39,7 @@ function DesignPage() {
     const getdata = async () => {
       const token = isAuthenticated ? await getAccessTokenSilently() : localStorage.getItem("Token")
       // console.log(isAuthenticated, token)
-      axios.get('http://localhost:3000/Designs', {
+      axios.get(`${import.meta.env.VITE_SERVER_URL}/Designs`, {
         headers: {
           "Content-Type": "text",
           "Authorization": token
@@ -74,16 +75,16 @@ function DesignPage() {
           <div className={css.head}>
             <div className={css.header}>
               <img src={logo} alt="" className={css.logo} />
-              <select name="Filter" id="" className={css.filter}>
+              <select name="Filter" id="" className={css.filter} onChange={(e) => setFilter(e.target.value)}>
                 <option value="" defaultValue={true}>All</option>
-                <option value="Low to High Plot Area">Low to High Area</option>
-                <option value="High to Low Plot Area">High to Low Area</option>
-                <option value="Low to High Map Area">Low to High Area</option>
-                <option value="High to Low Map Area">High to Low Area</option>
+                <option value="Low to High Plot Area">Low to High PLot Area</option>
+                <option value="High to Low Plot Area">High to Low Plot Area</option>
+                <option value="Low to High Map Area">Low to High Map Area</option>
+                <option value="High to Low Map Area">High to Low Map Area</option>
               </select>
             </div>
             {
-              data.map((item) => {
+              sortedData.map((item) => {
                 return (
                   
                     <div className={css.card} key={item._id}>

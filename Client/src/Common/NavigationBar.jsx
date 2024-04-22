@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useState } from 'react'
 import navcss from "../css/Navigation.module.css"
 import menu from "../../Assets/menu.png"
@@ -14,6 +14,7 @@ function NavigationBar() {
   const[id,setid]=useState("")
   const [toggle, settoggle] = useState(false)
   const { logout } = useAuth0();
+  const navigate=useNavigate()
 
   const togglebtn = () => {
     settoggle(!toggle)
@@ -30,10 +31,8 @@ function NavigationBar() {
   }
   
   useEffect(() => {
-    axios.get(`http://localhost:3000/Profilefind/${role}/${email}`)
-    .then((res) => {
-      setid(res.data._id)
-    console.log(res.data._id)})
+    axios.get(`${import.meta.env.VITE_SERVER_URL}/Profilefind/${role}/${email}`)
+    .then((res) => setid(res.data._id))
     .catch((err) => {
       console.log(err)
     })
@@ -66,8 +65,9 @@ function NavigationBar() {
 
 
   const Logout = () => {
-    logout({ logoutParams: { returnTo: window.location.origin } })
+    // logout({ logoutParams: { returnTo: window.location.origin } })
     localStorage.clear()
+    navigate("/")
   }
 
   return (

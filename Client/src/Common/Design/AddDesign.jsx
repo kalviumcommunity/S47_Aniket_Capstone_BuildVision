@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { useEffect } from 'react'
 
+
 function AddDesign() {
   const { id } = useParams()
   const { role } = useParams()
@@ -16,7 +17,7 @@ function AddDesign() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/Profile/${role}/${id}`, {
+    axios.get(`${import.meta.env.VITE_SERVER_URL}/Profile/${role}/${id}`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -46,7 +47,7 @@ function AddDesign() {
     formdata.append("ImageOfDesign", data.ImageOfDesign[0])
 
     const ddata = () => {
-      axios.post(`http://localhost:3000/AddDesign/${role}/${id}`, formdata)
+      axios.post(`${process.env.VITE_SERVER_URL}/AddDesign/${role}/${id}`, formdata)
         .then((res) => console.log(res))
         .catch((err) => console.log(err))
     }

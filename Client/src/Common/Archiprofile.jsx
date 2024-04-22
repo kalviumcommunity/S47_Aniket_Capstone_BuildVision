@@ -7,6 +7,7 @@ import profile from "../../Assets/profile.png"
 import axios from 'axios'
 import { useAuth0 } from "@auth0/auth0-react"
 
+
 function ArchiProfile() {
   const [data, setdata] = useState([])
   const [error, setError] = useState("")
@@ -38,7 +39,7 @@ function ArchiProfile() {
     // console.log("token", localStorage.getItem("Token"))
     const getdata = async () => {
       const token = isAuthenticated ? await getAccessTokenSilently() : localStorage.getItem("Token")
-      axios.get('http://localhost:3000/ArchiSignU', {
+      axios.get(`${import.meta.env.VITE_SERVER_URL}/ArchiSignU`, {
         headers: {
           "Content-Type": "application/json",
           "Authorization": token
@@ -86,7 +87,7 @@ function ArchiProfile() {
                   <div>
                     {datas.ImageOfArchitect && datas.ImageOfArchitect[0] && datas.ImageOfArchitect[0] !== "undefined" ? (
                       <img
-                        src={`http://localhost:3000/Upload/Architect/${datas.ImageOfArchitect[0].replace(/ /g, '%20')}`}
+                        src={`${import.meta.env.VITE_SERVER_URL}/Upload/Architect/${datas.ImageOfArchitect[0].replace(/ /g, '%20')}`}
                         alt=""
                         className={css.archiimage}
                       />

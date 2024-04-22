@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import Image from '../../../Assets/EditDesignFormImage.png'
 import css from '../../css/EditDesignForm.module.css'
 
+
 function EditDesign() {
   const did = useParams().did
   const role = useParams().role
@@ -18,7 +19,7 @@ function EditDesign() {
 
 
   const submit = () => {
-    axios.put(`http://localhost:3000/EditDesign/${role}/${id}/${did}`, { AreaOfPlot, AreaOfMap, DetailsOfMap })
+    axios.put(`${import.meta.env.VITE_SERVER_URL}/EditDesign/${role}/${id}/${did}`, { AreaOfPlot, AreaOfMap, DetailsOfMap })
       .then((res) => {
         console.log(res.data)
       })
@@ -29,7 +30,7 @@ function EditDesign() {
   }
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/Design/${role}/${id}/${did}`)
+    axios.get(`${import.meta.env.VITE_SERVER_URL}/Design/${role}/${id}/${did}`)
       .then((res) => {
         setdata(res.data)
       })

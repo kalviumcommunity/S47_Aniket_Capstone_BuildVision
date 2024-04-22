@@ -10,17 +10,18 @@ import google from "../../../Assets/GoogleLogo.png"
 import axios from 'axios'
 import { useAuth0 } from '@auth0/auth0-react'
 
+
 function Login() {
   const [toggle, setToggle] = useState("")
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate()
-  const { user, loginWithRedirect, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { loginWithRedirect} = useAuth0();
 
 
   const submit = (data) => {
     localStorage.setItem("Role", "Architect");
     localStorage.setItem("Email", data.email);
-    axios.post("http://localhost:3000/ArchiLogin", data)
+    axios.post(`${import.meta.env.VITE_SERVER_URL}/ArchiLogin`, data)
       .then((res) => {
         localStorage.setItem("Token", res.data.token)
         alert(res.data.result)
@@ -32,7 +33,8 @@ function Login() {
         console.log(err)
       })
   }
-
+  // console.log("VITE_SERVER_URL value:", import.meta.env.VITE_SERVER_URL);
+  
   useEffect(() => {
     const body = document.getElementsByClassName(css.container)[0]
     const archi = document.getElementsByClassName(css.archi)[0]
