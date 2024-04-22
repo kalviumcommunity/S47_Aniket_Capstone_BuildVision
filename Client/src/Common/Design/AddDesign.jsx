@@ -47,14 +47,13 @@ function AddDesign() {
     formdata.append("ImageOfDesign", data.ImageOfDesign[0])
 
     const ddata = () => {
-      axios.post(`${process.env.VITE_SERVER_URL}/AddDesign/${role}/${id}`, formdata)
+      axios.post(`${import.meta.env.VITE_SERVER_URL}/AddDesign/${role}/${id}`, formdata)
         .then((res) => console.log(res))
         .catch((err) => console.log(err))
     }
     ddata()
 
     navigate(`/Profile/${role}/${id}`)
-    window.location.reload()
   }
 
 

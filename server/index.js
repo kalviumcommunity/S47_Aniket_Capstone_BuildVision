@@ -26,7 +26,6 @@ mongoose.connect(process.env.CLUSTER, { dbName: "BuildVision" }, {
 })
 
 app.get('/ArchiSignU', Validation, async (req, res) => {
-    console.log("hello");
     await archidetailschema.find({})
         .then(result => res.json(result))
         .catch(err => res.json(err))
@@ -39,8 +38,7 @@ app.get('/Profilefind/:role/:email', async (req, res) => {
     }
     else if(req.params.role == "Client") {
         await clientdetailschema.findOne({ ClientEmail: req.params.email })
-            .then(result =>{ res.json(result)
-            console.log(result)})
+            .then(result =>{ res.json(result)})
             .catch(err => console.log(err))
     }
 })
@@ -54,8 +52,7 @@ app.get('/Profile/:role/:id', async (req, res) => {
     if (req.params.role == "Architect") {
         await archidetailschema.findById(id)
             .then(result => { 
-                res.json(result) 
-            console.log(result)})
+                res.json(result)})
             .catch(err => console.log(err))
     }
     else if (req.params.role == "Client") {
@@ -88,7 +85,6 @@ app.get('/Design/:role/:id/:did', async (req, res) => {
 app.put('/Profileedit/:role/:id', async (req, res) => {
     const id = req.params.id
     if (req.params.role == "Architect") {
-        console.log(req.body)
         await archidetailschema.findByIdAndUpdate(id, req.body)
             .then(result => { res.json(result) })
             .catch(err => console.log(err))
@@ -147,7 +143,6 @@ app.post('/ClientLogin', async (req, res) => {
 
 app.post("/ArchiSignUp", archiupload.single("ImageOfArchitect"), async (req, res) => {
     const afiledata = req.body
-    console.log(afiledata);
     const userexist = await archidetailschema.findOne({ ArchiEmail: afiledata.ArchiEmail })
     if (userexist) {
         return res.status(400).json({ message: "user already exists" })
@@ -177,7 +172,6 @@ app.post("/ArchiSignUp", archiupload.single("ImageOfArchitect"), async (req, res
 })
 app.post("/ClientSignUp", clientupload.single("ImageOfClient"), async (req, res) => {
     const cfiledata = req.body
-    console.log(cfiledata);
     // console.log(pass);
 
 
@@ -196,7 +190,6 @@ app.post("/ClientSignUp", clientupload.single("ImageOfClient"), async (req, res)
             const hash = await bcrypt.hash(pass, 10)
             clientdetailschema.create({ ...cfiledata, ClientPassword: hash })
                 .then(result => {
-                    console.log(result);
                     const token = jwt.sign({ result },`${process.env.SECRET_KEY}`, { expiresIn: "1d" })
                     res.json({ "result": "Signup Successful", "token": token })
                 })
