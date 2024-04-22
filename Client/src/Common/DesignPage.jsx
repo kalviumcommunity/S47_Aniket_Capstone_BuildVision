@@ -59,7 +59,7 @@ function DesignPage() {
             {
               data.map((item) => {
                 return (
-                  <>
+                  
                     <div className={css.card} key={item._id}>
                       <img src={item.ImageOfDesign} alt="Image is not Available" className={css.img} />
                       <ul className={css.details}>
@@ -70,7 +70,7 @@ function DesignPage() {
                         <li>Details of map : {item.DetailsOfMap}</li>
                       </ul>
                     </div>
-                  </>
+                  
                 )
               })
             }
