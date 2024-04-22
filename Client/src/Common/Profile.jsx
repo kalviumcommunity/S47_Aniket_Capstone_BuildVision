@@ -35,7 +35,7 @@ function Profile() {
             })
             .catch((err) => console.log(err))
         }
-    }, [data])
+    }, [role, id])
     return (
         <div className={navcss.navbar}>
             <NavigationBar />
@@ -55,7 +55,7 @@ function Profile() {
                             {data && data.Role === "Client" && (
                                 <>
                                     <h3>Name : {data.ClientName}</h3>
-                                    <h3>Birth Year : {data.BirthYear || "****"}</h3>
+                                    <h3>D.O.B : {data.DOB || "**/**/****"}</h3>
                                     <h3>Phone Number : +91 {data.ClientPhoneNumber ? data.ClientPhoneNumber : "**********"}</h3>
                                     <h3>Email : {data.ClientEmail}</h3>
                                 </>
