@@ -7,16 +7,16 @@ import './main.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Auth0Provider
-        domain="dev-bhzywqcftmwjth02.us.auth0.com"
-        clientId="SFLCcjHxeJQlxI4xLXIjR0K3RdraTT8c"
-        authorizationParams={{
-          redirect_uri: window.location.origin
-        }}
-        >
+    <Auth0Provider
+      domain="dev-bhzywqcftmwjth02.us.auth0.com"
+      clientId="SFLCcjHxeJQlxI4xLXIjR0K3RdraTT8c"
+      authorizationParams={{
+        redirect_uri: window.location.origin
+      }}
+    >
+      <BrowserRouter>
         <App />
-      </Auth0Provider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </Auth0Provider>
   </React.StrictMode>
 )

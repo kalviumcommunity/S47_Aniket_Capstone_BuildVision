@@ -26,7 +26,7 @@ mongoose.connect(process.env.CLUSTER, { dbName: "BuildVision" }, {
 })
 
 app.get('/ArchiSignU', Validation, async (req, res) => {
-    await archidetailschema.find({})
+        await archidetailschema.find({})
         .then(result => res.json(result))
         .catch(err => res.json(err))
 })
@@ -143,6 +143,7 @@ app.post('/ClientLogin', async (req, res) => {
 
 app.post("/ArchiSignUp", archiupload.single("ImageOfArchitect"), async (req, res) => {
     const afiledata = req.body
+    console.log("gxdgh")
     const userexist = await archidetailschema.findOne({ ArchiEmail: afiledata.ArchiEmail })
     if (userexist) {
         return res.status(400).json({ message: "user already exists" })

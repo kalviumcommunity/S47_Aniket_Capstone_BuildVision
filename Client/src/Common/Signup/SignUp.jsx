@@ -16,15 +16,16 @@ function SignUp() {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
 
-  const { user, loginWithRedirect, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { user, loginWithRedirect, isAuthenticated } = useAuth0();
   const navigate = useNavigate()
 
   // console.log(image)
-  if(isAuthenticated){
+  const fdata = async () => {
     // document.cookie=`Role=${Architect}; expires=Thu, 01 Jan 9999 23:59:59 GMT`
     // document.cookie=`Email=${data.email || user1.email}; expires=Thu, 01 Jan 9999 00:00:00 UTC;`
     localStorage.setItem("Role", "Architect")
-    localStorage.setItem("Email", user.email)
+    // localStorage.setItem("Email", user.email)
+    console.log(FormData)
     const formdata = new FormData();
     formdata.append("ImageOfArchitect", user.picture)
     formdata.append("ArchitectName", user.name)
@@ -34,21 +35,20 @@ function SignUp() {
     formdata.append("YearOfExperience", "0")
     formdata.append("ArchiPhoneNumber", "0")
 
-    console.log(formdata)
-    const fdata = async () => {
-      // if(data){
-      await axios.post(`${import.meta.env.VITE_SERVER_URL}/ArchiSignUp`, formdata)
-        .then((res) => {
-          alert(res.data.result)
-          navigate("/DesignPage")
-          window.location.reload()
-        })
-        // .catch((err) => alert(err.response.data.message))
-
-      // }
-    }
-    fdata()
+    // if(data){
+    await axios.post(`${import.meta.env.VITE_SERVER_URL}/ArchiSignUp`, formdata)
+      .then((res) => {
+        alert(res.data.result)
+        // navigate("/DesignPage")
+      })
   }
+  useEffect(() => {
+    console.log("inside use effect")
+      fdata()
+  }, [user, isAuthenticated])
+
+
+  
   const onSubmit = (data) => {
     // document.cookie=`Role=${Architect}; expires=Thu, 01 Jan 9999 23:59:59 GMT`
     // document.cookie=`Email=${data.email || user1.email}; expires=Thu, 01 Jan 9999 00:00:00 UTC;`
@@ -70,8 +70,8 @@ function SignUp() {
         .then((res) => {
           alert(res.data.result)
           localStorage.setItem("Token", res.data.token)
-          navigate("/DesignPage")
-          window.location.reload()
+          // navigate("/DesignPage")
+          // window.location.reload()
         })
         .catch((err) => alert(err.response.data.message))
 
@@ -125,17 +125,6 @@ function SignUp() {
     }
   }, [toggle])
 
-
-  const token = async () => {
-    const res = await getAccessTokenSilently()
-    console.log("Token", res)
-  }
-
-
-  if (isAuthenticated) {
-    token()
-    navigate("/DesignPage")
-  }
 
   return (
     <div className={css.container}>

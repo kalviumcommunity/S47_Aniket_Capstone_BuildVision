@@ -28,7 +28,7 @@ function ClientSignupform() {
         axios.post(`${import.meta.env.VITE_SERVER_URL}/ClientSignUp`, formdata)
             .then((res) => {
                 alert(res.data.result)
-                navigate("/DesignPage")
+                // navigate("/DesignPage")
             })
             .catch((err) => alert(err.response))
     }
@@ -63,7 +63,7 @@ function ClientSignupform() {
                     alert(res.data.result)
                     localStorage.setItem("Token", res.data.token)
 
-                    navigate("/DesignPage")
+                    // navigate("/DesignPage")
                     window.location.reload()
                 })
 
