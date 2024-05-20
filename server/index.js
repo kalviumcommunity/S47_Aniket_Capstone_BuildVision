@@ -17,7 +17,7 @@ app.get("/",(req,res)=>{
 })
 
 app.post("/post",(req,res)=>{
-    res.json(req.body)
+    res.send("Post request")
 })
 
 app.listen(3000,()=>{
