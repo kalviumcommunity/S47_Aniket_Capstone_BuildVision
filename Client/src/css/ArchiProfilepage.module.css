@@ -1,0 +1,72 @@
+.main{
+    width: 90vw;
+    height: 200vh;
+    margin-left: 15vh;
+}
+
+.head{
+    height: 10vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 3vh 15vh;
+}
+
+.logo{
+    height: 10vh;
+}
+
+.filter{
+    padding: 1vh;
+    font-size: x-large;
+    background-color: rgb(195, 195, 195);
+    border-radius: 15px ;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.body{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    font-size: 20px;
+}
+
+.card{
+    width: 23vw;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    margin: 3vh;
+    padding: 0 3vh 3vh 3vh;
+    width: 20vw;
+}
+
+.contact{
+    border: 1px solid black  ;
+}
+
+.archiimage{
+    height: 120px;
+    width: 120px;
+    border-radius: 100%;
+    background-color: #e1e1e1;
+    padding: 3vh;
+    margin: 3vh 0;
+}
+
+.contactbtn{
+    font-size: 17px;
+    padding: .5vh 2vh;
+    border-radius: 10px;
+    background-color: #00B3FF;
+    border: 1px solid black;
+    margin: 1vh;
+}
