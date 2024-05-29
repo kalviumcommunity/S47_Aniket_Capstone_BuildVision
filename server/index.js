@@ -217,6 +217,10 @@ app.post('/AddDesign/:role/:id', designupload.single("ImageOfDesign"), (req, res
 });
 
 
+app.post("/post",(req,res)=>{
+    res.send("Post request")
+  
+  
 app.delete('/DeleteDesign/:role/:id/:did', async (req, res) => {
     const id = req.params.did
     if (req.params.role == "Architect") {
@@ -230,5 +234,3 @@ app.delete('/DeleteDesign/:role/:id/:did', async (req, res) => {
 app.listen(3000, () => {
     console.log("Server 3000 is running")
 })
-
-
