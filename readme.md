@@ -1,4 +1,4 @@
-Topic :- BuildVision
+# Topic :- BuildVision
 
 # Project Idea:-
 User authentication and login page:- Users can login and register to our website with their email id and access to website features.
@@ -18,13 +18,12 @@ Then I will try a chat application for my site.
 Deploy front-end.
 
 # Task
-# Features:-
 - [x] JWT authentication
 - [x] auth0 authentication
 - [x] CRUD operations
-- [] Chat feature
-# UI:-
+- [ ] Chat feature
+
 - [x] Sliding window for Signup and Login
 - [x] side bar or navigation bar with sliding feature
 - [x] designing card of design page and architect page
-- [] Final UI or finalizing
+- [ ] Final UI or finalizing
