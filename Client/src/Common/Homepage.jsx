@@ -16,9 +16,8 @@ function Homepage() {
   }
   useEffect(()=>{
     if(token || isAuthenticated){
-      // navigate("/DesignPage")
+      navigate("/DesignPage")
     }
-    
   },[token,isAuthenticated])
   return (
     <div className={css.container}>

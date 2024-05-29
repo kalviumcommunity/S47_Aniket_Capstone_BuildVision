@@ -8,6 +8,7 @@ const DesignSchema=new mongoose.Schema({
     AreaOfPlot:Number,
     AreaOfMap: Number,
     DetailsOfMap: String,
+    Price: Number,
     ImageOfDesign: [{type:String}]
 })
 const DesignDetail = mongoose.model('design_detail', DesignSchema)

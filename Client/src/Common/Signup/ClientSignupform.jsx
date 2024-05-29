@@ -12,25 +12,10 @@ import { useAuth0 } from '@auth0/auth0-react'
 function ClientSignupform() {
     const { register, handleSubmit, formState: { errors } } = useForm()
 
-    const { user, loginWithRedirect, isAuthenticated } = useAuth0();
-    const navigate = useNavigate()
-    if (isAuthenticated) {
+    const { user, loginWithRedirect } = useAuth0();
+    const handlegooglebtn = async () => {
         localStorage.setItem("Role", "Client")
-        localStorage.setItem("Email", user.email)
-        const formdata=new FormData();
-
-        formdata.append("ClientEmail", user.email)
-        formdata.append("ClientName", user.name)
-        formdata.append("ImageOfClient", user.picture)
-        formdata.append("Role", "Client");
-        formdata.append("BirthYear", "0");
-        formdata.append("ClientPhoneNumber", "0");
-        axios.post(`${import.meta.env.VITE_SERVER_URL}/ClientSignUp`, formdata)
-            .then((res) => {
-                alert(res.data.result)
-                // navigate("/DesignPage")
-            })
-            .catch((err) => alert(err.response))
+        await loginWithRedirect({ authorizationParams: { 'screen_hint': 'signup' }, returnTo: window.location.origin + "/DesignPage" })
     }
 
     const onSubmit = (data) => {
@@ -45,7 +30,7 @@ function ClientSignupform() {
         console.log(data)
         const formData = new FormData();
 
-        formData.append("ClientEmail", data.ClientEmail )
+        formData.append("ClientEmail", data.ClientEmail)
         formData.append("ClientName", data.ClientName);
         formData.append("ClientPassword", data.ClientPassword);
         formData.append("Role", "Client");
@@ -63,8 +48,8 @@ function ClientSignupform() {
                     alert(res.data.result)
                     localStorage.setItem("Token", res.data.token)
 
-                    // navigate("/DesignPage")
-                    window.location.reload()
+                    navigate("/DesignPage")
+                    // window.location.reload()
                 })
 
                 .catch((err) => alert(err.response))
@@ -83,7 +68,7 @@ function ClientSignupform() {
 
                         <h1>Client</h1>
 
-                        <button className={css.googlebtn} onClick={() => loginWithRedirect({ authorizationParams: { 'screen_hint': 'signup' },returnTo: window.location.origin + "/DesignPage"})}><img src={google} alt="" className={css.google} /><h3 className={css.googletext}>Google</h3></button>
+                        <button className={css.googlebtn} onClick={handlegooglebtn}><img src={google} alt="" className={css.google} /><h3 className={css.googletext}>Google</h3></button>
 
 
                         <p>Already have an account? <Link to={"/Login"}>Log In</Link></p>

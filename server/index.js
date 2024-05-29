@@ -143,7 +143,6 @@ app.post('/ClientLogin', async (req, res) => {
 
 app.post("/ArchiSignUp", archiupload.single("ImageOfArchitect"), async (req, res) => {
     const afiledata = req.body
-    console.log("gxdgh")
     const userexist = await archidetailschema.findOne({ ArchiEmail: afiledata.ArchiEmail })
     if (userexist) {
         return res.status(400).json({ message: "user already exists" })

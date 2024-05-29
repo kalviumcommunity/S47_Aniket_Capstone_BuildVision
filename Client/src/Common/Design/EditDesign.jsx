@@ -13,13 +13,14 @@ function EditDesign() {
 
 
   const [data, setdata] = useState([])
-  const [AreaOfMap, setAreaOfMap] = useState("")
+  const [AreaOfMap, setAreaOfMap] = useState("")         
   const [AreaOfPlot, setAreaOfPlot] = useState("")
   const [DetailsOfMap, setDetailsOfMap] = useState("")
+  const [Price, setPrice] = useState("")         
 
 
   const submit = () => {
-    axios.put(`${import.meta.env.VITE_SERVER_URL}/EditDesign/${role}/${id}/${did}`, { AreaOfPlot, AreaOfMap, DetailsOfMap })
+    axios.put(`${import.meta.env.VITE_SERVER_URL}/EditDesign/${role}/${id}/${did}`, { AreaOfPlot, AreaOfMap, DetailsOfMap,Price })
       .then((res) => {
         console.log(res.data)
       })
@@ -54,6 +55,10 @@ function EditDesign() {
           <div className={css.details}>
             <label>Details of Map</label>
             <input type="text" defaultValue={data.DetailsOfMap} onChange={(e) => setDetailsOfMap(e.target.value)} className={css.input} />
+          </div>
+          <div className={css.details}>
+            <label>Price</label>
+            <input type="number" defaultValue={data.Price} onChange={(e) => setPrice(e.target.value)} className={css.input} />
           </div>
           <div className={css.details}>
             <label>Image of Design</label>

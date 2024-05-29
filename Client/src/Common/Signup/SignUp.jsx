@@ -20,35 +20,37 @@ function SignUp() {
   const navigate = useNavigate()
 
   // console.log(image)
-  const fdata = async () => {
-    // document.cookie=`Role=${Architect}; expires=Thu, 01 Jan 9999 23:59:59 GMT`
-    // document.cookie=`Email=${data.email || user1.email}; expires=Thu, 01 Jan 9999 00:00:00 UTC;`
-    localStorage.setItem("Role", "Architect")
-    // localStorage.setItem("Email", user.email)
-    console.log(FormData)
-    const formdata = new FormData();
-    formdata.append("ImageOfArchitect", user.picture)
-    formdata.append("ArchitectName", user.name)
-    formdata.append("ArchiEmail", user.email)
-    formdata.append("Role", "Architect")
-    formdata.append("NoOfProjects", "0")
-    formdata.append("YearOfExperience", "0")
-    formdata.append("ArchiPhoneNumber", "0")
+  // const fdata = async () => {
+  //   // document.cookie=`Role=${Architect}; expires=Thu, 01 Jan 9999 23:59:59 GMT`
+  //   // document.cookie=`Email=${data.email || user1.email}; expires=Thu, 01 Jan 9999 00:00:00 UTC;`
+  //   localStorage.setItem("Role", "Architect")
+  //   // localStorage.setItem("Email", user.email)
+  //   console.log(FormData)
+  //   const formdata = new FormData();
+  //   formdata.append("ImageOfArchitect", user.picture)
+  //   formdata.append("ArchitectName", user.name)
+  //   formdata.append("ArchiEmail", user.email)
+  //   formdata.append("Role", "Architect")
+  //   formdata.append("NoOfProjects", "0")
+  //   formdata.append("YearOfExperience", "0")
+  //   formdata.append("ArchiPhoneNumber", "0")
 
-    // if(data){
-    await axios.post(`${import.meta.env.VITE_SERVER_URL}/ArchiSignUp`, formdata)
-      .then((res) => {
-        alert(res.data.result)
-        // navigate("/DesignPage")
-      })
-  }
-  useEffect(() => {
-    console.log("inside use effect")
-      fdata()
-  }, [user, isAuthenticated])
+  //   // if(data){
+  //   await axios.post(`${import.meta.env.VITE_SERVER_URL}/ArchiSignUp`, formdata)
+  //     .then((res) => {
+  //       alert(res.data.result)
+  //       // navigate("/DesignPage")
+  //     })
+  // }
+  // useEffect(() => {
+  //   if(isAuthenticated) {
+  //     console.log("inside use effect")
+  //       fdata()
+  //   }
+  // },[user,isAuthenticated])
 
 
-  
+
   const onSubmit = (data) => {
     // document.cookie=`Role=${Architect}; expires=Thu, 01 Jan 9999 23:59:59 GMT`
     // document.cookie=`Email=${data.email || user1.email}; expires=Thu, 01 Jan 9999 00:00:00 UTC;`
@@ -70,7 +72,7 @@ function SignUp() {
         .then((res) => {
           alert(res.data.result)
           localStorage.setItem("Token", res.data.token)
-          // navigate("/DesignPage")
+          navigate("/DesignPage")
           // window.location.reload()
         })
         .catch((err) => alert(err.response.data.message))
@@ -78,6 +80,11 @@ function SignUp() {
       // }
     }
     fdata()
+  }
+
+  const handlegooglebtn = async () => {
+    localStorage.setItem("Role", "Architect")
+    await loginWithRedirect({ authorizationParams: { 'screen_hint': 'signup' }, returnTo: window.location.origin + "/DesignPage" }) 
   }
 
   useEffect(() => {
@@ -142,7 +149,7 @@ function SignUp() {
             </div>
             <div className={css.archiform}>
               <h1>Architecture</h1>
-              <button className={css.googlebtn} onClick={() => loginWithRedirect({ authorizationParams: { 'screen_hint': 'signup' } })}><img src={google} alt="" className={css.google} /><h3 className={css.googletext}>Google</h3></button>
+              <button className={css.googlebtn} onClick={handlegooglebtn}><img src={google} alt="" className={css.google} /><h3 className={css.googletext}>Google</h3></button>
 
               <p>Already have an account? <Link to={"/Login"}>Log In</Link></p>
               <form className={css.form} method="post" encType="multipart/form-data">
