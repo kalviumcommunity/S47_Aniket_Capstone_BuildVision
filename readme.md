@@ -16,3 +16,15 @@ Then I will start my work on the front-end and on the UI of my page.
 Then I will set up authentication and authorization on my site.
 Then I will try a chat application for my site.
 Deploy front-end.
+
+# Task
+# Features:-
+- [x] JWT authentication
+- [x] auth0 authentication
+- [x] CRUD operations
+- [] Chat feature
+# UI:-
+- [x] Sliding window for Signup and Login
+- [x] side bar or navigation bar with sliding feature
+- [x] designing card of design page and architect page
+- [] Final UI or finalizing
