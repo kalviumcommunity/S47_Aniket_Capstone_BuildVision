@@ -90,6 +90,7 @@ function Profile() {
                                         <li>Dimentions of Plot : {designs.AreaOfPlot}</li>
                                         <li>Dimentions of Map : {designs.AreaOfMap}</li>
                                         <li>Details of Map : {designs.DetailsOfMap}</li>
+                                        <li>Price : {designs.Price}</li>
                                     </ul>
                                     <div className={css.buttons}>
                                         <Link to={`/EditDesign/${role}/${id}/${designs._id}`}><button className={css.editbtn}>Edit</button></Link>

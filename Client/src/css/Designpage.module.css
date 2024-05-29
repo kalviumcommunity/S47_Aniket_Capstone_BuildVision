@@ -7,7 +7,6 @@
 .card{
     padding: 4vh;
     width: 80vw;
-    height: 20vh;
     margin: 3vh 7vh; 
     border: 2px solid black;
     display: flex;
@@ -27,6 +26,7 @@
 .details{
     font-size: 22px;
     font-weight: 600;
+    width: 700px;
 }
 .logo{
     height: 10vh;
@@ -42,4 +42,12 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
+}
+.btn{
+    padding: 5px;
+    font-size: 20px;
+    margin-top: 10px;
+    border-radius: 10px;
+    background-color: rgb(115, 255, 255);
+    border: 2px solid #335DB4;
 }

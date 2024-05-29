@@ -21,16 +21,18 @@ function Login() {
   const submit = (data) => {
     localStorage.setItem("Role", "Architect");
     localStorage.setItem("Email", data.email);
+    console.log(import.meta.env.VITE_SERVER_URL)
     axios.post(`${import.meta.env.VITE_SERVER_URL}/ArchiLogin`, data)
-      .then((res) => {
+    .then((res) => {
+        console.log(res.data)
         localStorage.setItem("Token", res.data.token)
         alert(res.data.result)
         navigate("/DesignPage")
 
       })
       .catch((err) => {
+        // alert(err.response)
         alert(err.response.data)
-        console.log(err)
       })
   }
   // console.log("VITE_SERVER_URL value:", import.meta.env.VITE_SERVER_URL);

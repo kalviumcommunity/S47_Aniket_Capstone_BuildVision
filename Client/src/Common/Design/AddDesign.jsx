@@ -44,6 +44,7 @@ function AddDesign() {
     formdata.append("AreaOfPlot", data.AreaOfPlot)
     formdata.append("AreaOfMap", data.AreaOfMap)
     formdata.append("DetailsOfMap", data.DetailsOfMap)
+    formdata.append("Price", data.Price)
     formdata.append("ImageOfDesign", data.ImageOfDesign[0])
 
     const ddata = () => {
@@ -67,12 +68,12 @@ function AddDesign() {
             <form className={css.form}>
               <div className={css.detail}>
                 <label>Dimentions of Plot</label>
-                <input type='text' {...register("AreaOfPlot", { required: "Area of Plot is required" })} placeholder="Enter Area of Plot" className={css.input} />
+                <input type='text' {...register("AreaOfPlot", { required: "Area of Plot is required" })} placeholder="Enter Area of Plot in msq" className={css.input} />
               </div>
               {errors.AreaOfPlot && <p className={css.alert}>{errors.AreaOfPlot.message}</p>}
               <div className={css.detail}>
                 <label>Dimentions of Map</label>
-                <input type='text' {...register("AreaOfMap", { required: "Area of Map is required" })} placeholder="Enter Area of Map" className={css.input} />
+                <input type='text' {...register("AreaOfMap", { required: "Area of Map is required" })} placeholder="Enter Area of Map in msq" className={css.input} />
               </div>
               {errors.AreaOfMap && <p className={css.alert}>{errors.AreaOfMap.message}</p>}
               <div className={css.detail}>
@@ -81,8 +82,13 @@ function AddDesign() {
               </div>
               {errors.DetailsOfMap && <p className={css.alert}>{errors.DetailsOfMap.message}</p>}
               <div className={css.detail}>
+                <label>Price</label>
+                <input type='number' {...register("Price", { required: "Price is required" })} placeholder="Enter Price" className={css.input} />
+              </div>
+              {errors.Price && <p className={css.alert}>{errors.Price.message}</p>}
+              <div className={css.detail}>
                 <label>Image of Map</label>
-                <input type='file' {...register("ImageOfDesign", )} placeholder="Upload Image of Map" className={css.input} />
+                <input type='file' {...register("ImageOfDesign",{ required: "Image of Map is required"} )} placeholder="Upload Image of Map" className={css.input} />
               </div>
               {errors.ImageOfDesign && <p className={css.alert}>{errors.ImageOfDesign.message}</p>}
               <div className={css.btns}>
