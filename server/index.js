@@ -104,24 +104,6 @@ app.put('/EditDesign/:role/:id/:did', async (req, res) => {
     }
 })
 
-app.post('/ArchiLogin', async (req, res) => {
-    const { email, password } = req.body
-    const walidate = await archidetailschema.findOne({ ArchiEmail: email })
-    if (walidate) {
-        const pass = walidate.ArchiPassword
-        const validpassword = await bcrypt.compare(password, pass)
-        if (validpassword) {
-            const token = jwt.sign({ walidate },`${process.env.SECRET_KEY}`, { expiresIn: "1d" })
-            res.json({ "result": "Login Successful", "token": token })
-        }
-        else {
-            return res.status(400).send("Entries doesn't match")
-        }
-    }
-    else {
-        return res.status(400).send("User Doest Exist")
-    }
-})
 app.post('/ClientLogin', async (req, res) => {
     const { email, password } = req.body
     const walidate = await clientdetailschema.findOne({ ClientEmail: email })
@@ -141,6 +123,24 @@ app.post('/ClientLogin', async (req, res) => {
     }
 })
 
+app.post('/ArchiLogin', async (req, res) => {
+    const { email, password } = req.body
+    const walidate = await archidetailschema.findOne({ ArchiEmail: email })
+    if (walidate) {
+        const pass = walidate.ArchiPassword
+        const validpassword = await bcrypt.compare(password, pass)
+        if (validpassword) {
+            const token = jwt.sign({ walidate },`${process.env.SECRET_KEY}`, { expiresIn: "1d" })
+            res.json({ "result": "Login Successful", "token": token })
+        }
+        else {
+            return res.status(400).send("Entries doesn't match")
+        }
+    }
+    else {
+        return res.status(400).send("User Doest Exist")
+    }
+})
 app.post("/ArchiSignUp", archiupload.single("ImageOfArchitect"), async (req, res) => {
     const afiledata = req.body
     const userexist = await archidetailschema.findOne({ ArchiEmail: afiledata.ArchiEmail })
