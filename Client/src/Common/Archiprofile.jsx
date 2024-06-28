@@ -13,27 +13,23 @@ function ArchiProfile() {
   const [error, setError] = useState("")
   const { isAuthenticated, getAccessTokenSilently, isLoading } = useAuth0();
   const [filter, setFilter] = useState("")
-  const [sortedData, setSortedData] = useState([])
 
-  useEffect(() => {
-    const sorted = [...data].sort((a, b) => {
-      if (filter === "") {
-        return 0;
-      } else if (filter === "Low to High Projects") {
-        return a.NoOfProjects - b.NoOfProjects;
-      } else if (filter === "High to Low Projects") {
-        return b.NoOfProjects - a.NoOfProjects;
-      } else if (filter === "Low to High Experience") {
-        return a.YearOfExperience - b.YearOfExperience;
-      } else if (filter === "High to Low Experience") {
-        return b.YearOfExperience - a.YearOfExperience;
-      } else {
-        return 0;
-      }
-    });
-    setSortedData(sorted);
-  }, [filter, data]);
-  
+  const filterdata = () => {
+    if (!filter) {
+      return data;
+    }
+
+    const [min, max] = filter.split('-');
+    const minYears = parseInt(min);
+    const maxYears = max === '+' ? Infinity : parseInt(max);
+
+    return data.filter(
+      (architect) => architect.YearOfExperience >= minYears && architect.YearOfExperience < maxYears
+    );
+  };
+
+  const filterArchitect=filterdata()
+
 
   useEffect(() => {
     // console.log("token", localStorage.getItem("Token"))
@@ -74,15 +70,15 @@ function ArchiProfile() {
             <div className={css.head}>
               <img src={logo} alt="" className={css.logo} />
               <select name="Filter" id="" className={css.filter} aria-placeholder='Filter' onChange={(e) => setFilter(e.target.value)}>
-                <option value="" defaultValue={true}>ALL</option>
-                <option value="Low to High Projects">Low to High Projects</option>
-                <option value="High to Low Projects">High to Low Projects</option>
-                <option value="Low to High Experience">Low to High Experience</option>
-                <option value="High to Low Experience">High to Low Experience</option>
+                <option value="" defaultValue={true}>Year Of Experiece</option>
+                <option value="0-5">0-5 years</option>
+                <option value="5-10">5-10 years</option>
+                <option value="10-15">10-15 years</option>
+                <option value="15+">15+ years</option>
               </select>
             </div>
             <div className={css.body}>
-              {sortedData.map((datas) => (
+              {filterArchitect.map((datas) => (
                 <div className={css.card} key={datas._id}>
                   <div>
                     {datas.ImageOfArchitect && datas.ImageOfArchitect[0] && datas.ImageOfArchitect[0] !== "undefined" ? (
