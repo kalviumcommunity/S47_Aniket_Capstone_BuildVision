@@ -9,6 +9,10 @@ import Profile from './Common/Profile'
 import Profileedit from './Common/Edit/Profileedit'
 import AddDesign from './Common/Design/AddDesign'
 import EditDesign from './Common/Design/EditDesign'
+import ClientForget from './Common/ForgetPassword/ClientForget'
+import ArchiForget from './Common/ForgetPassword/ArchiForget'
+import ArchiChangePassword from './Common/ForgetPassword/ArchiChangePassword'
+import ClientChangePassword from './Common/ForgetPassword/ClientChangePassword'
 
 function App() {
   return(
@@ -23,6 +27,10 @@ function App() {
         <Route path="/Profileedit/:role/:id" element={<Profileedit/>}/>
         <Route path='/AddDesign/:role/:id' element={<AddDesign/>}/>
         <Route path='/EditDesign/:role/:id/:did' element={<EditDesign/>}/>
+        <Route path='/ClientForgetPass' element={<ClientForget/>}/>
+        <Route path='/ArchiForgetPass' element={<ArchiForget/>}/>
+        <Route path='/ArchitectChangePassword' element={<ArchiChangePassword/>}/>
+        <Route path='/ClientChangePassword' element={<ClientChangePassword/>}/>
       </Routes>
     </>
   )

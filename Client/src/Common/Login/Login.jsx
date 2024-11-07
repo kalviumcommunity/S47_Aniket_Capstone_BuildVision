@@ -120,6 +120,7 @@ function Login() {
                   <input type='password' {...register("password", { required: "Password is required" })} placeholder="Enter Password" />
                 </div>
                 {errors.password && <p className={css.alert}>{errors.password.message}</p>}
+                <Link to={'/ArchiForgetPass'} className={css.forgetpass}>Forget Password?</Link>
                 <button type="submit" className={css.archisubmit} onClick={handleSubmit(submit)}>LogIn</button>
               </form>
 

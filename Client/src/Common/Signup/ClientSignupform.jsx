@@ -27,19 +27,19 @@ function ClientSignupform() {
         localStorage.setItem("Email", data.ClientEmail);
 
 
-        console.log(data)
+        // console.log(data)
         const formData = new FormData();
 
         formData.append("ClientEmail", data.ClientEmail)
         formData.append("ClientName", data.ClientName);
         formData.append("ClientPassword", data.ClientPassword);
         formData.append("Role", "Client");
-        formData.append("D.O.B", ISODate(""));
+        formData.append("D.O.B", (""));
         formData.append("ClientPhoneNumber", "0");
         formData.append("ImageOfClient", data.ImageOfClient[0]);
 
-        console.log(data);
-        console.log(formData);
+        // console.log(data);
+        // console.log(formData);
 
         const fdata = async () => {
             // if(data){
@@ -52,7 +52,11 @@ function ClientSignupform() {
                     // window.location.reload()
                 })
 
-                .catch((err) => alert(err.response))
+                .catch((err) => {
+                    // console.log(err.response.data)
+
+                }
+                )
 
             // }
         }
