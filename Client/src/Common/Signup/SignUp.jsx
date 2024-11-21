@@ -54,8 +54,6 @@ function SignUp() {
   const onSubmit = (data) => {
     // document.cookie=`Role=${Architect}; expires=Thu, 01 Jan 9999 23:59:59 GMT`
     // document.cookie=`Email=${data.email || user1.email}; expires=Thu, 01 Jan 9999 00:00:00 UTC;`
-    localStorage.setItem("Role", "Architect")
-    localStorage.setItem("Email", data.email)
 
     const formdata = new FormData();
     formdata.append("ImageOfArchitect", data.ImageOfArchitect[0] || "")
@@ -72,6 +70,9 @@ function SignUp() {
         .then((res) => {
           alert(res.data.result)
           localStorage.setItem("Token", res.data.token)
+          localStorage.setItem("userid", res.data.id)
+          localStorage.setItem("Role", "Architect")
+          localStorage.setItem("Email", data.email)
           navigate("/DesignPage")
           // window.location.reload()
         })
@@ -84,7 +85,7 @@ function SignUp() {
 
   const handlegooglebtn = async () => {
     localStorage.setItem("Role", "Architect")
-    await loginWithRedirect({ authorizationParams: { 'screen_hint': 'signup' }, returnTo: window.location.origin + "/DesignPage" }) 
+    await loginWithRedirect({ authorizationParams: { 'screen_hint': 'signup' }, returnTo: window.location.origin + "/DesignPage" })
   }
 
   useEffect(() => {

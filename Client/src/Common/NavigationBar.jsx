@@ -6,6 +6,7 @@ import menu from "../../Assets/menu.png"
 import archi from "../../Assets/arcitect.png"
 import design from "../../Assets/design.png"
 import profile from "../../Assets/profile.png"
+import chat from "../../Assets/chat.png"
 import logoutimg from "../../Assets/logout.png"
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from 'axios'
@@ -73,6 +74,7 @@ function NavigationBar() {
           <Link><div className={navcss.navicon}><img src={menu} alt="" className={navcss.menu} onClick={togglebtn} /><p className={navcss.navtext}>Menu</p></div></Link>
           <Link to="/DesignPage"><div className={navcss.navicon} ><img src={design} alt="" className={navcss.design} /><p className={navcss.navtext}>Design</p></div></Link>
           <Link to="/ArchiProfile"><div className={navcss.navicon}><img src={archi} alt="" className={navcss.archi} /><p className={navcss.navtext}>Architect</p></div></Link>
+          <Link to="/Chatting"><div className={navcss.navicon}><img src={chat} alt="" className={navcss.chat} /><p className={navcss.navtext}>Chatting</p></div></Link>
         </div>
         <div className={navcss.nav}>
           <Link to={`/Profile/${role}/${id}`}><div className={navcss.navicon}><img src={profile} alt="" className={navcss.profile} /><p className={navcss.navtext}>Profile</p></div></Link>

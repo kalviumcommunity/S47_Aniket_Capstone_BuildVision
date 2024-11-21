@@ -20,6 +20,7 @@ function ClientLoginform() {
         axios.post(`${import.meta.env.VITE_SERVER_URL}/ClientLogin`, data)
             .then((res) => {
                 localStorage.setItem("Token", res.data.token)
+                localStorage.setItem("userid", res.data.id)
                 alert(res.data.result)
                 navigate("/DesignPage")
 

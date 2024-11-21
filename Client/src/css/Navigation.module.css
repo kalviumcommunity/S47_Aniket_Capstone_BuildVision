@@ -57,3 +57,7 @@
     text-decoration: none;
     font-size: 150%; 
 }
+.chat{
+    height: 30px;
+    padding: 10px;
+}
