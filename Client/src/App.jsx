@@ -13,27 +13,27 @@ import ClientForget from './Common/ForgetPassword/ClientForget'
 import ArchiForget from './Common/ForgetPassword/ArchiForget'
 import ArchiChangePassword from './Common/ForgetPassword/ArchiChangePassword'
 import ClientChangePassword from './Common/ForgetPassword/ClientChangePassword'
-
+import Chat from './Common/Chatting/chat'
 function App() {
-  return(
+  return (
     <>
       <Routes>
-        <Route path="/" element={<Homepage/>}/>
-        <Route path='/Login' element={<Login/>}></Route>
-        <Route path='/SignUp' element={<SignUp/>}/>
-        <Route path='/ArchiProfile' element={<ArchiProfile/>}></Route>
-        <Route path="/DesignPage" element={<DesignPage/>}/>
-        <Route path="/Profile/:role/:id" element={<Profile/>}/>
-        <Route path="/Profileedit/:role/:id" element={<Profileedit/>}/>
-        <Route path='/AddDesign/:role/:id' element={<AddDesign/>}/>
-        <Route path='/EditDesign/:role/:id/:did' element={<EditDesign/>}/>
-        <Route path='/ClientForgetPass' element={<ClientForget/>}/>
-        <Route path='/ArchiForgetPass' element={<ArchiForget/>}/>
-        <Route path='/ArchitectChangePassword' element={<ArchiChangePassword/>}/>
-        <Route path='/ClientChangePassword' element={<ClientChangePassword/>}/>
+        <Route path="/" element={<Homepage />} />
+        <Route path='/Login' element={<Login />}></Route>
+        <Route path='/SignUp' element={<SignUp />} />
+        <Route path='/ArchiProfile' element={<ArchiProfile />}></Route>
+        <Route path="/DesignPage" element={<DesignPage />} />
+        <Route path="/Profile/:role/:id" element={<Profile />} />
+        <Route path="/Profileedit/:role/:id" element={<Profileedit />} />
+        <Route path='/AddDesign/:role/:id' element={<AddDesign />} />
+        <Route path='/EditDesign/:role/:id/:did' element={<EditDesign />} />
+        <Route path='/ClientForgetPass' element={<ClientForget />} />
+        <Route path='/ArchiForgetPass' element={<ArchiForget />} />
+        <Route path='/ArchitectChangePassword' element={<ArchiChangePassword />} />
+        <Route path='/ClientChangePassword' element={<ClientChangePassword />} />
+        <Route path='/Chatting' element={<Chat />} />
       </Routes>
     </>
   )
 }
-
 export default App

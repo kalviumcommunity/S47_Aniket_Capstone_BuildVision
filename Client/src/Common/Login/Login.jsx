@@ -15,17 +15,18 @@ function Login() {
   const [toggle, setToggle] = useState("")
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate()
-  const { loginWithRedirect} = useAuth0();
+  const { loginWithRedirect } = useAuth0();
 
 
   const submit = (data) => {
-    localStorage.setItem("Role", "Architect");
-    localStorage.setItem("Email", data.email);
     console.log(import.meta.env.VITE_SERVER_URL)
     axios.post(`${import.meta.env.VITE_SERVER_URL}/ArchiLogin`, data)
-    .then((res) => {
-        console.log(res.data)
+      .then((res) => {
+        // console.log(res.data)
+        localStorage.setItem("Role", "Architect");
+        localStorage.setItem("Email", data.email);
         localStorage.setItem("Token", res.data.token)
+        localStorage.setItem("userid", res.data.id)
         alert(res.data.result)
         navigate("/DesignPage")
 
@@ -36,7 +37,7 @@ function Login() {
       })
   }
   // console.log("VITE_SERVER_URL value:", import.meta.env.VITE_SERVER_URL);
-  
+
   useEffect(() => {
     const body = document.getElementsByClassName(css.container)[0]
     const archi = document.getElementsByClassName(css.archi)[0]

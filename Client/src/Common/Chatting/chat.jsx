@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Chatting from "./Zustand/Zustand";
 import css from '../../css/chat.module.css';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useSocketContext } from './Context/socketcontext';
 import { formatDistanceToNow } from 'date-fns';
 import navcss from '../../css/Navigation.module.css'
@@ -25,7 +25,6 @@ function Chat() {
     const Email = localStorage.getItem("Email");
     const userRole = localStorage.getItem("Role");
     const id = localStorage.getItem("userid");
-    const navigate = useNavigate();
 
     const lastMessageRef = useRef();
 
@@ -124,7 +123,7 @@ function Chat() {
         }
     );
 
-    // console.log(conversation)
+    console.log(conversation)
 
     if (error) {
         return (

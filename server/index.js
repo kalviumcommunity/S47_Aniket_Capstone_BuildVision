@@ -14,10 +14,24 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { Validation } = require('./Auth/Auth.js')
 const sendotp = require('./Helper/nodemailer.js')
+const { getRecieversSocketid, io } = require('./Helper/Socket.js');
+const Conversation = require('./Models/conversation.jsx')
+const Message = require('./Models/message.jsx')
+const ArchiDetail = require('./Models/ArchiDetail.jsx')
+const ClientDetail = require('./Models/ClientDetail.jsx')
+
+
 
 app.use('/Upload', express.static(path.join(__dirname, 'Upload')))
 app.use(express.json())
 app.use(cors())
+
+app.use(cors({
+    origin:"http://localhost:5173",
+    // origin:`*`,
+    credentials:true,
+    methods: ["GET","POST"]
+}))
 
 mongoose.connect(process.env.CLUSTER, { dbName: "BuildVision" }, {
 }).then(() => {
@@ -173,11 +187,11 @@ app.put('/Profileedit/:role/:id', async (req, res) => {
         console.log(error)
     }
 })
-app.put('/EditDesign/:role/:id/:did', async (req, res) => {
+app.put('/EditDesign', async (req, res) => {
     try {
-        const id = req.params.did
-        if (req.params.role == "Architect") {
-            await designdetailschema.findByIdAndUpdate(id, req.body)
+        const { role, did } = req.body
+        if (role == "Architect") {
+            await designdetailschema.findByIdAndUpdate(did, req.body.data)
                 .then(result => { res.json(result) })
                 .catch(err => console.log(err))
         }
@@ -231,10 +245,11 @@ app.post('/ClientLogin', async (req, res) => {
         const walidate = await clientdetailschema.findOne({ ClientEmail: email })
         if (walidate) {
             const pass = walidate.ClientPassword
+            const id = walidate._id
             const validpassword = await bcrypt.compare(password, pass)
             if (validpassword) {
                 const token = jwt.sign({ walidate }, `${process.env.SECRET_KEY}`, { expiresIn: "1d" })
-                res.json({ "result": "Login Successful", "token": token })
+                res.json({ "result": "Login Successful", "token": token ,"id":id})
             }
             else {
                 return res.status(400).send("Entries doesn't match")
@@ -253,10 +268,11 @@ app.post('/ArchiLogin', async (req, res) => {
         const walidate = await archidetailschema.findOne({ ArchiEmail: email })
         if (walidate) {
             const pass = walidate.ArchiPassword
+            const id = walidate._id
             const validpassword = await bcrypt.compare(password, pass)
             if (validpassword) {
                 const token = jwt.sign({ walidate }, `${process.env.SECRET_KEY}`, { expiresIn: "1d" })
-                res.json({ "result": "Login Successful", "token": token })
+                res.json({ "result": "Login Successful", "token": token, "id": id})
             }
             else {
                 return res.status(400).send("Entries doesn't match")
@@ -273,8 +289,12 @@ app.post("/ArchiSignUp", archiupload.single("ImageOfArchitect"), async (req, res
     try {
         const afiledata = req.body
         const userexist = await archidetailschema.findOne({ ArchiEmail: afiledata.ArchiEmail })
+        const nametaken = await archidetailschema.findOne({ ArchitectName: afiledata.ArchitectName })
+        if (nametaken) {
+            return res.status(400).json({ message: "Name Already Taken" })
+        }
         if (userexist) {
-            return res.status(400).json({ message: "user already exists" })
+            return res.status(400).json({ message: "User Already Exists" })
         }
         else {
             if (req.file) {
@@ -286,7 +306,7 @@ app.post("/ArchiSignUp", archiupload.single("ImageOfArchitect"), async (req, res
                 archidetailschema.create({ ...afiledata, ArchiPassword: hash })
                     .then(result => {
                         const token = jwt.sign({ result }, `${process.env.SECRET_KEY}`, { expiresIn: "1d" })
-                        res.json({ "result": "Signup Successful", "token": token })
+                        res.json({ "result": "Signup Successful", "token": token , "id":result._id})
                     })
                     .catch(err => console.log(err))
             }
@@ -307,8 +327,11 @@ app.post("/ClientSignUp", clientupload.single("ImageOfClient"), async (req, res)
         const cfiledata = req.body
         // console.log(pass);
         const userexist = await clientdetailschema.findOne({ ClientEmail: cfiledata.ClientEmail })
+        const nametaken = await archidetailschema.findOne({ ArchitectName: afiledata.ArchitectName })
+        if (nametaken) {
+            return res.status(400).json({ message: "Name Already Taken" })
+        }
         if (userexist) {
-            // console.log(userexist);
             return res.status(400).json({ message: "user already exists" })
         }
         else {
@@ -321,8 +344,9 @@ app.post("/ClientSignUp", clientupload.single("ImageOfClient"), async (req, res)
                 const hash = await bcrypt.hash(pass, 10)
                 clientdetailschema.create({ ...cfiledata, ClientPassword: hash })
                     .then(result => {
+                        // console.log(result)
                         const token = jwt.sign({ result }, `${process.env.SECRET_KEY}`, { expiresIn: "1d" })
-                        res.json({ "result": "Signup Successful", "token": token })
+                        res.json({ "result": "Signup Successful", "token": token , "id":result._id})
                     })
                     .catch(err => console.log(err))
             }
@@ -338,17 +362,15 @@ app.post("/ClientSignUp", clientupload.single("ImageOfClient"), async (req, res)
         console.log(error)
     }
 })
-app.post('/AddDesign/:role/:id', designupload.single("ImageOfDesign"), (req, res) => {
+app.post('/AddDesign', designupload.single("ImageOfDesign"), (req, res) => {
     try {
-        if (req.params.role === "Architect") {
-            const dfiledata = req.body;
-            if (req.file) {
-                dfiledata.ImageOfDesign = req.file.filename;
-            }
-            designdetailschema.create(dfiledata)
-                .then(result => res.send(result))
-                .catch(err => console.log(err));
+        const dfiledata = req.body;
+        if (req.file) {
+            dfiledata.ImageOfDesign = req.file.filename;
         }
+        designdetailschema.create(dfiledata)
+            .then(result => res.send(result))
+            .catch(err => console.log(err));
     } catch (error) {
         console.log(error)
     }
@@ -376,8 +398,146 @@ app.delete('/DeleteDesign/:role/:id/:did', async (req, res) => {
 
 
 
-app.listen(3000, () => {
-    console.log("Server 3000 is running")
+
+
+
+
+
+app.get('/GetArchiData', async (req, res) => {
+    try {
+        const data = await ArchiDetail.find().select("-password"); // Select all user data except password
+        res.send(data);
+    } catch (error) {
+        console.error("GetUserDataError:", error);
+        res.status(500).send("Server error");
+    }
+});
+app.get('/GetClientData', async (req, res) => {
+    try {
+        const data = await ClientDetail.find().select("-password"); // Select all user data except password
+        res.send(data);
+    } catch (error) {
+        console.error("GetUserDataError:", error);
+        res.status(500).send("Server error");
+    }
+});
+// app.get('/GetCurrentUser/:email',async (req, res) => {
+//     const email=req.params.email
+//     // console.log(email)
+//     try {
+//         const data = await User.findOne({ email: email })
+//         res.send(data)
+//     }
+//     catch (error) {
+//         console.error("getcurrentuserError:", error);
+//     }
+// })
+
+
+
+app.get('/GetUserDataById',async (req, res) => {
+    const {id,role}=req.query
+    // console.log("id",id)
+    try {
+        const data = role === "Architect" 
+            ? await archidetailschema.findOne({ _id: id }) 
+            : await clientdetailschema.findOne({ _id: id });
+        res.send(data)
+    }
+    catch (error) {
+        console.error("getuserdatabyidError:", error);
+    }
 })
 
 
+
+app.get('/:recieverid',async (req, res) => {
+    try {
+        const recieverid=req.params.recieverid
+        const senderid=req.query.senderid
+        // console.log(senderid)
+
+        const conversation=await Conversation.findOne({
+            participants: {
+                $all: [senderid, recieverid]
+            }
+        }).populate("messages"); //not reference but actual messages
+
+        // console.log(conversation)
+        if(!conversation || !conversation.messages){
+            return res.status(404).json({error:"Start a conversation"});
+        }
+        const messages=conversation.messages || []
+        
+        res.status(200).json(messages)
+    }
+
+    catch (error) {
+        console.error("Error:", error);
+        res.send(500).json({error:"Internal Server Error"});
+    }
+})
+
+app.post('/SendMessage/:recieverid',async (req, res) => {
+    const recieverid = req.params.recieverid
+
+    const { senderid, msg:message } = req.body
+    // console.log(senderid, recieverid, message)
+
+    try {
+        let conversation=await Conversation.findOne({
+            participants: {
+                $all: [senderid, recieverid]
+            }
+        })
+        if(!conversation){
+            conversation=await Conversation.create({participants: [senderid, recieverid]})
+        }
+
+        const newMessage = new Message({
+            senderid,
+            recieverid,
+            message
+        })
+        if(newMessage){
+            conversation.messages.push(newMessage._id)
+        }
+        
+        //save parallely
+        await Promise.all([
+            newMessage.save(),
+            conversation.save()
+        ])
+
+        // socket io for message
+        const recieversocketid=getRecieversSocketid(recieverid)
+        if(recieversocketid){
+            // use to send event to specific user
+            // console.log("recieversocketid",recieversocketid)
+            io.to(recieversocketid).emit("newMessage",newMessage)
+
+        }
+
+        res.status(201).json(newMessage);
+    }
+    catch (error) {
+        console.error("Error:", error);
+        res.send(500).json({error:"Internal Server Error"});
+    }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.listen(3000, () => {
+    console.log("Server 3000 is running")
+})
