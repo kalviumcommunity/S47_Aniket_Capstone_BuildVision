@@ -32,7 +32,8 @@ export const SocketContextProvider = ({ children }) => {
     useEffect(() => {
         const fetchData =  () => {
             if (userdata) {
-                    const socket = io(`http://localhost:3000`, {
+                    // const socket = io(`http://localhost:3000`, {
+                    const socket = io(`https://s47-aniket-capstone-buildvision.onrender.com`, {
                         query: {
                             userid: userdata._id
                         }

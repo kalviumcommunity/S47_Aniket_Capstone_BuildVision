@@ -19,10 +19,10 @@ function Login() {
 
 
   const submit = (data) => {
-    console.log(import.meta.env.VITE_SERVER_URL)
+    // console.log(import.meta.env.VITE_SERVER_URL)
     axios.post(`${import.meta.env.VITE_SERVER_URL}/ArchiLogin`, data)
       .then((res) => {
-        // console.log(res.data)
+        console.log(res.data)
         localStorage.setItem("Role", "Architect");
         localStorage.setItem("Email", data.email);
         localStorage.setItem("Token", res.data.token)

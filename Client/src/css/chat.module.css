@@ -1,36 +1,226 @@
-.head{
-    width: 90vw;
+.head {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.chatarea{
-    width: 300px;
-    height: 500px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    flex-wrap: wrap;
-}
-.messagearea{
-    border: 1px solid black;
-    width: 300px;
-    height: 500px;
+    justify-content: space-between;
+    margin-left: 10%;
+    width: 100%;
+    height: 100vh;
+  }
+  
+  .chatmembers {
+    width: 25%;
+    overflow-y: auto;
+    padding-right: 10px;
+  }
+  
+  .chatarea {
+    width: 70%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    overflow:scroll;
-    text-align: none;
-}
-.message{
-    height: 10px;
-}
-.messagetext{
-    font-size: 18px;
-}
-.time{
-    line-height: 0px;
-    font-size: 11px;
-    margin-top: 2px;
-}
+    padding-left: 5vw;
+  }
+  
+  .chatholder {
+    display: flex;
+    justify-content: center;
+    margin: 2% 0;
+    font-size: 1.5rem;
+  }
+  
+  .messagearea {
+    width: 90%;
+    height: 80%;
+    border: 1px solid #e1e1e1;
+    border-radius: 10px;
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    background-color: #e1f5fe;
+  }
+  
+  .messagetypearea {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 10px 0;
+  }
+  
+  .time {
+    font-size: 0.8rem;
+    color: #777;
+  }
+  
+  .messagetext {
+    width: 80%;
+    font-size: 1.2rem;
+    padding: 10px;
+    background-color: #e1f5fe;
+    border-radius: 12px;
+    margin: 5px 10px 0 0;
+  }
+  
+  .button {
+    width: 10%;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #00b3ff;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+  
+  .searchtext {
+    width: 90%;
+    height: 3vh;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 10px;
+    margin-bottom: 10%;
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+  }
+  
+  .userhead {
+    margin: 2% 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .userhead:hover {
+    background-color: #e1f5fe;
+  }
+  
+  .userhead.selected {
+    background-color: #00b3ff;
+    color: white;
+  }
+  
+  /* Media Queries for responsiveness */
+  
+  @media (max-width: 1024px) {
+    /* For tablets */
+    .head {
+      flex-direction: column;
+      margin-left: 5%;
+      width: 90%;
+    }
+  
+    .chatmembers {
+        width: 100%;
+        /* margin-bottom: 10px; */
+        margin-left: 3.5%;
+        height:100%;
+    }
+  
+    .chatarea {
+      width: 100%;
+      margin-left: 0;
+    }
+  
+    .chatholder {
+      font-size: 1.3rem;
+    }
+  
+    .messagetext {
+      font-size: 1rem;
+    }
+  
+    .button {
+      width: 20%;
+    }
+
+    .searchtext{
+        margin-bottom: 0;
+    }
+    .messagetypearea{
+        width: 93%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    /* For mobile screens */
+    .head {
+      flex-direction: column;
+      margin-left: 0;
+      padding: 5%;
+    }
+  
+    .chatmembers {
+      width: 100%;
+      margin-bottom: 10px;
+      padding-right: 0;
+      height: 90%;
+    }
+  
+    .chatarea {
+      width: 100%;
+      margin-left: 0;
+      height: 90%;
+    }
+  
+    .chatholder {
+      font-size: 1.2rem;
+      margin: 5% 0;
+      
+    }
+    .messagetext {
+      font-size: 0.9rem;
+      padding: 8px;
+    }
+  
+    .button {
+      width: 30%;
+    }
+  
+    .searchtext {
+      height: 5vh;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    /* For very small screens (e.g., phones in portrait mode) */
+    .head {
+      flex-direction: column;
+      margin-left: 0;
+      padding: 10px;
+    }
+  
+    .chatmembers {
+      width: 100%;
+      margin-bottom: 5px;
+    }
+  
+    .chatarea {
+      width: 100%;
+      margin-left: 0;
+      padding-left: 5%;
+    }
+  
+    .chatholder {
+      font-size: 1.1rem;
+    }
+  
+    .messagetext {
+      font-size: 0.85rem;
+      padding: 6px;
+    }
+  
+    .button {
+      width: 40%;
+    }
+  
+    .searchtext {
+      font-size: 0.9rem;
+      padding: 8px;
+      height: 6vh;
+    }
+  
+    .userhead {
+      font-size: 1rem;
+      margin: 1% 0;
+    }
+  }
+  

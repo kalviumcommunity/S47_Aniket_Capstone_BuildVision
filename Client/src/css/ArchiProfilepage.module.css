@@ -1,72 +1,95 @@
-.main{
-    width: 90vw;
-    height: 200vh;
-    margin-left: 15vh;
-}
-
-.head{
-    height: 10vh;
+.main {
+    width: 90%;
+    margin-left: 7%;
+  }
+  
+  .head {
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    margin: 3vh 15vh;
-}
-
-.logo{
+    margin: 2vh 0;
+  }
+  
+  .logo {
     height: 10vh;
-}
-
-.filter{
+  }
+  
+  .filter {
     padding: 1vh;
-    font-size: x-large;
-    background-color: rgb(195, 195, 195);
-    border-radius: 15px ;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.body{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    font-size: 20px;
-}
-
-.card{
-    width: 23vw;
-    border: 1px solid black;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    margin: 3vh;
-    padding: 0 3vh 3vh 3vh;
-    width: 20vw;
-}
-
-.contact{
-    border: 1px solid black  ;
-}
-
-.archiimage{
+    font-size: large;
+    background-color: rgb(220, 220, 220);
+    border-radius: 8px;
+    border: none;
+    transition: 0.3s ease;
+  }
+  
+  .filter:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .body {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2vh 0;
+  }
+  
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .archiimage {
     height: 120px;
     width: 120px;
-    border-radius: 100%;
-    background-color: #e1e1e1;
-    padding: 3vh;
-    margin: 3vh 0;
-}
-
-.contactbtn{
-    font-size: 17px;
-    padding: .5vh 2vh;
-    border-radius: 10px;
-    background-color: #00B3FF;
-    border: 1px solid black;
-    margin: 1vh;
-}
+    border-radius: 50%;
+    margin-bottom: 1rem;
+  }
+  
+  .name {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .contactbtn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    background-color: #00b3ff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .contactbtn:hover {
+    background-color: #008ace;
+  }
+  
+  @media (max-width: 768px) {
+    .filter {
+      font-size: medium;
+    }
+  
+    .card {
+      padding: 1rem;
+    }
+  
+    .buttons {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+  
