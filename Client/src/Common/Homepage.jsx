@@ -1,42 +1,96 @@
-import React ,{useEffect}from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
-import css from "../css/homepage.module.css"
-import logo from "../../Assets/Logo.png"
-import img from "../../Assets/HomeImage.png"
-import { useAuth0 } from '@auth0/auth0-react'
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import css from "../css/homepage.module.css";
+import logo from "../../Assets/Logo.png";
+import heroImg from "../../Assets/HomeImage.png";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Homepage() {
-  const navigate=useNavigate()
-  const {user,isAuthenticated,getAccessTokenSilently}=useAuth0()
-  const token=localStorage.getItem("Token")
-  if(isAuthenticated){
-    localStorage.setItem("Email",user.email)
-    localStorage.setItem("Token",getAccessTokenSilently())
+  const navigate = useNavigate();
+  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const token = localStorage.getItem("Token");
 
+  if (isAuthenticated) {
+    localStorage.setItem("Email", user.email);
+    localStorage.setItem("Token", getAccessTokenSilently());
   }
-  useEffect(()=>{
-    if(token || isAuthenticated){
-      navigate("/DesignPage")
+
+  useEffect(() => {
+    if (token || isAuthenticated) {
+      navigate("/DesignPage");
     }
-  },[token,isAuthenticated])
+  }, [token, isAuthenticated]);
+
   return (
     <div className={css.container}>
-      <div className={css.left}>
-        <img src={logo} alt="" className={css.logo} />
-        <img src={img} alt="" className={css.img} />
-      </div>
-      <div className={css.left}>
-        <h1 className={css.intro}>Introduction</h1>
-        <p className={css.pera}>Welcome to Build Vision, your all-in-one solution for architecture enthusiasts! Whether you're an aspiring architect, a professional designer, or someone who simply appreciates beautiful buildings, our app has something for you. <br />
-          Explore a wide range of architectural marvels from around the world, discover the latest trends in design, and connect with like-minded individuals in our vibrant community. From iconic landmarks to cutting-edge innovations, immerse yourself in the fascinating world of architecture like never before. <br />
-          Join us on this journey as we celebrate the creativity, ingenuity, and passion behind the structures that shape our world. Let's build something extraordinary together. Welcome to Build vision.</p>
-        <div className={css.btns}>
-          <Link to="/Login"><button className={css.LogInBtn}>Log In</button></Link>
-          <Link to="/Signup"><button className={css.SignUpBtn}>Sign Up</button></Link>
+      {/* Navbar */}
+      <nav className={css.navbar}>
+        <img src={logo} alt="Build Vision Logo" className={css.navLogo} />
+        <div className={css.navLinks}>
+          <Link to="/Login" className={css.navLink}>Login</Link>
+          <Link to="/Signup" className={`${css.navLink} ${css.highlightLink}`}>Sign Up</Link>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <div className={css.heroSection}>
+        {/* Left Content */}
+        <div className={css.heroText}>
+          <h1 className={css.mainHeading}>
+            Build Your Vision with <span className={css.brandHighlight}>Build Vision</span>
+          </h1>
+          <p className={css.subText}>
+            The ultimate platform for architecture enthusiasts! Explore iconic
+            designs, connect with creative minds, and transform your ideas into
+            reality.
+          </p>
+          <div className={css.ctaButtons}>
+            <Link to="/Signup">
+              <button className={`${css.btn} ${css.primaryBtn}`}>Get Started</button>
+            </Link>
+            <a href="#features">
+              <button className={`${css.btn} ${css.secondaryBtn}`}>Learn More</button>
+            </a>
+          </div>
+        </div>
+
+        {/* Hero Image */}
+        <div className={css.heroImageWrapper}>
+          <img src={heroImg} alt="Architecture Showcase" className={css.heroImg} />
         </div>
       </div>
+
+      {/* Features Section */}
+      <section id="features" className={css.featuresSection}>
+        <h2 className={css.featuresHeading}>Why Choose Build Vision?</h2>
+        <div className={css.featureCards}>
+          <div className={css.featureCard}>
+            <h3 className={css.cardTitle}>Explore Designs</h3>
+            <p className={css.cardText}>
+              Discover stunning architectural marvels and trends from around the globe.
+            </p>
+          </div>
+          <div className={css.featureCard}>
+            <h3 className={css.cardTitle}>Collaborate</h3>
+            <p className={css.cardText}>
+              Connect with architects, designers, and enthusiasts in our vibrant community.
+            </p>
+          </div>
+          <div className={css.featureCard}>
+            <h3 className={css.cardTitle}>Innovate</h3>
+            <p className={css.cardText}>
+              Turn your vision into reality with tools to bring your ideas to life.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className={css.footer}>
+        <p>&copy; 2024 Build Vision. All rights reserved.</p>
+      </footer>
     </div>
-  )
+  );
 }
 
-export default Homepage
+export default Homepage;

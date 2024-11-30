@@ -1,70 +1,183 @@
-.body{
-    margin-left: 5.9vw;
-    width: 94.1vw;
-    height: 100vh;
+/* Body Container */
+.body {
+    padding-left: 0;
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+    flex-direction: column;
+    overflow: hidden;
+    /* Hide overflow outside the viewport */
+    position: relative;
 }
 
-.main{
+/* Main Section */
+.main {
+    max-height: 100%;
+    overflow-y: auto;
+    /* Enable vertical scrolling for internal content */
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
-    height: auto;
-    padding: 10vh;
+    justify-content: center;
+    gap: 5vw;
+    padding: 5vh;
 }
-.img{
-    height: 85vh;
 
+/* Responsive Image */
+.img {
+    height: 60vh;
+    max-width: 100%;
+    object-fit: contain;
 }
-.heading{
-    line-height: 10vh;
+
+/* Heading Styling */
+.heading {
+    line-height: 1.5;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #333;
 }
-.container{
-    height: auto;
-    width: 25vw;
-    background-color: #65D1FF;
-    padding: 4vh 2vh;
+
+/* Form Container */
+.container {
+    overflow-y: auto;
+    /* Scroll within the container if needed */
+    width: 90%;
+    max-width: 500px;
+    background-color: #ffffff;
+    padding: 4vh 3vh;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    border-radius: 10px;
-    font-size: 20px;
+    font-size: 1rem;
+}
+
+/* Form Styling */
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 1.5rem;
+}
+
+.detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    height: auto;
+}
+
+label {
     font-weight: bold;
-}
-.form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    height: 30vh;
-    width: 25vw;
-    font-size: 2.5vh;
-}
-.detail{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 25vw;
+    color: #555;
 }
 
-.input{
-    padding: .5vh;
-    border-radius: 10px;
-    font-size: 2vh;
+/* Input Fields */
+.input {
+    padding: 0.8rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
 }
 
-.btn{
-    background-color: #a5e0f9;
-    border-radius: 10px;
-    padding: 1vh;
-    font-size: 2.5vh;
+.input:focus {
+    border-color: #65d1ff;
+    outline: none;
 }
-.btns{
+
+/* Validation Alerts */
+.alert {
+    color: #ff4d4d;
+    font-size: 0.9rem;
+    margin-top: -0.8rem;
+}
+
+/* Buttons */
+.submit,.cancel {
+    background-color: #65d1ff;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+    text-align: center;
+}
+
+.submit:hover {
+    background-color: #4cb9e6;
+}
+
+.submit:focus {
+    outline: none;
+    box-shadow: 0 0 3px #4cb9e6;
+}
+
+.cancel {
+    background-color: #ffcccc;
+    color: #a94442;
+}
+
+.cancel:hover {
+    background-color: #ffa3a3;
+}
+
+/* Button Container */
+.btns {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    width: 15vw;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 768px) {
+    .main {
+        flex-direction: column;
+        padding: 3vh;
+        gap: 2vh;
+        /* Adjust spacing for smaller screens */
+    }
+
+    .img {
+        height: auto;
+        width: 80%;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    .heading {
+        font-size: 2rem;
+    }
+
+    .input {
+        font-size: 0.9rem;
+    }
+
+    .btn {
+        font-size: 1rem;
+    }
+
+    .container {
+        padding: 2vh;
+    }
 }

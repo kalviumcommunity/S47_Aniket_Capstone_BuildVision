@@ -15,10 +15,10 @@ function ClientLoginform() {
 
     const submit = (data) => {
 
-        localStorage.setItem("Role", "Client");
-        localStorage.setItem("Email", data.email);
         axios.post(`${import.meta.env.VITE_SERVER_URL}/ClientLogin`, data)
-            .then((res) => {
+        .then((res) => {
+                localStorage.setItem("Role", "Client");
+                localStorage.setItem("Email", data.email);
                 localStorage.setItem("Token", res.data.token)
                 localStorage.setItem("userid", res.data.id)
                 alert(res.data.result)

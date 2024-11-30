@@ -1,17 +1,18 @@
-.container{
+.container {
     height: 100vh;
     display: flex;
     flex-direction: row;
 }
 
-.mainarchi ,.mainclient{
+.mainarchi,
+.mainclient {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 }
 
-.archi{
+.archi {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,130 +24,161 @@
     transition: width 500ms ease-in-out;
 }
 
-.client{
+.client {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    width:50vw;
+    width: 50vw;
     border: none;
     background-color: #335DB4;
     transition: width 500ms ease-in-out;
 }
 
-.archicontent ,.clientcontent{
+.archicontent,
+.clientcontent {
     display: none;
     transition: display 500ms ease-in-out;
 }
-.archiHeading ,.clientHeading{
+
+.archiHeading,
+.clientHeading {
     display: block;
     transition: display 500ms ease-in-out;
 }
-.archiform{
+
+.archiform {
     background-color: #65D1FF;
 }
-.clientform{
+
+.clientform {
     background-color: #5885E4;
 }
 
-.archiform, .clientform{
+.archiform,
+.clientform {
+    background: linear-gradient(135deg, #f3f4f6, #e0e7ff);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    padding: 40px;
+    border-radius: 15px;
+    width: 50%;
+    max-width: 500px;
+    min-width: 320px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 30px;
-    border-radius: 15px;
-    height: 45vh;
-    width: 45%;
+    gap: 15px;
+    transition: transform 0.3s ease-in-out;
 }
 
-.mainarchiimage ,.mainclientimage{
+h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+input{
+  padding: .2rem;
+  margin: 0.2rem 0.4rem;
+
+}
+
+
+.mainarchiimage,
+.mainclientimage {
     height: 400px;
     margin: 50px;
     margin: 0px;
 }
 
-.archiimage ,.clientimage{
+.archiimage,
+.clientimage {
     height: 400px;
     margin: 50px;
 }
 
-.mainbody{
+.mainbody {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;   
+    justify-content: space-around;
 }
 
-.form{
+.form {
     display: flex;
     flex-direction: column;
-    align-items:center;
+    align-items: center;
     justify-content: space-around;
     height: 30vh;
 }
 
-.formdiv{
+.formdiv {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
 }
 
-.archisubmit{
+.archisubmit {
     background-color: #a5e0f9;
 }
-.clientsubmit{
+
+.clientsubmit {
     background-color: #bad0ff;
 }
 
-.archisubmit ,.clientsubmit{
+.archisubmit,
+.clientsubmit {
     font-size: 17px;
-    height:5vh;
+    height: 5vh;
     border-radius: 11px;
     width: 12vw;
     border: 1px solid black;
 }
 
-.orbox{
+.orbox {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     width: 100%;
 }
-.or{
+
+.or {
     font-size: 15px;
 }
-.line{
+
+.line {
     background: #AAAAAA;
     border: none;
     height: 1px;
     width: 40%;
 }
 
-.google{
+.google {
     height: 27px;
 }
 
-.googlebtn{
+.googlebtn {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     width: auto;
-    padding:5px 7px;
-    margin: 20px;
-    border:1px solid black;
+    padding: 5px 7px;
+    margin: 5px;
+    border: 1px solid black;
     border-radius: 10px;
 }
 
-.googletext{
+.googletext {
     font-size: 20px;
-    margin: 7px ;
+    margin: 7px;
 }
 
-.forgetpass{
-    
+.forgetpass {
+    color: #60228a;
 }

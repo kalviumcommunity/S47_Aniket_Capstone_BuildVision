@@ -27,8 +27,8 @@ app.use(express.json())
 app.use(cors())
 
 app.use(cors({
-    origin:"http://localhost:5173",
-    // origin:`*`,
+    // origin:"http://localhost:5173",
+    origin:`*`,
     credentials:true,
     methods: ["GET","POST"]
 }))
@@ -403,7 +403,7 @@ app.delete('/DeleteDesign/:role/:id/:did', async (req, res) => {
 
 
 
-app.get('/GetArchiData', async (req, res) => {
+app.get('/GetArchiData',Validation, async (req, res) => {
     try {
         const data = await ArchiDetail.find().select("-password"); // Select all user data except password
         res.send(data);
@@ -412,7 +412,7 @@ app.get('/GetArchiData', async (req, res) => {
         res.status(500).send("Server error");
     }
 });
-app.get('/GetClientData', async (req, res) => {
+app.get('/GetClientData', Validation,async (req, res) => {
     try {
         const data = await ClientDetail.find().select("-password"); // Select all user data except password
         res.send(data);
@@ -474,7 +474,7 @@ app.get('/:recieverid',async (req, res) => {
 
     catch (error) {
         console.error("Error:", error);
-        res.send(500).json({error:"Internal Server Error"});
+        res.Status(500).json({error:"Internal Server Error"});
     }
 })
 
@@ -522,7 +522,7 @@ app.post('/SendMessage/:recieverid',async (req, res) => {
     }
     catch (error) {
         console.error("Error:", error);
-        res.send(500).json({error:"Internal Server Error"});
+        res.Status(500).json({error:"Internal Server Error"});
     }
 })
 
