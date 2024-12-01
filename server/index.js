@@ -362,7 +362,7 @@ app.post("/ClientSignUp", clientupload.single("ImageOfClient"), async (req, res)
         console.log(error)
     }
 })
-app.post('/AddDesign', designupload.single("ImageOfDesign"), (req, res) => {
+app.post('/AddDesign/:role/:id', designupload.single("ImageOfDesign"), (req, res) => {
     try {
         const dfiledata = req.body;
         if (req.file) {

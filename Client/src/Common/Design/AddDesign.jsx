@@ -16,24 +16,8 @@ function AddDesign() {
   const [Archidata, setArchidata] = useState([])
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false);
-
-  const submit = (data) => {
-    setIsLoading(true);
-    const formdata = new FormData();
-    formdata.append("ArchitectId", Archidata._id);
-
-    axios.post(`${import.meta.env.VITE_SERVER_URL}/AddDesign/${role}/${id}`, formdata)
-      .then(() => {
-        setIsLoading(false);
-        navigate(`/Profile/${role}/${id}`);
-      })
-      .catch(() => {
-        setIsLoading(false);
-        alert("An error occurred. Please try again.");
-      });
-  };
-
-
+  
+  
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_SERVER_URL}/Profile/${role}/${id}`, {
       headers: {
@@ -41,43 +25,51 @@ function AddDesign() {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
     })
-      .then((res) => {
-        // console.log(res.data)
-        setArchidata(res.data)
-      })
+    .then((res) => {
+      // console.log(res.data)
+      setArchidata(res.data)
+    })
       .catch((err) => {
         console.log(err)
       })
-  })
-
-  // const submit = (data) => {
-  //   console.log(data)
-  //   console.log(data.ImageOfDesign[0])
-  //   const formdata = new FormData();
-  //   formdata.append("ArchitectId", Archidata._id)
-  //   formdata.append("ArchitectName", Archidata.ArchitectName)
-  //   formdata.append("ArchitectEmail", Archidata.ArchiEmail)
-  //   formdata.append("ArchitectExperience", Archidata.ArchitectExperience || 0)
-  //   formdata.append("ArchiPhoneNumber", Archidata.ArchiPhoneNumber || 0)
-  //   formdata.append("AreaOfPlot", data.AreaOfPlot)
-  //   formdata.append("AreaOfMap", data.AreaOfMap)
-  //   formdata.append("DetailsOfMap", data.DetailsOfMap)
-  //   formdata.append("Price", data.Price)
-  //   formdata.append("ImageOfDesign", data.ImageOfDesign[0])
-
-  //   const ddata = () => {
-  //     axios.post(`${import.meta.env.VITE_SERVER_URL}/AddDesign/${role}/${id}`, formdata)
-  //       .then((res) => console.log(res))
-  //       .catch((err) => console.log(err))
-  //   }
-  //   ddata()
-
-  //   navigate(`/Profile/${role}/${id}`)
-  // }
-
-
-  return (
-    <div className={navcss.navbar}>
+    })
+    
+    const submit = (data) => {
+      console.log(data)
+      // console.log(data.ImageOfDesign[0])
+      const formdata = new FormData();
+      formdata.append("ArchitectId", Archidata._id)
+      formdata.append("ArchitectName", Archidata.ArchitectName)
+      formdata.append("ArchitectEmail", Archidata.ArchiEmail)
+      formdata.append("ArchitectExperience", Archidata.ArchitectExperience || 0)
+      formdata.append("ArchiPhoneNumber", Archidata.ArchiPhoneNumber || 0)
+      formdata.append("AreaOfPlot", data.AreaOfPlot)
+      formdata.append("AreaOfMap", data.AreaOfMap)
+      formdata.append("DetailsOfMap", data.DetailsOfMap)
+      formdata.append("Price", data.Price)
+      formdata.append("ImageOfDesign", data.ImageOfDesign[0])
+      
+      const ddata = () => {
+        axios.post(`${import.meta.env.VITE_SERVER_URL}/AddDesign/${role}/${id}`, formdata)
+        .then((res) =>{
+          // console.log(res)
+          setIsLoading(false);
+          navigate(`/Profile/${role}/${id}`);
+        })
+        .catch((err) => {
+          console.log(err)
+          setIsLoading(false);
+          alert("An error occurred. Please try again.");
+        });
+      }
+      ddata()
+      
+      navigate(`/Profile/${role}/${id}`)
+    }
+    
+    
+    return (
+      <div className={navcss.navbar}>
       <NavigationBar />
       <div className={css.body}>
         <div className={css.main}>
