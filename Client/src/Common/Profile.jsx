@@ -45,7 +45,7 @@ function Profile() {
     if (isLoading) {
         return (
             <div className={css.loading}>
-                <p>Loading Profile...</p>
+                <h1>Loading Profile...</h1>
             </div>
         );
     }else {
