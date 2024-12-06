@@ -67,7 +67,7 @@ function DesignPage() {
         {sortedData.map((item) => (
           <div className={css.card} key={item._id}>
             <img
-              src={`${import.meta.env.VITE_SERVER_URL}/Upload/Design/${item.ImageOfDesign[0].replace(/ /g, "%20")}`}
+              src={item.ImageOfDesign[0] ? `${import.meta.env.VITE_SERVER_URL}/Upload/Design/${item.ImageOfDesign[0].replace(/ /g, "%20")}`:""}
               alt="Design"
               className={css.img}
             />

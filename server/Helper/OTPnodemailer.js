@@ -16,7 +16,7 @@ async function sendotp(otp,mail) {
 //   send mail with defined transport object
 //   console.log(otp,mail)
   const sendmail = {
-    from: process.env.AUTH_USER, // sender address
+    from: "buildvision@gmail.com", // sender address
     to: `${mail}`, // list of receivers
     subject: "OTP for Forget Password", // Subject line
     text: `${otp}`, // plain text body
