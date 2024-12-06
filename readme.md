@@ -34,3 +34,16 @@ Deploy front-end.
 
 # Frontend Deploy
 [Link](https://s47-aniket-capstone-build-vision.vercel.app)
+
+
+# Ticklist of my task
+-[x] create hi-fid design
+-[x] create get request
+-[x] create put request
+-[x] create post request
+-[x] create delete request
+-[x] create database schema
+-[x] deploy backend
+-[x] initialize front end
+-[x] deploy front end
+-[x] create authentication

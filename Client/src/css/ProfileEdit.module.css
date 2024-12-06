@@ -1,65 +1,186 @@
-.body{
+.body {
+    width: 70%;
     height: 100vh;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
-    padding: 0 20vh;
-    background-color: #00B3FF;
+    justify-content: center;
+    padding: 0 10vw;
+    /* background-color: #00B3FF; */
+    overflow: hidden
 }
 
-.mainimage{
-    height: 90vh;
+/* Main image styling */
+.mainimage {
+    height: 80vh;
+    object-fit: cover;
+    border-radius: 10px;
 }
 
-.container{
+/* Form container */
+.container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
+    background-color: #ffffff;
+    padding: 3vh 2vh;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+}
+
+/* Heading */
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2vh;
+    text-align: center;
+    color: #333;
+    font-weight: 600;
+}
+
+/* Form styling */
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1.8vh;
+}
+
+/* Individual input field styling */
+.detail {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    width: 100%;
+}
+
+/* Label styling */
+label {
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+/* Input fields */
+input {
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease-in-out;
+}
+
+input:focus {
+    border-color: #65d1ff;
+    outline: none;
+}
+
+/* Button styling */
+.submit {
     background-color: #65d1ff;
-    padding: 4vh 2vh;
-    border-radius: 10px;
+    color: #fff;
+    padding: 1.2rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+    text-align: center;
 }
 
-.form{
+.submit:hover {
+    background-color: #4cb9e6;
+    transform: scale(1.05);
+}
+
+.submit:focus {
+    outline: none;
+    box-shadow: 0 0 5px #4cb9e6;
+}
+
+/* Button container */
+.button {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    height: auto;
-    width: 30vw;
-    margin: 5vh 0;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.submit{
-    padding: 1vh 2vh;
-    border-radius: 10px;
+    flex-direction: row;
+    gap: 1.5rem;
+    width: 100%;
+    justify-content: space-between;
     margin-top: 2vh;
-    background-color: #a5e0fa;
-    font-size: 2.5vh;
 }
 
-.detail{
-    line-height: 6vh;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 25vw;
+/* Cancel button styling */
+.cancel {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+    text-align: center;
 }
 
-.alert{
-    line-height: 10px;
-    font-size: 13.5px;
-    color: red;
+.cancel:hover {
+    background-color: #f5c6cb;
+    transform: scale(1.05);
 }
-.button{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 15vw;
+
+/* Alert message styling */
+.alert {
+    color: #ff4d4d;
+    font-size: 0.9rem;
+    margin-top: -0.8rem;
+}
+
+/* Mobile responsive styling */
+@media (max-width: 768px) {
+    .body {
+        flex-direction: column;
+        padding: 5vh 2vw;
+    }
+
+    .container {
+        width: 90%;
+    }
+
+    .mainimage {
+        height: 50vh;
+    }
+
+    .form {
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .submit {
+        font-size: 1.2rem;
+    }
+
+    .button {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .submit {
+        font-size: 1rem;
+        padding: 1vh 1.5rem;
+    }
+
+    .cancel {
+        font-size: 1rem;
+        padding: 1vh 1.5rem;
+    }
 }

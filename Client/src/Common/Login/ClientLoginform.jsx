@@ -15,13 +15,14 @@ function ClientLoginform() {
 
     const submit = (data) => {
 
-        localStorage.setItem("Role", "Client");
-        localStorage.setItem("Email", data.email);
         axios.post(`${import.meta.env.VITE_SERVER_URL}/ClientLogin`, data)
-            .then((res) => {
+        .then((res) => {
+                localStorage.setItem("Role", "Client");
+                localStorage.setItem("Email", data.email);
                 localStorage.setItem("Token", res.data.token)
-                // alert(res.data.result)
-                // navigate("/DesignPage")
+                localStorage.setItem("userid", res.data.id)
+                alert(res.data.result)
+                navigate("/DesignPage")
 
             })
             .catch((err) => alert(err.response.data))
@@ -60,6 +61,7 @@ function ClientLoginform() {
                                 <input type='password' {...register("password", { required: "Password is required" })} placeholder="Enter Password" />
                             </div>
                             {errors.password && <p className={css.alert}>{errors.password.message}</p>}
+                            <Link to={'/ClientForgetPass'} className={css.forgetpass}>Forget Password?</Link>
                             <button type='submit' className={css.clientsubmit} onClick={handleSubmit(submit)}>LogIn</button>
                         </form>
                     </div>

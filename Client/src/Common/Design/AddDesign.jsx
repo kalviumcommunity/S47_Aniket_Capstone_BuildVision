@@ -15,7 +15,9 @@ function AddDesign() {
   const { register, handleSubmit, formState: { errors } } = useForm()
   const [Archidata, setArchidata] = useState([])
   const navigate = useNavigate()
-
+  const [isLoading, setIsLoading] = useState(false);
+  
+  
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_SERVER_URL}/Profile/${role}/${id}`, {
       headers: {
@@ -23,43 +25,51 @@ function AddDesign() {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
     })
-      .then((res) => {
-        // console.log(res.data)
-        setArchidata(res.data)
-      })
+    .then((res) => {
+      // console.log(res.data)
+      setArchidata(res.data)
+    })
       .catch((err) => {
         console.log(err)
       })
-  })
-
-  const submit = (data) => {
-    console.log(data)
-    console.log(data.ImageOfDesign[0])
-    const formdata = new FormData();
-    formdata.append("ArchitectId", Archidata._id)
-    formdata.append("ArchitectName", Archidata.ArchitectName)
-    formdata.append("ArchitectEmail", Archidata.ArchiEmail)
-    formdata.append("ArchitectExperience", Archidata.ArchitectExperience || 0)
-    formdata.append("ArchiPhoneNumber", Archidata.ArchiPhoneNumber || 0)
-    formdata.append("AreaOfPlot", data.AreaOfPlot)
-    formdata.append("AreaOfMap", data.AreaOfMap)
-    formdata.append("DetailsOfMap", data.DetailsOfMap)
-    formdata.append("Price", data.Price)
-    formdata.append("ImageOfDesign", data.ImageOfDesign[0])
-
-    const ddata = () => {
-      axios.post(`${import.meta.env.VITE_SERVER_URL}/AddDesign/${role}/${id}`, formdata)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err))
+    })
+    
+    const submit = (data) => {
+      console.log(data)
+      // console.log(data.ImageOfDesign[0])
+      const formdata = new FormData();
+      formdata.append("ArchitectId", Archidata._id)
+      formdata.append("ArchitectName", Archidata.ArchitectName)
+      formdata.append("ArchitectEmail", Archidata.ArchiEmail)
+      formdata.append("ArchitectExperience", Archidata.ArchitectExperience || 0)
+      formdata.append("ArchiPhoneNumber", Archidata.ArchiPhoneNumber || 0)
+      formdata.append("AreaOfPlot", data.AreaOfPlot)
+      formdata.append("AreaOfMap", data.AreaOfMap)
+      formdata.append("DetailsOfMap", data.DetailsOfMap)
+      formdata.append("Price", data.Price)
+      formdata.append("ImageOfDesign", data.ImageOfDesign[0])
+      
+      const ddata = () => {
+        axios.post(`${import.meta.env.VITE_SERVER_URL}/AddDesign/${role}/${id}`, formdata)
+        .then((res) =>{
+          // console.log(res)
+          setIsLoading(false);
+          navigate(`/Profile/${role}/${id}`);
+        })
+        .catch((err) => {
+          console.log(err)
+          setIsLoading(false);
+          alert("An error occurred. Please try again.");
+        });
+      }
+      ddata()
+      
+      navigate(`/Profile/${role}/${id}`)
     }
-    ddata()
-
-    navigate(`/Profile/${role}/${id}`)
-  }
-
-
-  return (
-    <div className={navcss.navbar}>
+    
+    
+    return (
+      <div className={navcss.navbar}>
       <NavigationBar />
       <div className={css.body}>
         <div className={css.main}>
@@ -88,12 +98,12 @@ function AddDesign() {
               {errors.Price && <p className={css.alert}>{errors.Price.message}</p>}
               <div className={css.detail}>
                 <label>Image of Map</label>
-                <input type='file' {...register("ImageOfDesign",{ required: "Image of Map is required"} )} placeholder="Upload Image of Map" className={css.input} />
+                <input type='file' {...register("ImageOfDesign", { required: "Image of Map is required" })} placeholder="Upload Image of Map" className={css.input} />
               </div>
               {errors.ImageOfDesign && <p className={css.alert}>{errors.ImageOfDesign.message}</p>}
               <div className={css.btns}>
-                <button onClick={() => navigate(`/Profile/${role}/${id}`)} className={css.btn}>Cancel</button>
-                <button onClick={handleSubmit(submit)} className={css.btn}>Submit</button>
+                <button onClick={() => navigate(`/Profile/${role}/${id}`)} className={css.cancel}>Cancel</button>
+                <button onClick={handleSubmit(submit)} className={css.submit}>Submit</button>
               </div>
             </form>
           </div>

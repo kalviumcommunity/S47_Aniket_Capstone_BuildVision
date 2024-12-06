@@ -1,16 +1,26 @@
-.nav{
+.navbottom{
+    height: 15%;
+}
+.navtop{
+    height: 30%;
+}
+
+.navbottom,.navtop{
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
+    padding: 1.5vh;
 }
 
 .mainnav{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height:95.8vh;
+    height:100%;
+    overflow:auto;
     overflow-y: hidden;
     background-color: #335DB4;
-    padding: 15px;
+    /* padding: 1vw; */
     position: fixed;
 }
 
@@ -19,17 +29,30 @@
     flex-direction: row;
 }
 
+/* #archi{
+    height: 4.2vh;
+    width: 4.4vh;
+} */
+
+.img{
+    height: 3.6vh;
+    width: 2.2vw;
+    margin: 1.3vh;
+    /* padding: 1.2vh; */
+}
+
+/* 
 .menu{
-    height: 20px;
-    padding: 12px;
+    height: 2.7vh;
+    padding: 1.5vh;
 }
 .design{
-    height: 30px;
-    padding: 9px;
+    height: 4vh;
+    padding: 1.2vh;
 }
-.archi{
-    height: 42px;
-    padding: 2px 0px 2px 2px;
+.chat{
+    height: 4vh;
+    padding: 1.2vh;
 }
 .profile{
     height: 45px;
@@ -38,22 +61,27 @@
 .logout{
     height: 35px;
     padding: 7px 0px 5px 10px;
-}
+} */
 
 .navicon{
     display: flex;
     flex-direction: row;
     background-color: aqua;
     border-radius: 100%;
-    margin: 5px;
+    /* margin: 10px; */
+    /* padding: 10px; */
     align-items: center;
 }
 .navtext{
     display: none;
-    text-decoration: none;
+    text-decoration: underline;
     text-align: center;
 
     color: black;
     text-decoration: none;
     font-size: 150%; 
+}
+
+.active{
+    background-color: aliceblue;
 }

@@ -24,14 +24,14 @@ const Validation = async (req, res, next) => {
             console.log("jwt token fail")
         }
         
-        try {
+    try {
             // console.log('auth', token)
             // console.log("Auth")
-            const checkJwt = auth({
+            const checkAuth = auth({
                 audience: 'http://BuildVision',
                 issuerBaseURL: `https://dev-bhzywqcftmwjth02.us.auth0.com/`,
             })
-            // console.log('decode',checkJwt)
+            // console.log('decode',checkAuth)
             next()
         } catch (error) {
             return res.status(500).json({ error: "Auth token error" })

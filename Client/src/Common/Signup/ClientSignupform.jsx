@@ -22,37 +22,41 @@ function ClientSignupform() {
         // document.cookie="Role=Client"
         // document.cookie=`Email=${data.email || user.email}`
 
-        localStorage.setItem("Role", "Client");
-
-        localStorage.setItem("Email", data.ClientEmail);
-
-
-        console.log(data)
+        
+        
+        // console.log(data)
         const formData = new FormData();
 
         formData.append("ClientEmail", data.ClientEmail)
         formData.append("ClientName", data.ClientName);
         formData.append("ClientPassword", data.ClientPassword);
         formData.append("Role", "Client");
-        formData.append("D.O.B", ISODate(""));
+        formData.append("D.O.B", (""));
         formData.append("ClientPhoneNumber", "0");
         formData.append("ImageOfClient", data.ImageOfClient[0]);
-
-        console.log(data);
-        console.log(formData);
-
+        
+        // console.log(data);
+        // console.log(formData);
+        
         const fdata = async () => {
             // if(data){
-            axios.post(`${import.meta.env.VITE_SERVER_URL}/ClientSignUp`, formData)
+                axios.post(`${import.meta.env.VITE_SERVER_URL}/ClientSignUp`, formData)
                 .then((res) => {
                     alert(res.data.result)
-                    localStorage.setItem("Token", res.data.token)
+                    localStorage.setItem("Token", res.data.token);
+                    localStorage.setItem("Role", "Client");
+                    localStorage.setItem("Email", data.ClientEmail);
+                    localStorage.setItem("userid", res.data.id)
 
                     navigate("/DesignPage")
                     // window.location.reload()
                 })
 
-                .catch((err) => alert(err.response))
+                .catch((err) => {
+                    // console.log(err.response.data)
+
+                }
+                )
 
             // }
         }
