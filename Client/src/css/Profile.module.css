@@ -117,6 +117,7 @@ header {
 }
 
 .designimage {
+    margin: 1vh;
     width: 100%;
     max-width: 300px;
     height: auto;

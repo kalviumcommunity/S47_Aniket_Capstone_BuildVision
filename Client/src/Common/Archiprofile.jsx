@@ -61,8 +61,8 @@ function ArchiProfile() {
       <>
         <div className={navcss.navbar}>
           <NavigationBar />
-          <div className={css.main}>
-            <div className={css.head}>
+          <div className={css.head}>
+            <div className={css.header}>
               <img src={logo} alt="Logo" className={css.logo} />
               <select
                 name="Filter"

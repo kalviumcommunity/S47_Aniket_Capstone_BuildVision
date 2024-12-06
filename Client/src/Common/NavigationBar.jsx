@@ -93,7 +93,7 @@ function NavigationBar() {
         <div className={navcss.navbottom}>
           <Link to={`/Profile/${role}/${id}`}><div className={navcss.navicon}><img src={profile} alt="" id={navcss.profile} className={navcss.img} /><p className={navcss.navtext}>Profile</p></div></Link>
 
-          <div className={navcss.navicon} onClick={exit}><img src={logoutimg} alt="" id={navcss.logout} className={navcss.img} /><p className={navcss.navtext}>Log-Out</p></div>
+          <div className={navcss.navicon} onClick={() => exit}><img src={logoutimg} alt="" id={navcss.logout} className={navcss.img} /><p className={navcss.navtext}>Log-Out</p></div>
 
         </div>
       </nav>

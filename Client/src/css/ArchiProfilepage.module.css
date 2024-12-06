@@ -1,31 +1,42 @@
-.main {
-    width: 90%;
-    margin-left: 7%;
-  }
-  
-  .head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    margin: 2vh 0;
-  }
+.head {
+  width: 90%;
+  margin-left: 7%;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 20px;
+  gap: 20px;
+}
+
+/* Header styles */
+.header {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
   
   .logo {
-    height: 10vh;
+    height: 50px;
+    margin-right: auto;
   }
   
   .filter {
-    padding: 1vh;
-    font-size: large;
-    background-color: rgb(220, 220, 220);
+    width: 250px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #335db4;
     border-radius: 8px;
-    border: none;
-    transition: 0.3s ease;
+    background-color: #f0f4fa;
+    cursor: pointer;
+    transition: all 0.3s;
   }
   
   .filter:hover {
-    background-color: #f0f0f0;
+    background-color: #d9e6f8;
   }
   
   .body {

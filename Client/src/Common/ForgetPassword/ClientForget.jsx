@@ -1,77 +1,85 @@
-import React, { useEffect } from 'react'
-import css from "../../css/Forget.module.css"
-import image from "../../../Assets/ClientForgetPassword.png"
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import image from "../../../Assets/ClientForgetPassword.png";
+import css from "../../css/ForgetPass.module.css";
 
 function ClientForget() {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const [otp, setotp] = useState()
-  const [otprecieved, setotprecieved] = useState("notrecieved")
+  const [otp, setOtp] = useState("");
+  const [otpReceived, setOtpReceived] = useState(false);
   const navigate = useNavigate();
 
-  const back = () => {
-    navigate(-1)
-  }
+  const back = () => navigate(-1);
 
-  const getotp = (data) => {
-    axios.get(`${import.meta.env.VITE_SERVER_URL}/ClientForgetPass`, { headers: { "email": data.email } })
+  const getOtp = (data) => {
+    axios
+      .get(`${import.meta.env.VITE_SERVER_URL}/ClientForgetPass`, { headers: { email: data.email } })
       .then((res) => {
-        setotprecieved("recieved")
-        setotp(res.data.otp)
-
+        setOtp(res.data.otp);
+        setOtpReceived(true);
+        alert("OTP sent to your email!");
       })
-      .catch((err) => console.log(err))
-  }
+      .catch((err) => alert(err.response.data));
+  };
 
-  const verifyOTP = (data) => {
-    // console.log(data)
-    if (data.OTP == otp) {
-      navigate('/ClientChangePassword',)
+  const verifyOtp = (data) => {
+    if (data.OTP === otp) {
+      alert("OTP verified successfully!");
+      navigate("/ClientChangePassword");
     } else {
-      alert("Wrong OTP Entered")
-      navigate("/login")
+      alert("Wrong OTP entered!");
     }
-  }
+  };
 
   return (
-    <div className={css.main}>
-      <div className={css.form}>
-        <h1 className={css.heading}>Forget password</h1>
-        <div className={css.formbody}>
-          {otprecieved === "recieved" ?
-            (<>
-              <div className={`${css.details} ${css.buttons}`}>
-                <label>Enter OTP</label>
-                <input type='number' {...register("OTP", { required: "OTP is required" })} placeholder="Enter OTP" />
-                {errors.OTP && <p className={css.alert}>{errors.OTP.message}</p>}
-              </div>
-              <div className={`${css.details} ${css.buttons}`}>
-                <button onClick={back}>Back</button>
-                {<button onClick={handleSubmit(verifyOTP)}>Verify</button>}
-
-              </div>
-            </>)
-            :
-            (<>
-              <div className={`${css.email} ${css.buttons}`}>
-                <label>Enter your Email</label>
-                <input type='email' {...register("email", { required: "Email is required" })} placeholder="Enter Email" />
-                {errors.email && <p className={css.alert}>{errors.email.message}</p>}
-              </div>
-              <div className={`${css.details} ${css.buttons}`}>
-                <button onClick={back}>Back</button>
-                {<button onClick={handleSubmit(getotp)}>Get OTP</button>}
-
-              </div>
-            </>)
-          }
-        </div>
+    <div className={css.container}>
+      <div className={css.imageContainer}>
+        <img src={image} alt="Forget Password" className={css.image} />
       </div>
-      <img src={image} alt="" className={css.image} />
+      <div className={css.card}>
+        <h1 className={css.heading}>Forgot Password</h1>
+        <form onSubmit={otpReceived ? handleSubmit(verifyOtp) : handleSubmit(getOtp)} className={css.form}>
+          {otpReceived ? (
+            <>
+              <div className={css.inputGroup}>
+                <label htmlFor="otp">Enter OTP</label>
+                <input
+                  id="otp"
+                  type="number"
+                  {...register("OTP", { required: "OTP is required" })}
+                  placeholder="Enter OTP"
+                />
+                {errors.OTP && <p className={css.errorText}>{errors.OTP.message}</p>}
+              </div>
+              <div className={css.buttons}>
+                <button type="button" className={css.backButton} onClick={back}>Back</button>
+                <button type="submit" className={css.submitButton} onClick={verifyOtp}>Verify</button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className={css.inputGroup}>
+                <label htmlFor="email">Enter Your Email</label>
+                <input
+                  id="email"
+                  type="email"
+                  {...register("email", { required: "Email is required" })}
+                  placeholder="Enter your email"
+                />
+                {errors.email && <p className={css.errorText}>{errors.email.message}</p>}
+              </div>
+              <div className={css.buttons}>
+                <button type="button" className={css.backButton} onClick={back}>Back</button>
+                <button type="submit" className={css.submitButton} onClick={getOtp}>Get OTP</button>
+              </div>
+            </>
+          )}
+        </form>
+      </div>
     </div>
-  )
+  );
 }
-export default ClientForget
+
+export default ClientForget;
