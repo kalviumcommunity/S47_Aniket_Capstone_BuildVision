@@ -19,14 +19,17 @@ Deploy front-end.
 
 # Task
 - [x] JWT authentication
-- [x] auth0 authentication
+- [x] Auth0 authentication
 - [x] CRUD operations
-- [ ] Chat feature
+- [X] Chat feature
+- [ ] Payment gateway
+- [ ] Mail feature for client 
 
 - [x] Sliding window for Signup and Login
-- [x] side bar or navigation bar with sliding feature
-- [x] designing card of design page and architect page
-- [ ] Final UI or finalizing
+- [x] Side bar or navigation bar with sliding feature
+- [x] Designing card of design page and architect page
+- [X] Final UI or finalizing
+- [x] Forget password
 
 
 # Backend Deploy
@@ -34,16 +37,3 @@ Deploy front-end.
 
 # Frontend Deploy
 [Link](https://s47-aniket-capstone-build-vision.vercel.app)
-
-
-# Ticklist of my task
--[x] create hi-fid design
--[x] create get request
--[x] create put request
--[x] create post request
--[x] create delete request
--[x] create database schema
--[x] deploy backend
--[x] initialize front end
--[x] deploy front end
--[x] create authentication
